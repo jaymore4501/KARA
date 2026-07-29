@@ -1,0 +1,658 @@
+# KARA - Complete System Overview
+
+## Product Vision
+
+**KARA (Knowledge AI for Research & Automation)** is an autonomous multi-agent AI platform that transforms a single startup idea into a complete business.
+
+Instead of one chatbot answering questions, KARA coordinates multiple specialized AI agents that collaborate on the user's behalf.
+
+The user provides only one prompt.
+
+Example:
+
+> "Build an AI-powered fitness application for senior citizens."
+
+KARA then performs every stage of startup creation:
+
+* Business validation
+* Market research
+* Product planning
+* UI/UX planning
+* Software architecture
+* Backend planning
+* Frontend planning
+* Database design
+* Marketing strategy
+* Financial projections
+* Investor pitch generation
+
+---
+
+# Core Workflow
+
+```text
+User Idea
+     │
+     ▼
+CEO Agent
+     │
+     ▼
+Market Research Agent
+     │
+     ▼
+Business Analyst
+     │
+     ▼
+Product Manager
+     │
+     ▼
+Software Architect
+     │
+ ┌───┴──────────────────────┐
+ │                          │
+ ▼                          ▼
+UI Designer          Database Architect
+ │                          │
+ ▼                          ▼
+Frontend Agent       Backend Agent
+ │                          │
+ └─────────────┬────────────┘
+               ▼
+          QA Agent
+               ▼
+        Marketing Agent
+               ▼
+        Finance Agent
+               ▼
+        Investor Agent
+               ▼
+ Complete Startup Package
+```
+
+---
+
+# User Flow
+
+### Step 1
+
+User logs in.
+
+---
+
+### Step 2
+
+Dashboard opens.
+
+User clicks
+
+> New Startup
+
+---
+
+### Step 3
+
+User enters
+
+Idea
+
+Problem
+
+Target users
+
+Country
+
+Budget
+
+Optional documents
+
+---
+
+### Step 4
+
+KARA asks 3–5 clarification questions.
+
+Example:
+
+Who is your customer?
+
+B2B or B2C?
+
+Subscription or one-time payment?
+
+---
+
+### Step 5
+
+User clicks
+
+Generate Startup
+
+---
+
+### Step 6
+
+Agent execution begins.
+
+The interface streams progress:
+
+```
+CEO Agent ✔
+
+Market Research ✔
+
+Product Manager ✔
+
+Software Architect ✔
+
+UI Designer ⏳
+
+Backend Engineer ⏳
+
+Frontend Engineer ⏳
+
+Marketing Waiting
+
+Finance Waiting
+```
+
+---
+
+### Step 7
+
+Results appear section by section.
+
+---
+
+# Dashboard
+
+The dashboard should contain:
+
+Sidebar
+
+* Dashboard
+* Projects
+* AI Agents
+* Documents
+* Architecture
+* Analytics
+* Exports
+* Settings
+
+---
+
+Top Bar
+
+Search
+
+Notifications
+
+Credits
+
+User Profile
+
+---
+
+Main Area
+
+Recent projects
+
+Agent activity
+
+Latest documents
+
+Startup score
+
+Token usage
+
+---
+
+# Project Workspace
+
+Every project has tabs.
+
+Overview
+
+Research
+
+Business Plan
+
+Architecture
+
+Frontend
+
+Backend
+
+Database
+
+Marketing
+
+Finance
+
+Investor Deck
+
+Exports
+
+Chat
+
+---
+
+# Agent Details
+
+## CEO Agent
+
+Purpose
+
+Convert an idea into a business vision.
+
+Output
+
+Mission
+
+Vision
+
+Objectives
+
+Target audience
+
+Problem statement
+
+---
+
+## Market Research Agent
+
+Uses search.
+
+Outputs
+
+Competitors
+
+Pricing
+
+Market size
+
+SWOT
+
+Customer pain points
+
+Opportunities
+
+---
+
+## Business Analyst
+
+Creates
+
+Business Model Canvas
+
+Lean Canvas
+
+Revenue model
+
+Customer persona
+
+---
+
+## Product Manager
+
+Creates
+
+Features
+
+Roadmap
+
+User stories
+
+Sprint planning
+
+MVP definition
+
+---
+
+## Architect Agent
+
+Creates
+
+Tech stack
+
+Folder structure
+
+API architecture
+
+Authentication
+
+Cloud architecture
+
+Caching
+
+Security
+
+Scalability
+
+ER diagram
+
+---
+
+## Database Agent
+
+Creates
+
+Database schema
+
+Relationships
+
+Indexes
+
+SQL scripts
+
+---
+
+## UI Agent
+
+Creates
+
+Design system
+
+Color palette
+
+Components
+
+Layouts
+
+Wireframes
+
+Responsive behavior
+
+---
+
+## Backend Agent
+
+Creates
+
+REST APIs
+
+Authentication
+
+CRUD
+
+Database integration
+
+Validation
+
+Docker
+
+---
+
+## Frontend Agent
+
+Creates
+
+Pages
+
+Components
+
+Hooks
+
+Forms
+
+State management
+
+Responsive UI
+
+---
+
+## QA Agent
+
+Checks
+
+Security
+
+Performance
+
+Accessibility
+
+Bugs
+
+Optimization
+
+---
+
+## Marketing Agent
+
+Creates
+
+Brand
+
+Landing page copy
+
+SEO
+
+Social campaigns
+
+Emails
+
+Blogs
+
+---
+
+## Finance Agent
+
+Creates
+
+Revenue model
+
+Pricing
+
+Break-even estimate
+
+Cost projections
+
+Financial dashboard
+
+---
+
+## Investor Agent
+
+Creates
+
+Pitch deck
+
+Investment summary
+
+Risk analysis
+
+Funding strategy
+
+---
+
+# Memory System (RAG)
+
+KARA should remember:
+
+User preferences
+
+Previous projects
+
+Uploaded PDFs
+
+Business documents
+
+Generated code
+
+Architecture
+
+Notes
+
+Conversations
+
+Each project has its own knowledge base.
+
+---
+
+# Tools
+
+Every agent can invoke tools.
+
+Examples:
+
+Web Search
+
+Competitor Search
+
+Document Generator
+
+Markdown Export
+
+PDF Export
+
+Diagram Generator
+
+GitHub Generator
+
+Presentation Generator
+
+Spreadsheet Generator
+
+---
+
+# Database Structure
+
+```text
+Users
+
+Projects
+
+ProjectDocuments
+
+ProjectChats
+
+ProjectMemory
+
+Embeddings
+
+AgentRuns
+
+GeneratedFiles
+
+Notifications
+
+Analytics
+
+Settings
+```
+
+---
+
+# Authentication
+
+Google Login
+
+GitHub Login
+
+Email Login
+
+JWT Authentication
+
+Protected routes
+
+---
+
+# AI Chat
+
+Every project has its own chat.
+
+The AI already knows
+
+Architecture
+
+Documents
+
+Code
+
+Previous outputs
+
+User goals
+
+No need to repeat context.
+
+---
+
+# Exports
+
+Export as
+
+PDF
+
+Markdown
+
+DOCX
+
+ZIP
+
+JSON
+
+---
+
+# Analytics
+
+Track
+
+Agent execution time
+
+Total prompts
+
+Tokens
+
+Project completion
+
+Most active agent
+
+Cost estimation
+
+---
+
+# Suggested Folder Structure
+
+```text
+kara/
+
+app/
+components/
+features/
+lib/
+hooks/
+services/
+store/
+types/
+
+backend/
+    api/
+    agents/
+    workflows/
+    prompts/
+    rag/
+    database/
+    auth/
+    tools/
+
+postgres/
+
+redis/
+
+vectorstore/
+
+docker/
+```
+
+---
+
+# Deployment
+
+* **Frontend:** Vercel
+* **Backend:** Render
+* **Database:** Railway PostgreSQL
+* **Redis:** Railway Redis
+* **Storage:** Cloudinary or Supabase Storage
+* **Vector Search:** PostgreSQL + pgvector (or Qdrant)
+
+---
+

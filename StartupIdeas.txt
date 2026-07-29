@@ -1,0 +1,199 @@
+========================================
+Startup Idea:
+AI-powered platform that matches students with internships, mentors, projects, and hackathons.
+
+Project Name:
+SkillSync AI
+
+Problem Being Solved:
+Students struggle to find practical experience and industry connections.
+
+Target Users:
+College Students, Graduates, Recruiters
+
+Target Country / Market:
+India
+
+Budget Range:
+$120,000
+========================================
+
+========================================
+Startup Idea:
+AI assistant that automatically converts meetings into notes, tasks, and project documentation.
+
+Project Name:
+AutoDocs AI
+
+Problem Being Solved:
+Manual meeting documentation is time-consuming and inconsistent.
+
+Target Users:
+Businesses, Startups, Remote Teams
+
+Target Country / Market:
+United States
+
+Budget Range:
+$150,000
+========================================
+
+========================================
+Startup Idea:
+AI-powered grocery assistant that reduces food waste through smart pantry management.
+
+Project Name:
+EcoCart AI
+
+Problem Being Solved:
+People waste food due to poor inventory and meal planning.
+
+Target Users:
+Families, Working Professionals
+
+Target Country / Market:
+Canada
+
+Budget Range:
+$100,000
+========================================
+
+========================================
+Startup Idea:
+AI logistics platform that optimizes delivery routes and predicts delivery times.
+
+Project Name:
+GreenRoute AI
+
+Problem Being Solved:
+Delivery companies lose money due to inefficient routing.
+
+Target Users:
+Logistics Companies, Fleet Operators
+
+Target Country / Market:
+Germany
+
+Budget Range:
+$250,000
+========================================
+
+========================================
+Startup Idea:
+AI-powered legal assistant for generating contracts and compliance documents.
+
+Project Name:
+LawPilot AI
+
+Problem Being Solved:
+Legal documentation is expensive and time-consuming for startups.
+
+Target Users:
+Startups, Small Businesses
+
+Target Country / Market:
+United Kingdom
+
+Budget Range:
+$180,000
+========================================
+
+========================================
+Startup Idea:
+AI platform that recommends doctors, manages medical records, and schedules appointments.
+
+Project Name:
+MedLink AI
+
+Problem Being Solved:
+Patients struggle to access organized healthcare services.
+
+Target Users:
+Patients, Hospitals, Clinics
+
+Target Country / Market:
+India
+
+Budget Range:
+$200,000
+========================================
+
+========================================
+Startup Idea:
+AI-powered property rental platform with tenant verification and smart pricing.
+
+Project Name:
+RentWise AI
+
+Problem Being Solved:
+Finding reliable tenants and fair rental prices is difficult.
+
+Target Users:
+Landlords, Property Managers, Tenants
+
+Target Country / Market:
+United States
+
+Budget Range:
+$170,000
+========================================
+
+========================================
+Startup Idea:
+AI platform that tracks company carbon emissions and generates sustainability reports.
+
+Project Name:
+CarbonIQ
+
+Problem Being Solved:
+Businesses struggle with carbon tracking and ESG compliance.
+
+Target Users:
+Medium & Large Enterprises
+
+Target Country / Market:
+Netherlands
+
+Budget Range:
+$300,000
+========================================
+
+========================================
+Startup Idea:
+AI career mentorship platform with personalized learning paths and mentor matching.
+
+Project Name:
+MentorHub AI
+
+Problem Being Solved:
+Students and professionals lack access to personalized career guidance.
+
+Target Users:
+Students, Professionals
+
+Target Country / Market:
+Australia
+
+Budget Range:
+$130,000
+========================================
+
+========================================
+Startup Idea:
+AI travel planner that creates personalized itineraries, budgets, and bookings.
+
+Project Name:
+TravelGenie AI
+
+Problem Being Solved:
+Planning trips across multiple platforms is time-consuming.
+
+Target Users:
+Travelers, Families, Travel Enthusiasts
+
+Target Country / Market:
+Singapore
+
+Budget Range:
+$160,000
+========================================

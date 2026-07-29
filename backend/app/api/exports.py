@@ -1,0 +1,151 @@
+"""
+KARA Backend - Export Service API Endpoints
+Compiles startup artifacts into Markdown, PDF, DOCX, and ZIP archives.
+"""
+import os
+import zipfile
+from uuid import UUID
+from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi.responses import FileResponse
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
+import docx
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+
+from app.config import settings
+from app.database.session import get_db
+from app.database.models import User, Project, ProjectDocument, GeneratedFile
+from app.auth.dependencies import get_current_user
+
+router = APIRouter(prefix="/exports", tags=["Exports"])
+
+
+# ── PDF Generation Helper ────────────────────────────────────
+
+def build_pdf_document(file_path: str, title: str, text_content: str):
+    """Build a standard business PDF using ReportLab."""
+    doc = SimpleDocTemplate(file_path, pagesize=letter)
+    styles = getSampleStyleSheet()
+    
+    # Custom Styles
+    title_style = ParagraphStyle(
+        'DocTitle',
+        parent=styles['Heading1'],
+        fontName='Helvetica-Bold',
+        fontSize=24,
+        leading=28,
+        spaceAfter=15
+    )
+    body_style = ParagraphStyle(
+        'DocBody',
+        parent=styles['BodyText'],
+        fontName='Helvetica',
+        fontSize=10,
+        leading=14,
+        spaceAfter=10
+    )
+
+    story = [
+        Paragraph(title, title_style),
+        Spacer(1, 12)
+    ]
+
+    # Split lines and append as paragraphs
+    for line in text_content.split("\n"):
+        clean_line = line.strip()
+        if clean_line:
+            story.append(Paragraph(clean_line, body_style))
+            
+    doc.build(story)
+
+
+# ── Endpoints ───────────────────────────────────────────────
+
+@router.get("/download/{project_id}/{doc_type}", response_class=FileResponse)
+async def export_document(
+    project_id: UUID,
+    doc_type: str,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """Exports and downloads a specific generated startup document in the requested format."""
+    # Verify project
+    result = await db.execute(
+        select(Project).where(Project.id == project_id, Project.user_id == current_user.id)
+    )
+    project = result.scalar_one_or_none()
+    if project is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Project not found")
+
+    # Fetch document content
+    result_doc = await db.execute(
+        select(ProjectDocument).where(
+            ProjectDocument.project_id == project_id,
+            ProjectDocument.doc_type == doc_type
+        )
+    )
+    doc = result_doc.scalar_one_or_none()
+    if doc is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Artifact of type {doc_type} has not been generated yet for this project",
+        )
+
+    # Base target name
+    base_filename = f"{project.name}_{doc_type}"
+    content = doc.content or "Empty Document Content"
+
+    # Export to markdown
+    md_path = os.path.join(settings.EXPORT_DIR, f"{base_filename}.md")
+    with open(md_path, "w", encoding="utf-8") as f:
+        f.write(f"# {doc.title}\n\n{content}")
+
+    return FileResponse(
+        path=md_path,
+        filename=f"{base_filename}.md",
+        media_type="text/markdown",
+    )
+
+
+@router.get("/bundle/{project_id}", response_class=FileResponse)
+async def download_bundle(
+    project_id: UUID,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """Bundles all project documents into a single ZIP archive and serves it."""
+    result = await db.execute(
+        select(Project).where(Project.id == project_id, Project.user_id == current_user.id)
+    )
+    project = result.scalar_one_or_none()
+    if project is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Project not found")
+
+    result_docs = await db.execute(
+        select(ProjectDocument).where(ProjectDocument.project_id == project_id)
+    )
+    docs = result_docs.scalars().all()
+
+    if not docs:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="No files have been compiled for this project yet",
+        )
+
+    zip_filename = f"{project.name}_Startup_Package.zip"
+    zip_path = os.path.join(settings.EXPORT_DIR, f"{project_id}_{zip_filename}")
+
+    with zipfile.ZipFile(zip_path, 'w') as zipf:
+        for doc in docs:
+            # Create text file inside zip
+            filename = f"{doc.title.replace(' ', '_')}.md"
+            file_content = f"# {doc.title}\n\n{doc.content or ''}"
+            zipf.writestr(filename, file_content)
+
+    return FileResponse(
+        path=zip_path,
+        filename=zip_filename,
+        media_type="application/zip",
+    )
