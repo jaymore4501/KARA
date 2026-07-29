@@ -83,8 +83,8 @@ export default function DashboardLayout({
         <div className={`flex items-center gap-2.5 px-5 py-5 border-b border-white/5 ${sidebarCollapsed ? "justify-center" : ""}`}>
           <div className="relative flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-secondary to-brand-primary p-[1px] shadow-lg shrink-0">
             <div className="absolute inset-0 rounded-xl bg-brand-primary/20 blur-sm" />
-            <div className="relative w-full h-full rounded-xl bg-brand-bg flex items-center justify-center">
-              <Sparkles className="w-4 h-4 text-brand-highlight animate-pulse" />
+            <div className="relative w-full h-full rounded-xl bg-brand-bg flex items-center justify-center overflow-hidden">
+              <img src="/HERO-Logo.png" alt="KARA Logo" className="w-full h-full object-cover rounded-xl" />
             </div>
           </div>
           {!sidebarCollapsed && (
@@ -179,7 +179,9 @@ export default function DashboardLayout({
           <aside className="absolute left-0 top-0 bottom-0 w-[280px] bg-brand-surface border-r border-white/5 flex flex-col animate-slideInRight">
             <div className="flex items-center justify-between px-5 py-4 border-b border-white/5">
               <div className="flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-brand-highlight" />
+                <div className="w-7 h-7 rounded-xl bg-gradient-to-tr from-brand-secondary to-brand-primary p-[1px] overflow-hidden shrink-0">
+                  <img src="/HERO-Logo.png" alt="KARA Logo" className="w-full h-full object-cover rounded-xl" />
+                </div>
                 <span className="font-display font-bold text-lg text-white">KARA</span>
               </div>
               <button onClick={() => setMobileMenuOpen(false)} className="text-brand-text-secondary hover:text-white">

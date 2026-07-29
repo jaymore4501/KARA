@@ -67,7 +67,7 @@ export default function Footer() {
             <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-brand-secondary to-brand-primary p-[1px] shadow-lg overflow-hidden">
               <img src="/HERO-Logo.png" alt="KARA Logo" className="w-full h-full object-cover rounded-xl" />
             </div>
-            <span className="font-display font-bold italic text-lg text-white tracking-wider">
+            <span className="font-display font-bold text-lg text-white tracking-wider">
               KARA
             </span>
           </div>

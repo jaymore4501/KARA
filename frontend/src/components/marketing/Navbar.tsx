@@ -63,7 +63,7 @@ export default function Navbar({ onNavigate, onLaunchDashboard }: NavbarProps) {
               <img src="/HERO-Logo.png" alt="KARA Logo" className="w-full h-full object-cover rounded-xl" />
             </div>
           </div>
-          <span className="font-display font-bold italic text-xl tracking-wider bg-gradient-to-r from-white via-brand-highlight to-brand-primary bg-clip-text text-transparent">
+          <span className="font-display font-bold text-xl tracking-wider bg-gradient-to-r from-white via-brand-highlight to-brand-primary bg-clip-text text-transparent">
             KARA
           </span>
         </div>
