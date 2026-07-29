@@ -1,6 +1,6 @@
 <div align="center">
 
-  <img src="frontend/public/HERO-Logo.png" alt="KARA AI Logo" width="160" style="border-radius: 24px; box-shadow: 0 10px 30px rgba(157, 108, 255, 0.3);" />
+  <img src="frontend/public/HERO-Logo.png" alt="KARA AI Logo" width="140" style="border-radius: 28px; box-shadow: 0 12px 40px rgba(157, 108, 255, 0.35);" />
 
   # ⚡ KARA AI
   ### **Autonomous Multi-Agent Startup Engine**
@@ -47,14 +47,19 @@ Designed with a **dark-mode cyberpunk aesthetic**, KARA features an interactive 
 
 ## 🤖 Autonomous Agent Workforce
 
-KARA delegates tasks across specialized autonomous agent personas:
+KARA delegates tasks across specialized autonomous agent personas operating in parallel:
 
 | Agent Logo | Persona & Role | Key Responsibilities | Primary Output |
 | :---: | :--- | :--- | :--- |
-| 👑 | **Nova** <br> *(CEO & Strategy Lead)* | Market positioning, competitor analysis, business model validation | Executive Summary & GTM Strategy |
-| 🏗️ | **Forge** <br> *(Software Architect)* | System architecture design, database schemas, API specification | System Architecture & Code Specs |
-| 📈 | **Pulse** <br> *(Market & Data Scientist)* | Financial modeling, revenue forecasting, unit economics | Financial Runway & Metric Charts |
-| 🎨 | **Aura** <br> *(Product & UX Lead)* | Design systems, user persona mapping, interactive UI wireframing | Design Tokens & Wireframes |
+| 👑 | **Nova** <br> *(CEO & Strategy Lead)* | Strategic visioning, dynamic agent delegation, roadmap decisions | Executive Summary & GTM Strategy |
+| 🔍 | **Atlas** <br> *(Market Research)* | Deep intelligence crawling, TAM/SAM estimation, competitor sentiment | Market Intelligence & Segment Matrix |
+| 📋 | **Pulse** <br> *(Product Manager)* | PRD document autogeneration, agile epic mapping, feature value scoring | PRD Specifications & Sprint Backlog |
+| 🏗️ | **Forge** <br> *(Software Architect)* | System architecture design, database schema modeling, OpenAPI contracts | Schema Files & System Blueprints |
+| 💻 | **CodeX** <br> *(Backend Engineer)* | FastAPI & Node.js service development, SQL migrations, unit testing | Modular Backend & API Services |
+| ⚡ | **Flux** <br> *(Frontend Engineer)* | Component compilation, client state hooks, responsive UI assemblies | Production React/Next.js Client |
+| 🎨 | **Aura** <br> *(UI/UX Designer)* | Dark cosmic visual themes, typography frameworks, layout presets | Design Tokens & Wireframe Presets |
+| 📢 | **Echo** <br> *(Marketing Strategist)* | SEO positioning blueprints, ad copy autowriting, launch campaign sequencing | Launch Campaign & Social Assets |
+| 📊 | **Ledger & Vertex** <br> *(Finance & Investor Lead)* | COGS engine calculation, SaaS pricing yield, runway burn projections | Pitch Deck Slides & Financial Model |
 
 ---
 
