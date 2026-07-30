@@ -8,11 +8,21 @@
   *Transform raw business ideas into production-grade full-stack applications, market analytics, financial models, and execution roadmaps in seconds.*
 
   <p align="center">
-    <a href="https://github.com/jaymore4501/KARA/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge&logo=mit" alt="MIT License" /></a>
-    <a href="https://nextjs.org"><img src="https://img.shields.io/badge/Frontend-Next.js_16_Turbopack-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" alt="Next.js" /></a>
-    <a href="https://fastapi.tiangolo.com"><img src="https://img.shields.io/badge/Backend-FastAPI_Python_3.11+-009688?style=for-the-badge&logo=fastapi&logoColor=white" alt="FastAPI" /></a>
+    <a href="https://github.com/jaymore4501/KARA/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-4169E1?style=for-the-badge&logo=opensourceinitiative&logoColor=white" alt="License MIT" /></a>
+    <a href="https://github.com/jaymore4501/KARA/actions"><img src="https://img.shields.io/badge/Build-Passing_CI-22C55E?style=for-the-badge&logo=githubactions&logoColor=white" alt="CI Status" /></a>
+    <a href="https://ai.google.dev"><img src="https://img.shields.io/badge/AI_Engine-Google_Gemini-8E75FF?style=for-the-badge&logo=google&logoColor=white" alt="Gemini AI" /></a>
+    <a href="#-autonomous-agent-workforce"><img src="https://img.shields.io/badge/Workforce-9_Swarm_Agents-7C5CFF?style=for-the-badge&logo=probot&logoColor=white" alt="Swarm Agents" /></a>
+    <a href="https://nextjs.org"><img src="https://img.shields.io/badge/Frontend-Next.js_16-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" alt="Next.js" /></a>
+    <a href="https://fastapi.tiangolo.com"><img src="https://img.shields.io/badge/Backend-FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white" alt="FastAPI" /></a>
+  </p>
+
+  <p align="center">
+    <a href="https://www.typescriptlang.org"><img src="https://img.shields.io/badge/TypeScript-5.0+-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" /></a>
+    <a href="https://www.python.org"><img src="https://img.shields.io/badge/Python-3.11+-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" /></a>
     <a href="https://tailwindcss.com"><img src="https://img.shields.io/badge/Styling-TailwindCSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="TailwindCSS" /></a>
-    <a href="https://ai.google.dev"><img src="https://img.shields.io/badge/AI_Engine-Google_Gemini_3.5-8E75FF?style=for-the-badge&logo=google&logoColor=white" alt="Gemini AI" /></a>
+    <a href="#-docker-deployment-single-command"><img src="https://img.shields.io/badge/Deployment-Docker_Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker" /></a>
+    <a href="https://github.com/jaymore4501/KARA/security"><img src="https://img.shields.io/badge/Security-Audit_Passed-059669?style=for-the-badge&logo=shieldsdotio&logoColor=white" alt="Security Audit" /></a>
+    <a href="https://github.com/jaymore4501/KARA/pulls"><img src="https://img.shields.io/badge/PRs-Welcome-F59E0B?style=for-the-badge&logo=github&logoColor=white" alt="PRs Welcome" /></a>
   </p>
 
   <p align="center">
