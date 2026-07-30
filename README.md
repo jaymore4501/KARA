@@ -1,6 +1,6 @@
 <div align="center">
 
-  <img src="frontend/public/HERO-Logo.png" alt="KARA AI Logo" width="140" style="border-radius: 28px; box-shadow: 0 12px 40px rgba(157, 108, 255, 0.35);" />
+  <img src="frontend/public/KARA_LOGO.png" alt="KARA AI Logo" width="140" style="border-radius: 28px; box-shadow: 0 12px 40px rgba(157, 108, 255, 0.35);" />
 
   # KARA AI 🤖
   ### **Autonomous Multi-Agent Startup Engine**

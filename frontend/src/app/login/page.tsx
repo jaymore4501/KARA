@@ -39,8 +39,8 @@ export default function LoginPage() {
         <Link href="/" className="flex items-center gap-2 mb-10 justify-center group">
           <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-secondary to-brand-primary p-[1px] shadow-lg">
             <div className="absolute inset-0 rounded-xl bg-brand-primary/20 blur-sm" />
-            <div className="relative w-full h-full rounded-xl bg-brand-bg flex items-center justify-center">
-              <Sparkles className="w-4.5 h-4.5 text-brand-highlight animate-pulse" />
+            <div className="relative w-full h-full rounded-xl bg-brand-bg flex items-center justify-center overflow-hidden">
+              <img src="/KARA_LOGO.png" alt="KARA Logo" className="w-full h-full object-cover rounded-xl" />
             </div>
           </div>
           <span className="font-display font-bold text-2xl tracking-wider bg-gradient-to-r from-white via-brand-highlight to-brand-primary bg-clip-text text-transparent">

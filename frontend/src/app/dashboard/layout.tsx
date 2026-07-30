@@ -84,7 +84,7 @@ export default function DashboardLayout({
           <div className="relative flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-secondary to-brand-primary p-[1px] shadow-lg shrink-0">
             <div className="absolute inset-0 rounded-xl bg-brand-primary/20 blur-sm" />
             <div className="relative w-full h-full rounded-xl bg-brand-bg flex items-center justify-center overflow-hidden">
-              <img src="/HERO-Logo.png" alt="KARA Logo" className="w-full h-full object-cover rounded-xl" />
+              <img src="/KARA_LOGO.png" alt="KARA Logo" className="w-full h-full object-cover rounded-xl" />
             </div>
           </div>
           {!sidebarCollapsed && (
@@ -180,7 +180,7 @@ export default function DashboardLayout({
             <div className="flex items-center justify-between px-5 py-4 border-b border-white/5">
               <div className="flex items-center gap-2">
                 <div className="w-7 h-7 rounded-xl bg-gradient-to-tr from-brand-secondary to-brand-primary p-[1px] overflow-hidden shrink-0">
-                  <img src="/HERO-Logo.png" alt="KARA Logo" className="w-full h-full object-cover rounded-xl" />
+                  <img src="/KARA_LOGO.png" alt="KARA Logo" className="w-full h-full object-cover rounded-xl" />
                 </div>
                 <span className="font-display font-bold text-lg text-white">KARA</span>
               </div>
