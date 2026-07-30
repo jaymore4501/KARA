@@ -8,17 +8,14 @@
   *Transform raw business ideas into production-grade full-stack applications, market analytics, financial models, and execution roadmaps in seconds.*
 
   <p align="center">
-    <a href="https://ai.google.dev"><img src="https://img.shields.io/badge/AI_Engine-Google_Gemini-8E75FF?style=for-the-badge&logo=google&logoColor=white" alt="Google Gemini" /></a>
-    <a href="#-autonomous-agent-workforce"><img src="https://img.shields.io/badge/Workforce-9_Swarm_Agents-7C5CFF?style=for-the-badge&logo=probot&logoColor=white" alt="9 Swarm Agents" /></a>
-    <a href="https://nextjs.org"><img src="https://img.shields.io/badge/Frontend-Next.js_16-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" alt="Next.js 16" /></a>
-    <a href="https://fastapi.tiangolo.com"><img src="https://img.shields.io/badge/Backend-FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white" alt="FastAPI" /></a>
-  </p>
-
-  <p align="center">
-    <a href="https://www.typescriptlang.org"><img src="https://img.shields.io/badge/Language-TypeScript_5.0-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" /></a>
-    <a href="https://www.python.org"><img src="https://img.shields.io/badge/Runtime-Python_3.11+-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.11+" /></a>
-    <a href="https://tailwindcss.com"><img src="https://img.shields.io/badge/Styling-Tailwind_v4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind CSS" /></a>
-    <a href="https://github.com/jaymore4501/KARA/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT_Open_Source-4169E1?style=for-the-badge&logo=opensourceinitiative&logoColor=white" alt="MIT License" /></a>
+    <a href="https://ai.google.dev"><img src="https://img.shields.io/badge/AI_Engine-Gemini_Pro-8E75FF?style=flat-square&logo=google&logoColor=white" alt="Gemini AI" /></a>
+    <a href="https://nextjs.org"><img src="https://img.shields.io/badge/Frontend-Next.js_16-000000?style=flat-square&logo=nextdotjs&logoColor=white" alt="Next.js" /></a>
+    <a href="https://fastapi.tiangolo.com"><img src="https://img.shields.io/badge/Backend-FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white" alt="FastAPI" /></a>
+    <a href="https://www.typescriptlang.org"><img src="https://img.shields.io/badge/TypeScript-5.0+-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" /></a>
+    <a href="https://www.python.org"><img src="https://img.shields.io/badge/Python-3.11+-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python" /></a>
+    <a href="https://www.docker.com"><img src="https://img.shields.io/badge/Docker-Ready-2496ED?style=flat-square&logo=docker&logoColor=white" alt="Docker" /></a>
+    <a href="https://github.com/jaymore4501/KARA/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/jaymore4501/KARA/ci.yml?branch=main&label=Build&style=flat-square&logo=githubactions&logoColor=white" alt="CI Build" /></a>
+    <a href="https://github.com/jaymore4501/KARA/blob/main/LICENSE"><img src="https://img.shields.io/github/license/jaymore4501/KARA?color=4169E1&style=flat-square" alt="License MIT" /></a>
   </p>
 
   <p align="center">
