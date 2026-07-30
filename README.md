@@ -2,7 +2,7 @@
 
   <img src="frontend/public/HERO-Logo.png" alt="KARA AI Logo" width="140" style="border-radius: 28px; box-shadow: 0 12px 40px rgba(157, 108, 255, 0.35);" />
 
-  # ⚡ KARA AI
+  # KARA AI 🤖
   ### **Autonomous Multi-Agent Startup Engine**
 
   *Transform raw business ideas into production-grade full-stack applications, market analytics, financial models, and execution roadmaps in seconds.*

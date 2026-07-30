@@ -19,18 +19,20 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install uv package manager
-        run: curl -LsSf https://astral.sh/uv/install.sh | sh
+      - name: Set up uv package manager
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
 
       - name: Install dependencies
         working-directory: ./backend
         run: |
-          $HOME/.cargo/bin/uv sync
+          uv pip install --system -r requirements.txt
 
       - name: Code format & lint check
         working-directory: ./backend
         run: |
-          $HOME/.cargo/bin/uv run python -m py_compile app/main.py
+          python -m py_compile app/main.py
 
   frontend-build:
     name: Frontend Build & Type Check
@@ -48,7 +50,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./frontend
-        run: npm ci
+        run: npm install
 
       - name: Run Next.js Build
         working-directory: ./frontend
