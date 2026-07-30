@@ -8,33 +8,14 @@
   *Transform raw business ideas into production-grade full-stack applications, market analytics, financial models, and execution roadmaps in seconds.*
 
   <p align="center">
-    <a href="https://github.com/jaymore4501/KARA/blob/main/LICENSE">
-      <img src="https://img.shields.io/github/license/jaymore4501/KARA?color=blue&style=flat-square" alt="MIT License" /></a>
-    <a href="https://github.com/jaymore4501/KARA/actions/workflows/ci.yml">
-      <img src="https://img.shields.io/github/actions/workflow/status/jaymore4501/KARA/ci.yml?branch=main&label=build&style=flat-square&logo=githubactions&logoColor=white" alt="CI Build Status" /></a>
-    <a href="https://github.com/jaymore4501/KARA/stargazers">
-      <img src="https://img.shields.io/github/stars/jaymore4501/KARA?style=flat-square&logo=github" alt="GitHub Stars" /></a>
-    <a href="https://github.com/jaymore4501/KARA/network/members">
-      <img src="https://img.shields.io/github/forks/jaymore4501/KARA?style=flat-square&logo=github" alt="GitHub Forks" /></a>
-    <a href="https://github.com/jaymore4501/KARA/issues">
-      <img src="https://img.shields.io/github/issues/jaymore4501/KARA?style=flat-square&logo=github" alt="GitHub Issues" /></a>
-    <a href="https://github.com/jaymore4501/KARA/commits/main">
-      <img src="https://img.shields.io/github/last-commit/jaymore4501/KARA?style=flat-square&logo=git&logoColor=white" alt="Last Commit" /></a>
-  </p>
-
-  <p align="center">
-    <a href="https://ai.google.dev">
-      <img src="https://img.shields.io/badge/AI_Engine-Google_Gemini-8E75FF?style=flat-square&logo=google&logoColor=white" alt="Google Gemini" /></a>
-    <a href="#-autonomous-agent-workforce">
-      <img src="https://img.shields.io/badge/Swarm_Workforce-9_Agents-7C5CFF?style=flat-square&logo=probot&logoColor=white" alt="Swarm Workforce" /></a>
-    <a href="https://nextjs.org">
-      <img src="https://img.shields.io/badge/Frontend-Next.js_16-000000?style=flat-square&logo=nextdotjs&logoColor=white" alt="Next.js" /></a>
-    <a href="https://fastapi.tiangolo.com">
-      <img src="https://img.shields.io/badge/Backend-FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white" alt="FastAPI" /></a>
-    <a href="https://www.typescriptlang.org">
-      <img src="https://img.shields.io/badge/TypeScript-5.0+-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" /></a>
-    <a href="https://github.com/jaymore4501/KARA/pulls">
-      <img src="https://img.shields.io/badge/PRs-Welcome-brightgreen.svg?style=flat-square" alt="PRs Welcome" /></a>
+    <a href="https://ai.google.dev"><img src="https://img.shields.io/badge/Google_Gemini-8E75FF?style=for-the-badge&logo=google&logoColor=white" alt="Google Gemini" /></a>
+    <a href="https://nextjs.org"><img src="https://img.shields.io/badge/Next.js_16-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" alt="Next.js" /></a>
+    <a href="https://fastapi.tiangolo.com"><img src="https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white" alt="FastAPI" /></a>
+    <a href="https://www.typescriptlang.org"><img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" /></a>
+    <a href="https://www.python.org"><img src="https://img.shields.io/badge/Python_3.11+-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" /></a>
+    <a href="https://tailwindcss.com"><img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS" /></a>
+    <a href="https://www.docker.com"><img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker" /></a>
+    <a href="https://github.com/jaymore4501/KARA/blob/main/LICENSE"><img src="https://img.shields.io/badge/License_MIT-4169E1?style=for-the-badge&logo=opensourceinitiative&logoColor=white" alt="MIT License" /></a>
   </p>
 
   <p align="center">
