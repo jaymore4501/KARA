@@ -9,6 +9,7 @@ export default function AnalyticsPage() {
   const [activeTab, setActiveTab] = useState<string>("All");
   const [activeSettlementIndex, setActiveSettlementIndex] = useState<number | null>(null);
   const [hoveredIngestIndex, setHoveredIngestIndex] = useState<number | null>(null);
+  const [hoveredAllocIndex, setHoveredAllocIndex] = useState<number | null>(null);
   
   const svgRef = useRef<SVGSVGElement>(null);
   const settlementSvgRef = useRef<SVGSVGElement>(null);
@@ -95,15 +96,27 @@ export default function AnalyticsPage() {
 
   // --- Left Section: Agent Workspaces ---
   const agentsData = [
-    { name: "Sovereign Arch", role: "Lead Architect Agent", progress: 94.5, priority: "Very High", cost: "$18.4K", category: "Architect" },
-    { name: "Nexus Builder", role: "Lead Fullstack Agent", progress: 78.2, priority: "High", cost: "$32.1K", category: "Developer" },
-    { name: "Apex Strategist", role: "Lead Financial Agent", progress: 45.0, priority: "Medium", cost: "$8.5K", category: "Finance" },
-    { name: "Synapse QA", role: "Lead Testing Agent", progress: 100.0, priority: "Low", cost: "$3.2K", category: "QA" },
+    { name: "Nova", role: "CEO Agent", progress: 98.4, priority: "Very High", cost: "142K tokens", category: "Core" },
+    { name: "Pulse", role: "Product Manager", progress: 97.2, priority: "High", cost: "215K tokens", category: "Core" },
+    { name: "Forge", role: "Software Architect", progress: 99.1, priority: "Very High", cost: "109K tokens", category: "Developer" },
+    { name: "CodeX", role: "Backend Engineer", progress: 96.5, priority: "High", cost: "312K tokens", category: "Developer" },
+    { name: "Flux", role: "Frontend Engineer", progress: 94.9, priority: "High", cost: "289K tokens", category: "Developer" },
+    { name: "Aura", role: "UI/UX Designer", progress: 96.0, priority: "Medium", cost: "156K tokens", category: "Developer" },
+    { name: "Atlas", role: "Market Research", progress: 95.8, priority: "High", cost: "184K tokens", category: "Finance" },
+    { name: "Ledger", role: "Finance Analyst", progress: 98.9, priority: "Low", cost: "87K tokens", category: "Finance" },
+    { name: "Vertex", role: "Investor Advisor", progress: 97.6, priority: "Medium", cost: "74K tokens", category: "Finance" },
   ];
 
   const filteredAgents = activeTab === "All" 
     ? agentsData 
     : agentsData.filter(a => a.category === activeTab);
+
+  // --- Compute Allocation Data ---
+  const allocationData = [
+    { label: "GPU Core Alloc", value: "75%", raw: 75, color: "var(--color-brand-primary)", border: "bg-brand-primary" },
+    { label: "RAM Cluster", value: "60%", raw: 60, color: "var(--color-brand-success)", border: "bg-brand-success" },
+    { label: "IO Latency", value: "45%", raw: 45, color: "var(--color-brand-danger)", border: "bg-brand-danger" },
+  ];
 
   // --- Right Section: Settlement stepped data ---
   const settlementWeeks = ["1W", "3W", "5W", "7W", "9W", "11W", "13W", "15W"];
@@ -652,12 +665,12 @@ export default function AnalyticsPage() {
                 <span className="w-2 h-2 rounded-full bg-white/20" />
                 <span className="text-brand-text-secondary">Last Week</span>
               </div>
-              <strong className="text-white">4,298 k</strong>
+            <strong className="text-white">4,298 k</strong>
             </div>
           </div>
         </div>
 
-        {/* Card 3: Sales Overview / Resource Compute Allocations */}
+        {/* Card 3: Compute Allocations */}
         <div className="glass-card rounded-2xl p-6 relative overflow-hidden flex flex-col justify-between group hover:border-brand-primary/20 transition-all duration-300">
           <div className="absolute inset-0 bg-gradient-to-br from-white/[0.01] to-transparent pointer-events-none" />
 
@@ -671,71 +684,103 @@ export default function AnalyticsPage() {
             <div className="relative w-28 h-28 flex items-center justify-center">
               <svg width="100" height="100" viewBox="0 0 100 100" className="transform -rotate-90">
                 {/* Track lines */}
-                <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255, 255, 255, 0.03)" strokeWidth="6" />
-                <circle cx="50" cy="50" r="30" fill="none" stroke="rgba(255, 255, 255, 0.03)" strokeWidth="6" />
-                <circle cx="50" cy="50" r="20" fill="none" stroke="rgba(255, 255, 255, 0.03)" strokeWidth="6" />
+                {allocationData.map((alloc, idx) => {
+                  const radius = 40 - idx * 10;
+                  return (
+                    <circle
+                      key={`track-${idx}`}
+                      cx="50"
+                      cy="50"
+                      r={radius}
+                      fill="none"
+                      stroke="rgba(255, 255, 255, 0.02)"
+                      strokeWidth="6"
+                    />
+                  );
+                })}
 
-                {/* Outer (Purple) - 75% */}
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="40"
-                  fill="none"
-                  stroke="var(--color-brand-primary)"
-                  strokeWidth="6"
-                  strokeLinecap="round"
-                  strokeDasharray="251"
-                  strokeDashoffset="62.7" /* 251 * 0.25 offset = 75% fill */
-                />
-                {/* Middle (Cyan) - 60% */}
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="30"
-                  fill="none"
-                  stroke="var(--color-brand-success)"
-                  strokeWidth="6"
-                  strokeLinecap="round"
-                  strokeDasharray="188.4"
-                  strokeDashoffset="75.3" /* 188.4 * 0.4 offset = 60% fill */
-                />
-                {/* Inner (Pink) - 45% */}
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="20"
-                  fill="none"
-                  stroke="var(--color-brand-danger)"
-                  strokeWidth="6"
-                  strokeLinecap="round"
-                  strokeDasharray="125.6"
-                  strokeDashoffset="69" /* 125.6 * 0.55 offset = 45% fill */
-                />
+                {/* Progress Arcs */}
+                {allocationData.map((alloc, idx) => {
+                  const radius = 40 - idx * 10;
+                  const circ = 2 * Math.PI * radius;
+                  const fillPct = alloc.raw / 100;
+                  const offset = circ * (1 - fillPct);
+                  const isHovered = hoveredAllocIndex === idx;
+                  const isAnyHovered = hoveredAllocIndex !== null;
+                  
+                  return (
+                    <circle
+                      key={`arc-${idx}`}
+                      cx="50"
+                      cy="50"
+                      r={radius}
+                      fill="none"
+                      stroke={alloc.color}
+                      strokeWidth={isHovered ? "8" : "6"}
+                      strokeLinecap="round"
+                      strokeDasharray={circ}
+                      strokeDashoffset={offset}
+                      className="cursor-pointer transition-all duration-300"
+                      style={{
+                        opacity: isAnyHovered && !isHovered ? 0.35 : 1,
+                        filter: isHovered ? `drop-shadow(0 0 4px ${alloc.color})` : "none",
+                      }}
+                      onMouseEnter={() => setHoveredAllocIndex(idx)}
+                      onMouseLeave={() => setHoveredAllocIndex(null)}
+                    />
+                  );
+                })}
               </svg>
               {/* Concentric scale axis labels */}
-              <div className="absolute text-[8px] font-mono text-brand-text-secondary/40 font-bold select-none pointer-events-none">
-                <span className="absolute top-[8px] left-[46%]">0%</span>
-                <span className="absolute right-[4px] top-[45%]">25%</span>
-                <span className="absolute bottom-[4px] left-[43%]">50%</span>
-                <span className="absolute left-[2px] top-[45%]">75%</span>
+              {hoveredAllocIndex === null && (
+                <div className="absolute text-[8px] font-mono text-brand-text-secondary/40 font-bold select-none pointer-events-none">
+                  <span className="absolute top-[8px] left-[46%]">0%</span>
+                  <span className="absolute right-[4px] top-[45%]">25%</span>
+                  <span className="absolute bottom-[4px] left-[43%]">50%</span>
+                  <span className="absolute left-[2px] top-[45%]">75%</span>
+                </div>
+              )}
+              {/* Centered Hover Info Overlay */}
+              <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none select-none">
+                {hoveredAllocIndex !== null ? (
+                  <div className="text-center animate-fadeIn">
+                    <span className="text-[12px] font-bold font-mono text-white leading-none">
+                      {allocationData[hoveredAllocIndex].value}
+                    </span>
+                    <p className="text-[7px] font-mono text-brand-text-secondary leading-tight mt-0.5 max-w-[55px] truncate">
+                      {allocationData[hoveredAllocIndex].label.split(" ")[0]}
+                    </p>
+                  </div>
+                ) : (
+                  <div className="text-center">
+                    <Cpu className="w-4 h-4 text-brand-text-secondary/30 mx-auto" />
+                    <span className="text-[6px] font-mono text-brand-text-secondary/30 uppercase tracking-widest mt-0.5 block">Alloc</span>
+                  </div>
+                )}
               </div>
             </div>
 
             {/* List labels */}
             <div className="flex-1 space-y-2">
-              {[
-                { label: "GPU Core Alloc", value: "75%", color: "bg-brand-primary" },
-                { label: "RAM Cluster", value: "60%", color: "bg-brand-success" },
-                { label: "IO Latency", value: "45%", color: "bg-brand-danger" },
-              ].map((c, idx) => (
-                <div key={idx} className="flex items-center justify-between gap-1 font-mono text-[9px]">
-                  <div className="flex items-center gap-1.5">
-                    <span className={`w-2 h-2 rounded-full ${c.color}`} />
-                    <span className="text-brand-text-secondary leading-none">{c.label}</span>
+              {allocationData.map((c, idx) => {
+                const isHovered = hoveredAllocIndex === idx;
+                return (
+                  <div
+                    key={idx}
+                    className={`flex items-center justify-between gap-1 font-mono text-[9px] cursor-pointer p-1 rounded-md transition-all ${
+                      isHovered ? "bg-white/5" : ""
+                    }`}
+                    onMouseEnter={() => setHoveredAllocIndex(idx)}
+                    onMouseLeave={() => setHoveredAllocIndex(null)}
+                  >
+                    <div className="flex items-center gap-1.5">
+                      <span className={`w-2 h-2 rounded-full ${c.border}`} />
+                      <span className="text-brand-text-secondary leading-none">{c.label}</span>
+                    </div>
+                    <strong className="text-white">{c.value}</strong>
                   </div>
-                  <strong className="text-white">{c.value}</strong>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 
@@ -762,7 +807,7 @@ export default function AnalyticsPage() {
               
               {/* Category Tabs Toggles */}
               <div className="flex items-center gap-1 bg-white/5 border border-white/5 p-1 rounded-xl">
-                {["All", "Architect", "Developer", "Finance", "QA"].map((tab) => (
+                {["All", "Core", "Developer", "Finance"].map((tab) => (
                   <button
                     key={tab}
                     onClick={() => setActiveTab(tab)}
