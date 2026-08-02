@@ -1,12 +1,16 @@
 "use client";
 
 import React, { useState, useRef } from "react";
-import { BarChart3, TrendingUp, Zap, Clock, Activity, Calendar, ArrowUpRight, Cpu, HardDrive, Layers, Server } from "lucide-react";
+import { BarChart3, TrendingUp, Zap, Clock, Activity, Calendar, ArrowUpRight, Cpu, HardDrive, Layers, Server, Shield, CheckCircle, HelpCircle } from "lucide-react";
 
 export default function AnalyticsPage() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [activeLineIndex, setActiveLineIndex] = useState<number | null>(null);
+  const [activeTab, setActiveTab] = useState<string>("All");
+  const [activeSettlementIndex, setActiveSettlementIndex] = useState<number | null>(null);
+  
   const svgRef = useRef<SVGSVGElement>(null);
+  const settlementSvgRef = useRef<SVGSVGElement>(null);
 
   const weeklyData = [
     { day: "Mon", tokens: 3200, agents: 12 },
@@ -85,6 +89,39 @@ export default function AnalyticsPage() {
 
   const handleSvgMouseLeave = () => {
     setActiveLineIndex(null);
+  };
+
+  // --- Left Section: Agent Workspaces ---
+  const agentsData = [
+    { name: "Sovereign Arch", role: "Lead Architect Agent", progress: 94.5, priority: "Very High", cost: "$18.4K", category: "Architect" },
+    { name: "Nexus Builder", role: "Lead Fullstack Agent", progress: 78.2, priority: "High", cost: "$32.1K", category: "Developer" },
+    { name: "Apex Strategist", role: "Lead Financial Agent", progress: 45.0, priority: "Medium", cost: "$8.5K", category: "Finance" },
+    { name: "Synapse QA", role: "Lead Testing Agent", progress: 100.0, priority: "Low", cost: "$3.2K", category: "QA" },
+  ];
+
+  const filteredAgents = activeTab === "All" 
+    ? agentsData 
+    : agentsData.filter(a => a.category === activeTab);
+
+  // --- Right Section: Settlement stepped data ---
+  const settlementWeeks = ["1W", "3W", "5W", "7W", "9W", "11W", "13W", "15W"];
+  const settlementValues = [60, 60, 80, 50, 45, 52, 90, 95];
+
+  const handleSettlementMouseMove = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
+    if (!settlementSvgRef.current) return;
+    const rect = settlementSvgRef.current.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const padding = 20;
+    const contentWidth = rect.width - padding * 2;
+    const relativeX = mouseX - padding;
+    const index = Math.round((relativeX / contentWidth) * (settlementWeeks.length - 1));
+    if (index >= 0 && index < settlementWeeks.length) {
+      setActiveSettlementIndex(index);
+    }
+  };
+
+  const handleSettlementMouseLeave = () => {
+    setActiveSettlementIndex(null);
   };
 
   return (
@@ -574,6 +611,206 @@ export default function AnalyticsPage() {
           <p className="text-[9px] text-brand-text-secondary leading-normal font-light">
             Displays memory and model inference pipeline load balances.
           </p>
+        </div>
+
+      </div>
+
+      {/* --- Double Split Section: Left Agent Grid & Right Token Settlement Timeline --- */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        {/* Left Card: Active Agent Workspaces Table */}
+        <div className="glass-card rounded-2xl p-6 lg:col-span-8 relative overflow-hidden flex flex-col justify-between">
+          <div className="absolute inset-0 bg-gradient-to-b from-white/[0.01] to-transparent pointer-events-none" />
+          
+          <div>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+              <div>
+                <h3 className="text-sm font-semibold text-white">Active Agent Workspaces</h3>
+                <p className="text-[10px] text-brand-text-secondary mt-0.5">Assigned running tasks, budget values, and load status</p>
+              </div>
+              
+              {/* Category Tabs Toggles */}
+              <div className="flex items-center gap-1 bg-white/5 border border-white/5 p-1 rounded-xl">
+                {["All", "Architect", "Developer", "Finance", "QA"].map((tab) => (
+                  <button
+                    key={tab}
+                    onClick={() => setActiveTab(tab)}
+                    className={`text-[9px] font-mono px-3 py-1.5 rounded-lg transition-all ${
+                      activeTab === tab
+                        ? "bg-brand-primary text-white font-semibold shadow-md shadow-brand-primary/20"
+                        : "text-brand-text-secondary hover:text-white"
+                    }`}
+                  >
+                    {tab}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* List Table */}
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="border-b border-white/5 text-[9px] font-mono text-brand-text-secondary uppercase tracking-wider">
+                    <th className="pb-3 font-normal">Assigned Agent</th>
+                    <th className="pb-3 font-normal">Progress</th>
+                    <th className="pb-3 font-normal">Priority</th>
+                    <th className="pb-3 font-normal">Budget Burn</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-white/5 text-xs">
+                  {filteredAgents.map((agent, idx) => (
+                    <tr key={idx} className="group hover:bg-white/[0.02] transition-all">
+                      <td className="py-4 pr-3 flex items-center gap-3">
+                        <div className="w-9 h-9 rounded-xl bg-brand-card border border-white/10 flex items-center justify-center font-bold text-brand-primary group-hover:scale-105 transition-all select-none text-[13px]">
+                          {agent.name.charAt(0)}
+                        </div>
+                        <div className="flex flex-col">
+                          <span className="font-semibold text-white leading-tight">{agent.name}</span>
+                          <span className="text-[10px] text-brand-text-secondary mt-0.5">{agent.role}</span>
+                        </div>
+                      </td>
+                      <td className="py-4 pr-3">
+                        <div className="flex items-center gap-2">
+                          <span className="font-mono text-[10px] font-bold text-white">{agent.progress}%</span>
+                          <div className="w-20 h-1.5 bg-white/5 rounded-full overflow-hidden">
+                            <div 
+                              className="h-full bg-gradient-to-r from-brand-secondary to-brand-primary rounded-full transition-all duration-1000"
+                              style={{ width: `${agent.progress}%` }}
+                            />
+                          </div>
+                        </div>
+                      </td>
+                      <td className="py-4 pr-3">
+                        <span className={`text-[9px] font-mono px-2 py-0.5 rounded-md font-semibold select-none ${
+                          agent.priority === "Very High"
+                            ? "bg-brand-danger/10 text-brand-danger border border-brand-danger/20"
+                            : agent.priority === "High"
+                            ? "bg-brand-primary/10 text-brand-highlight border border-brand-primary/20"
+                            : agent.priority === "Medium"
+                            ? "bg-brand-warning/10 text-brand-warning border border-brand-warning/20"
+                            : "bg-brand-success/10 text-brand-success border border-brand-success/20"
+                        }`}>
+                          {agent.priority}
+                        </span>
+                      </td>
+                      <td className="py-4 font-mono font-bold text-white">{agent.cost}</td>
+                    </tr>
+                  ))}
+                  {filteredAgents.length === 0 && (
+                    <tr>
+                      <td colSpan={4} className="py-8 text-center text-[10px] font-mono text-brand-text-secondary">
+                        No active agents in this workspace category.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Card: Swarm Token Settlement Timeline */}
+        <div className="glass-card rounded-2xl p-6 lg:col-span-4 relative overflow-hidden flex flex-col justify-between group hover:border-brand-primary/20 transition-all duration-300">
+          <div className="absolute inset-0 bg-gradient-to-br from-white/[0.01] to-transparent pointer-events-none" />
+
+          <div>
+            <div className="flex items-center justify-between mb-4">
+              <span className="text-[10px] font-mono text-brand-text-secondary uppercase tracking-widest">Total Settlements</span>
+              <div className="w-7 h-7 rounded-lg bg-brand-primary/10 flex items-center justify-center">
+                <Shield className="w-4 h-4 text-brand-primary" />
+              </div>
+            </div>
+            <div className="text-2xl font-bold font-display text-white">$122,580</div>
+            <p className="text-[9px] text-brand-text-secondary mt-1">Overall settled budget values across cycles</p>
+          </div>
+
+          {/* Settlement stepped SVG line */}
+          <div className="relative h-32 my-6 flex items-end">
+            <svg
+              ref={settlementSvgRef}
+              width="100%"
+              height="100%"
+              viewBox="0 0 200 100"
+              preserveAspectRatio="none"
+              className="overflow-visible cursor-pointer"
+              onMouseMove={handleSettlementMouseMove}
+              onMouseLeave={handleSettlementMouseLeave}
+            >
+              {/* Stepped line path */}
+              <path
+                d="M 10 70 L 35 70 L 35 45 L 60 45 L 60 80 L 85 80 L 85 55 L 110 55 L 110 70 L 135 70 L 135 30 L 160 30 L 160 85 L 185 85 L 185 20 L 195 20"
+                fill="none"
+                stroke="var(--color-brand-secondary)"
+                strokeWidth="2"
+                className="transition-all duration-300"
+              />
+              
+              {/* Grid Lines */}
+              <line x1="10" y1="90" x2="195" y2="90" stroke="rgba(255, 255, 255, 0.03)" />
+              
+              {/* Interactive snaps */}
+              {activeSettlementIndex !== null && (
+                <g>
+                  {/* Vertical snaps guideline */}
+                  <line
+                    x1={10 + (activeSettlementIndex * (185)) / (settlementWeeks.length - 1)}
+                    y1="10"
+                    x2={10 + (activeSettlementIndex * (185)) / (settlementWeeks.length - 1)}
+                    y2="90"
+                    stroke="rgba(157, 108, 255, 0.2)"
+                    strokeWidth="1"
+                    strokeDasharray="2 2"
+                  />
+                  {/* Active dot */}
+                  <circle
+                    cx={10 + (activeSettlementIndex * (185)) / (settlementWeeks.length - 1)}
+                    cy={100 - settlementValues[activeSettlementIndex]}
+                    r="4"
+                    fill="var(--color-brand-primary)"
+                    stroke="#09070F"
+                    strokeWidth="1"
+                  />
+                </g>
+              )}
+            </svg>
+
+            {/* Stepped hover card */}
+            {activeSettlementIndex !== null && (
+              <div 
+                className="absolute z-20 bg-brand-surface border border-white/10 rounded-xl px-2 py-1 shadow-xl text-center pointer-events-none transition-all duration-100 font-mono text-[9px]"
+                style={{
+                  left: `${(activeSettlementIndex * 90) / (settlementWeeks.length - 1) + 5}%`,
+                  bottom: "65%",
+                }}
+              >
+                <span className="text-brand-text-secondary">settlements: </span>
+                <strong className="text-brand-primary">{settlementValues[activeSettlementIndex]}</strong>
+              </div>
+            )}
+          </div>
+
+          {/* Timeline labels */}
+          <div className="flex justify-between items-center px-1 font-mono text-[8px] text-brand-text-secondary/60">
+            {settlementWeeks.map((week, idx) => (
+              <span key={idx} className={activeSettlementIndex === idx ? "text-white font-bold" : ""}>
+                {week}
+              </span>
+            ))}
+          </div>
+
+          {/* Settlement foot metrics */}
+          <div className="grid grid-cols-2 gap-4 pt-4 border-t border-white/5 mt-4">
+            <div>
+              <span className="text-[8px] font-mono text-brand-text-secondary uppercase tracking-widest">Total Balance</span>
+              <div className="text-sm font-bold text-white font-mono mt-0.5">$122,580</div>
+            </div>
+            <div>
+              <span className="text-[8px] font-mono text-brand-text-secondary uppercase tracking-widest">Withdrawals</span>
+              <div className="text-sm font-bold text-white font-mono mt-0.5">$31,640</div>
+            </div>
+          </div>
+
         </div>
 
       </div>
