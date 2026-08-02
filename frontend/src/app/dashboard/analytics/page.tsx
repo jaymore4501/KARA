@@ -124,7 +124,7 @@ export default function AnalyticsPage() {
 
   const getSettlementCoords = (val: number, idx: number) => {
     const x = 10 + idx * (185 / (settlementWeeks.length - 1));
-    const y = 100 - 15 - (val * 70) / 100;
+    const y = 80 - 10 - (val * 55) / 100;
     return { x, y };
   };
 
@@ -146,7 +146,7 @@ export default function AnalyticsPage() {
   const getSettlementAreaPath = (data: number[]) => {
     const linePath = getSettlementBezierPath(data);
     const lastX = 10 + (data.length - 1) * (185 / (settlementWeeks.length - 1));
-    return `${linePath} L ${lastX} 90 L 10 90 Z`;
+    return `${linePath} L ${lastX} 80 L 10 80 Z`;
   };
 
   const handleSettlementMouseMove = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
@@ -913,133 +913,180 @@ export default function AnalyticsPage() {
           </div>
         </div>
 
-        {/* Right Card: Swarm Token Settlement Timeline */}
-        <div className="glass-card rounded-2xl p-6 lg:col-span-4 relative overflow-hidden flex flex-col justify-between group hover:border-brand-primary/20 transition-all duration-300">
-          <div className="absolute inset-0 bg-gradient-to-br from-white/[0.01] to-transparent pointer-events-none" />
+        {/* Right Column: Stacked Cards */}
+        <div className="lg:col-span-4 flex flex-col gap-6">
+          
+          {/* Card 4.1: Swarm Token Settlement Timeline (Shorter) */}
+          <div className="glass-card rounded-2xl p-5 relative overflow-hidden flex flex-col justify-between group hover:border-brand-primary/20 transition-all duration-300">
+            <div className="absolute inset-0 bg-gradient-to-br from-white/[0.01] to-transparent pointer-events-none" />
 
-          <div>
-            <div className="flex items-center justify-between mb-4">
-              <span className="text-[10px] font-mono text-brand-text-secondary uppercase tracking-widest">Total Settlements</span>
-              <div className="w-7 h-7 rounded-lg bg-brand-primary/10 flex items-center justify-center">
-                <Shield className="w-4 h-4 text-brand-primary" />
-              </div>
-            </div>
-            <div className="text-2xl font-bold font-display text-white">$122,580</div>
-            <p className="text-[9px] text-brand-text-secondary mt-1">Overall settled budget values across cycles</p>
-          </div>
-
-          {/* Settlement area SVG */}
-          <div className="relative h-32 my-6 flex items-end">
-            <svg
-              ref={settlementSvgRef}
-              width="100%"
-              height="100%"
-              viewBox="0 0 200 100"
-              preserveAspectRatio="none"
-              className="overflow-visible cursor-crosshair"
-              onMouseMove={handleSettlementMouseMove}
-              onMouseLeave={handleSettlementMouseLeave}
-            >
-              <defs>
-                <linearGradient id="settlement-area-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="var(--color-brand-primary)" stopOpacity="0.25" />
-                  <stop offset="100%" stopColor="var(--color-brand-primary)" stopOpacity="0.0" />
-                </linearGradient>
-              </defs>
-
-              {/* Grid Lines */}
-              <line x1="10" y1="90" x2="195" y2="90" stroke="rgba(255, 255, 255, 0.05)" />
-              <line x1="10" y1="50" x2="195" y2="50" stroke="rgba(255, 255, 255, 0.02)" strokeDasharray="3 3" />
-              <line x1="10" y1="15" x2="195" y2="15" stroke="rgba(255, 255, 255, 0.02)" strokeDasharray="3 3" />
-
-              {/* Area path */}
-              <path
-                d={getSettlementAreaPath(settlementValues)}
-                fill="url(#settlement-area-gradient)"
-                className="transition-all duration-300"
-              />
-
-              {/* Smooth spline curve path */}
-              <path
-                d={getSettlementBezierPath(settlementValues)}
-                fill="none"
-                stroke="var(--color-brand-primary)"
-                strokeWidth="2"
-                className="transition-all duration-300 drop-shadow-[0_2px_8px_rgba(157,108,255,0.4)]"
-              />
-
-              {/* Interactive snaps */}
-              {activeSettlementIndex !== null && (
-                <g>
-                  {/* Vertical snaps guideline */}
-                  <line
-                    x1={getSettlementCoords(0, activeSettlementIndex).x}
-                    y1="10"
-                    x2={getSettlementCoords(0, activeSettlementIndex).x}
-                    y2="90"
-                    stroke="rgba(157, 108, 255, 0.2)"
-                    strokeWidth="1"
-                    strokeDasharray="2 2"
-                  />
-                  {/* Active dot */}
-                  <circle
-                    cx={getSettlementCoords(settlementValues[activeSettlementIndex], activeSettlementIndex).x}
-                    cy={getSettlementCoords(settlementValues[activeSettlementIndex], activeSettlementIndex).y}
-                    r="4"
-                    fill="var(--color-brand-primary)"
-                    stroke="#09070F"
-                    strokeWidth="1.5"
-                  />
-                  {/* Glowing outer dot ring */}
-                  <circle
-                    cx={getSettlementCoords(settlementValues[activeSettlementIndex], activeSettlementIndex).x}
-                    cy={getSettlementCoords(settlementValues[activeSettlementIndex], activeSettlementIndex).y}
-                    r="7"
-                    fill="var(--color-brand-primary)"
-                    opacity="0.3"
-                  />
-                </g>
-              )}
-            </svg>
-
-            {/* Stepped hover card */}
-            {activeSettlementIndex !== null && (
-              <div 
-                className="absolute z-20 bg-brand-surface/95 backdrop-blur-md border border-white/10 rounded-xl px-2.5 py-1.5 shadow-2xl pointer-events-none transition-all duration-100 ease-out font-mono text-[9px]"
-                style={{
-                  left: `${((getSettlementCoords(0, activeSettlementIndex).x) / 200) * 100}%`,
-                  bottom: "65%",
-                  width: "115px",
-                  transform: activeSettlementIndex >= 5 ? "translateX(-115%)" : "translateX(15%)",
-                }}
-              >
-                <div className="flex justify-between items-center gap-1.5">
-                  <span className="text-brand-text-secondary">settlements:</span>
-                  <strong className="text-brand-primary">{settlementValues[activeSettlementIndex]}k</strong>
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-[9px] font-mono text-brand-text-secondary uppercase tracking-widest">Total Settlements</span>
+                <div className="w-6 h-6 rounded-lg bg-brand-primary/10 flex items-center justify-center">
+                  <Shield className="w-3.5 h-3.5 text-brand-primary" />
                 </div>
               </div>
-            )}
+              <div className="text-xl font-bold font-display text-white">$122,580</div>
+              <p className="text-[8px] text-brand-text-secondary mt-0.5">Overall settled budget values across cycles</p>
+            </div>
+
+            {/* Settlement area SVG */}
+            <div className="relative h-20 my-4 flex items-end">
+              <svg
+                ref={settlementSvgRef}
+                width="100%"
+                height="100%"
+                viewBox="0 0 200 80"
+                preserveAspectRatio="none"
+                className="overflow-visible cursor-crosshair"
+                onMouseMove={handleSettlementMouseMove}
+                onMouseLeave={handleSettlementMouseLeave}
+              >
+                <defs>
+                  <linearGradient id="settlement-area-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stopColor="var(--color-brand-primary)" stopOpacity="0.2" />
+                    <stop offset="100%" stopColor="var(--color-brand-primary)" stopOpacity="0.0" />
+                  </linearGradient>
+                </defs>
+
+                {/* Grid Lines */}
+                <line x1="10" y1="80" x2="195" y2="80" stroke="rgba(255, 255, 255, 0.05)" />
+                <line x1="10" y1="45" x2="195" y2="45" stroke="rgba(255, 255, 255, 0.02)" strokeDasharray="3 3" />
+                <line x1="10" y1="15" x2="195" y2="15" stroke="rgba(255, 255, 255, 0.02)" strokeDasharray="3 3" />
+
+                {/* Area path */}
+                <path
+                  d={getSettlementAreaPath(settlementValues)}
+                  fill="url(#settlement-area-gradient)"
+                  className="transition-all duration-300"
+                />
+
+                {/* Smooth spline curve path */}
+                <path
+                  d={getSettlementBezierPath(settlementValues)}
+                  fill="none"
+                  stroke="var(--color-brand-primary)"
+                  strokeWidth="1.5"
+                  className="transition-all duration-300 drop-shadow-[0_2px_8px_rgba(157,108,255,0.4)]"
+                />
+
+                {/* Interactive snaps */}
+                {activeSettlementIndex !== null && (
+                  <g>
+                    {/* Vertical snaps guideline */}
+                    <line
+                      x1={getSettlementCoords(0, activeSettlementIndex).x}
+                      y1="5"
+                      x2={getSettlementCoords(0, activeSettlementIndex).x}
+                      y2="80"
+                      stroke="rgba(157, 108, 255, 0.2)"
+                      strokeWidth="1"
+                      strokeDasharray="2 2"
+                    />
+                    {/* Active dot */}
+                    <circle
+                      cx={getSettlementCoords(settlementValues[activeSettlementIndex], activeSettlementIndex).x}
+                      cy={getSettlementCoords(settlementValues[activeSettlementIndex], activeSettlementIndex).y}
+                      r="3.5"
+                      fill="var(--color-brand-primary)"
+                      stroke="#09070F"
+                      strokeWidth="1"
+                    />
+                    {/* Glowing outer dot ring */}
+                    <circle
+                      cx={getSettlementCoords(settlementValues[activeSettlementIndex], activeSettlementIndex).x}
+                      cy={getSettlementCoords(settlementValues[activeSettlementIndex], activeSettlementIndex).y}
+                      r="6"
+                      fill="var(--color-brand-primary)"
+                      opacity="0.3"
+                    />
+                  </g>
+                )}
+              </svg>
+
+              {/* Stepped hover card */}
+              {activeSettlementIndex !== null && (
+                <div 
+                  className="absolute z-20 bg-brand-surface/95 backdrop-blur-md border border-white/10 rounded-xl px-2.5 py-1.5 shadow-2xl pointer-events-none transition-all duration-100 ease-out font-mono text-[9px]"
+                  style={{
+                    left: `${((getSettlementCoords(0, activeSettlementIndex).x) / 200) * 100}%`,
+                    bottom: "75%",
+                    width: "115px",
+                    transform: activeSettlementIndex >= 5 ? "translateX(-115%)" : "translateX(15%)",
+                  }}
+                >
+                  <div className="flex justify-between items-center gap-1.5">
+                    <span className="text-brand-text-secondary">settlements:</span>
+                    <strong className="text-brand-primary">{settlementValues[activeSettlementIndex]}k</strong>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Timeline labels */}
+            <div className="flex justify-between items-center px-1 font-mono text-[8px] text-brand-text-secondary/60">
+              {settlementWeeks.map((week, idx) => (
+                <span key={idx} className={activeSettlementIndex === idx ? "text-white font-bold" : ""}>
+                  {week}
+                </span>
+              ))}
+            </div>
+
+            {/* Settlement foot metrics */}
+            <div className="grid grid-cols-2 gap-4 pt-3 border-t border-white/5 mt-3">
+              <div>
+                <span className="text-[7px] font-mono text-brand-text-secondary uppercase tracking-widest">Total Balance</span>
+                <div className="text-xs font-bold text-white font-mono mt-0.5">$122,580</div>
+              </div>
+              <div>
+                <span className="text-[7px] font-mono text-brand-text-secondary uppercase tracking-widest">Withdrawals</span>
+                <div className="text-xs font-bold text-white font-mono mt-0.5">$31,640</div>
+              </div>
+            </div>
           </div>
 
-          {/* Timeline labels */}
-          <div className="flex justify-between items-center px-1 font-mono text-[8px] text-brand-text-secondary/60">
-            {settlementWeeks.map((week, idx) => (
-              <span key={idx} className={activeSettlementIndex === idx ? "text-white font-bold" : ""}>
-                {week}
-              </span>
-            ))}
-          </div>
+          {/* Card 4.2: Inference Latency / Model Performance */}
+          <div className="glass-card rounded-2xl p-5 relative overflow-hidden flex flex-col justify-between group hover:border-brand-primary/20 transition-all duration-300">
+            <div className="absolute inset-0 bg-gradient-to-br from-white/[0.01] to-transparent pointer-events-none" />
 
-          {/* Settlement foot metrics */}
-          <div className="grid grid-cols-2 gap-4 pt-4 border-t border-white/5 mt-4">
             <div>
-              <span className="text-[8px] font-mono text-brand-text-secondary uppercase tracking-widest">Total Balance</span>
-              <div className="text-sm font-bold text-white font-mono mt-0.5">$122,580</div>
+              <div className="flex items-center justify-between mb-3">
+                <div>
+                  <h3 className="text-xs font-semibold text-white">Model Inference Latency</h3>
+                  <p className="text-[8px] text-brand-text-secondary mt-0.5">Average swarm response delay times</p>
+                </div>
+                <div className="p-1 rounded-lg bg-brand-success/10 text-brand-success text-[8px] font-mono font-bold">
+                  Live Telemetry
+                </div>
+              </div>
+
+              {/* Progress Rows */}
+              <div className="space-y-3 mt-4">
+                {[
+                  { name: "Gemini 2.5 Flash", latency: "142ms", percentage: 90, color: "bg-brand-success" },
+                  { name: "Gemini 2.5 Pro", latency: "410ms", percentage: 35, color: "bg-brand-primary" },
+                  { name: "Custom CodeGen v2", latency: "280ms", percentage: 65, color: "bg-brand-highlight" },
+                ].map((model, idx) => (
+                  <div key={idx} className="space-y-1.5 group/row">
+                    <div className="flex items-center justify-between text-[9px] font-mono">
+                      <span className="text-brand-text-secondary group-hover/row:text-white transition-colors">{model.name}</span>
+                      <strong className="text-white">{model.latency}</strong>
+                    </div>
+                    <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
+                      <div 
+                        className={`h-full ${model.color} rounded-full transition-all duration-1000`} 
+                        style={{ width: `${model.percentage}%` }}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div>
-              <span className="text-[8px] font-mono text-brand-text-secondary uppercase tracking-widest">Withdrawals</span>
-              <div className="text-sm font-bold text-white font-mono mt-0.5">$31,640</div>
-            </div>
+
+            <p className="text-[8px] text-brand-text-secondary/60 leading-normal font-light mt-4">
+              Real-time monitoring of model inference response latency across the swarm pipelines.
+            </p>
           </div>
 
         </div>
