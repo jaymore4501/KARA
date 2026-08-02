@@ -733,11 +733,11 @@ export default function AnalyticsPage() {
               </svg>
               {/* Concentric scale axis labels */}
               {hoveredAllocIndex === null && (
-                <div className="absolute text-[8px] font-mono text-brand-text-secondary/40 font-bold select-none pointer-events-none">
-                  <span className="absolute top-[8px] left-[46%]">0%</span>
-                  <span className="absolute right-[4px] top-[45%]">25%</span>
-                  <span className="absolute bottom-[4px] left-[43%]">50%</span>
-                  <span className="absolute left-[2px] top-[45%]">75%</span>
+                <div className="absolute inset-0 text-[8px] font-mono text-brand-text-secondary/20 font-bold select-none pointer-events-none">
+                  <span className="absolute top-[2px] left-1/2 transform -translate-x-1/2">0%</span>
+                  <span className="absolute right-[2px] top-1/2 transform -translate-y-1/2">25%</span>
+                  <span className="absolute bottom-[2px] left-1/2 transform -translate-x-1/2">50%</span>
+                  <span className="absolute left-[2px] top-1/2 transform -translate-y-1/2">75%</span>
                 </div>
               )}
               {/* Centered Hover Info Overlay */}
