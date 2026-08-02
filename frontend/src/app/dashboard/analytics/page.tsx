@@ -8,9 +8,11 @@ export default function AnalyticsPage() {
   const [activeLineIndex, setActiveLineIndex] = useState<number | null>(null);
   const [activeTab, setActiveTab] = useState<string>("All");
   const [activeSettlementIndex, setActiveSettlementIndex] = useState<number | null>(null);
+  const [hoveredIngestIndex, setHoveredIngestIndex] = useState<number | null>(null);
   
   const svgRef = useRef<SVGSVGElement>(null);
   const settlementSvgRef = useRef<SVGSVGElement>(null);
+  const ingestSvgRef = useRef<SVGSVGElement>(null);
 
   const weeklyData = [
     { day: "Mon", tokens: 3200, agents: 12 },
@@ -122,6 +124,47 @@ export default function AnalyticsPage() {
 
   const handleSettlementMouseLeave = () => {
     setActiveSettlementIndex(null);
+  };
+
+  // --- Ingestion Sparkline Data & Helpers ---
+  const ingestDays = ["April 07", "April 08", "April 09", "April 10", "April 11", "April 12", "April 13", "April 14"];
+  const currentIngestData = [14, 45, 32, 50, 40, 60, 26, 65];
+  const previousIngestData = [26, 30, 25, 40, 30, 42, 14, 35];
+
+  const getIngestCoords = (val: number, idx: number) => {
+    const x = idx * (200 / (ingestDays.length - 1));
+    const y = 80 - 15 - (val * 50) / 100;
+    return { x, y };
+  };
+
+  const getIngestBezierPath = (data: number[]) => {
+    const points = data.map((val, idx) => getIngestCoords(val, idx));
+    let path = `M ${points[0].x} ${points[0].y}`;
+    for (let i = 0; i < points.length - 1; i++) {
+      const p0 = points[i];
+      const p1 = points[i + 1];
+      const cpX1 = p0.x + (p1.x - p0.x) / 2;
+      const cpY1 = p0.y;
+      const cpX2 = p0.x + (p1.x - p0.x) / 2;
+      const cpY2 = p1.y;
+      path += ` C ${cpX1} ${cpY1}, ${cpX2} ${cpY2}, ${p1.x} ${p1.y}`;
+    }
+    return path;
+  };
+
+  const handleIngestMouseMove = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
+    if (!ingestSvgRef.current) return;
+    const rect = ingestSvgRef.current.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const contentWidth = rect.width;
+    const index = Math.round((mouseX / contentWidth) * (ingestDays.length - 1));
+    if (index >= 0 && index < ingestDays.length) {
+      setHoveredIngestIndex(index);
+    }
+  };
+
+  const handleIngestMouseLeave = () => {
+    setHoveredIngestIndex(null);
   };
 
   return (
@@ -489,23 +532,111 @@ export default function AnalyticsPage() {
 
           {/* Mini Sparkline Chart */}
           <div className="relative h-24 my-4 flex items-end">
-            <svg width="100%" height="100%" viewBox="0 0 200 80" preserveAspectRatio="none" className="overflow-visible">
+            <svg
+              ref={ingestSvgRef}
+              width="100%"
+              height="100%"
+              viewBox="0 0 200 80"
+              preserveAspectRatio="none"
+              className="overflow-visible cursor-crosshair"
+              onMouseMove={handleIngestMouseMove}
+              onMouseLeave={handleIngestMouseLeave}
+            >
               {/* Previous week line (grey) */}
               <path
-                d="M 0 65 Q 30 50 60 55 T 120 40 T 180 50 T 200 45"
+                d={getIngestBezierPath(previousIngestData)}
                 fill="none"
                 stroke="rgba(255, 255, 255, 0.15)"
                 strokeWidth="1.5"
+                style={{
+                  opacity: hoveredIngestIndex !== null ? 0.4 : 1,
+                }}
               />
               {/* Current week line (gradient purple) */}
               <path
-                d="M 0 70 Q 30 35 60 48 T 120 30 T 180 20 T 200 15"
+                d={getIngestBezierPath(currentIngestData)}
                 fill="none"
                 stroke="var(--color-brand-primary)"
                 strokeWidth="2"
                 className="drop-shadow-[0_2px_8px_rgba(157,108,255,0.4)]"
+                style={{
+                  opacity: hoveredIngestIndex !== null ? 0.9 : 1,
+                }}
               />
+
+              {/* Vertical Guide Line */}
+              {hoveredIngestIndex !== null && (
+                <line
+                  x1={getIngestCoords(0, hoveredIngestIndex).x}
+                  y1="5"
+                  x2={getIngestCoords(0, hoveredIngestIndex).x}
+                  y2="75"
+                  stroke="rgba(157, 108, 255, 0.25)"
+                  strokeWidth="1"
+                  strokeDasharray="2 2"
+                />
+              )}
+
+              {/* Intersection Dots */}
+              {hoveredIngestIndex !== null && (
+                <g>
+                  {/* Previous week intersection */}
+                  <circle
+                    cx={getIngestCoords(previousIngestData[hoveredIngestIndex], hoveredIngestIndex).x}
+                    cy={getIngestCoords(previousIngestData[hoveredIngestIndex], hoveredIngestIndex).y}
+                    r="4"
+                    fill="rgba(255, 255, 255, 0.3)"
+                    stroke="#09070F"
+                    strokeWidth="1"
+                  />
+                  {/* Current week intersection */}
+                  <circle
+                    cx={getIngestCoords(currentIngestData[hoveredIngestIndex], hoveredIngestIndex).x}
+                    cy={getIngestCoords(currentIngestData[hoveredIngestIndex], hoveredIngestIndex).y}
+                    r="5"
+                    fill="var(--color-brand-primary)"
+                    stroke="#09070F"
+                    strokeWidth="1.5"
+                  />
+                  {/* Glow circle */}
+                  <circle
+                    cx={getIngestCoords(currentIngestData[hoveredIngestIndex], hoveredIngestIndex).x}
+                    cy={getIngestCoords(currentIngestData[hoveredIngestIndex], hoveredIngestIndex).y}
+                    r="8"
+                    fill="var(--color-brand-primary)"
+                    opacity="0.25"
+                  />
+                </g>
+              )}
             </svg>
+
+            {/* Hover Tooltip Card */}
+            {hoveredIngestIndex !== null && (
+              <div
+                className="absolute z-20 bg-brand-surface/95 backdrop-blur-md border border-white/10 rounded-xl p-2.5 shadow-2xl pointer-events-none transition-all duration-100 ease-out font-mono text-[9px]"
+                style={{
+                  left: `${(hoveredIngestIndex * 100) / (ingestDays.length - 1)}%`,
+                  bottom: "60%",
+                  width: "120px",
+                  transform: hoveredIngestIndex >= 5 ? "translateX(-115%)" : "translateX(15%)",
+                }}
+              >
+                <div className="flex items-center gap-1.5 justify-between">
+                  <div className="flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand-primary" />
+                    <span className="text-brand-text-secondary">{ingestDays[hoveredIngestIndex]}</span>
+                  </div>
+                  <strong className="text-white">{currentIngestData[hoveredIngestIndex]}k</strong>
+                </div>
+                <div className="flex items-center gap-1.5 justify-between mt-1">
+                  <div className="flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-white/20" />
+                    <span className="text-brand-text-secondary">Last Week</span>
+                  </div>
+                  <strong className="text-white">{previousIngestData[hoveredIngestIndex]}k</strong>
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="space-y-1.5">
