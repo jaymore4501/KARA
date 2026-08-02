@@ -333,11 +333,12 @@ export default function AnalyticsPage() {
             {/* Hover Tooltip Card */}
             {activeLineIndex !== null && (
               <div
-                className="absolute z-20 bg-brand-surface border border-white/10 rounded-2xl p-3.5 shadow-2xl animate-fadeIn pointer-events-none"
+                className="absolute z-20 bg-brand-surface/95 backdrop-blur-md border border-white/10 rounded-2xl p-3.5 shadow-2xl pointer-events-none transition-all duration-150 ease-out"
                 style={{
-                  left: `${(activeLineIndex * (100 - 8)) / (months.length - 1) + 6}%`,
-                  bottom: "35%",
-                  width: "120px",
+                  left: `${((paddingLeft + (activeLineIndex * (chartWidth - paddingLeft - paddingRight)) / (months.length - 1)) / chartWidth) * 100}%`,
+                  top: "15%",
+                  width: "135px",
+                  transform: activeLineIndex >= 5 ? "translateX(-115%)" : "translateX(15%)",
                 }}
               >
                 <div className="text-[10px] font-mono font-bold text-white mb-2 pb-1 border-b border-white/5">
