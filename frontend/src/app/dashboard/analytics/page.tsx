@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef } from "react";
-import { BarChart3, TrendingUp, Zap, Clock, Activity, Calendar, ArrowUpRight } from "lucide-react";
+import { BarChart3, TrendingUp, Zap, Clock, Activity, Calendar, ArrowUpRight, Cpu, HardDrive, Layers, Server } from "lucide-react";
 
 export default function AnalyticsPage() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -55,7 +55,6 @@ export default function AnalyticsPage() {
     return { x, y };
   };
 
-  // Generate smooth SVG Cubic Bezier path
   const getBezierPath = (data: number[], maxVal: number) => {
     const points = data.map((val, idx) => getCoordinates(val, idx, maxVal));
     if (points.length === 0) return "";
@@ -72,7 +71,6 @@ export default function AnalyticsPage() {
     return path;
   };
 
-  // Handle mouse moves over SVG to track vertical hover line
   const handleSvgMouseMove = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
     if (!svgRef.current) return;
     const rect = svgRef.current.getBoundingClientRect();
@@ -132,7 +130,7 @@ export default function AnalyticsPage() {
         ))}
       </div>
 
-      {/* Chart Section Grid */}
+      {/* Main Grid Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         
         {/* Token Usage Bar Chart (Left) */}
@@ -365,6 +363,221 @@ export default function AnalyticsPage() {
         </div>
 
       </div>
+
+      {/* --- Premium Triple Widget Visualisations --- */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        {/* Card 1: Your Performance / Swarm Engine Capacity */}
+        <div className="glass-card rounded-2xl p-6 relative overflow-hidden flex flex-col justify-between group hover:border-brand-primary/20 transition-all duration-300">
+          <div className="absolute inset-0 bg-gradient-to-br from-white/[0.01] to-transparent pointer-events-none" />
+          
+          <div>
+            <h3 className="text-sm font-semibold text-white">Swarm Performance</h3>
+            <p className="text-[10px] text-brand-text-secondary mt-0.5">Last active node state checking</p>
+          </div>
+
+          <div className="flex items-center justify-between gap-4 my-6">
+            {/* Left Items */}
+            <div className="space-y-3.5 flex-1">
+              {[
+                { label: "Tasks Completed", count: "64 runs", desc: "Processing", icon: Layers, color: "text-brand-primary", bg: "bg-brand-primary/10" },
+                { label: "Tasks in Queue", count: "4 runs", desc: "On hold", icon: Server, color: "text-brand-warning", bg: "bg-brand-warning/10" },
+                { label: "Deployments Active", count: "12 runs", desc: "Delivered", icon: Cpu, color: "text-brand-success", bg: "bg-brand-success/10" },
+              ].map((item, idx) => (
+                <div key={idx} className="flex items-center gap-2.5">
+                  <div className={`p-1.5 rounded-lg ${item.bg}`}>
+                    <item.icon className={`w-3.5 h-3.5 ${item.color}`} />
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-[10px] font-bold text-white font-mono leading-none">{item.count}</span>
+                    <span className="text-[8px] text-brand-text-secondary mt-0.5">{item.label}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Right Gauge SVG */}
+            <div className="relative w-28 h-20 flex flex-col items-center justify-center">
+              <svg width="110" height="70" viewBox="0 0 100 60" className="overflow-visible">
+                {/* Background arc */}
+                <path
+                  d="M 10 50 A 40 40 0 0 1 90 50"
+                  fill="none"
+                  stroke="rgba(255, 255, 255, 0.05)"
+                  strokeWidth="8"
+                  strokeLinecap="round"
+                />
+                {/* Foreground arc (gradient color) */}
+                <path
+                  d="M 10 50 A 40 40 0 0 1 90 50"
+                  fill="none"
+                  stroke="url(#gauge-grad)"
+                  strokeWidth="8"
+                  strokeLinecap="round"
+                  strokeDasharray="125"
+                  strokeDashoffset="37" /* Approx 70% value fill */
+                />
+                <defs>
+                  <linearGradient id="gauge-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="var(--color-brand-secondary)" />
+                    <stop offset="100%" stopColor="var(--color-brand-success)" />
+                  </linearGradient>
+                </defs>
+              </svg>
+              <div className="absolute bottom-[-10px] text-center">
+                <span className="text-xl font-bold font-display text-white">275</span>
+                <p className="text-[7px] text-brand-text-secondary leading-tight mt-0.5">Active swarm threads</p>
+              </div>
+            </div>
+          </div>
+          
+          <p className="text-[9px] text-brand-text-secondary leading-normal font-light">
+            Monitor real-time micro-agent allocation capacity across isolated runtime sandbox clusters.
+          </p>
+        </div>
+
+        {/* Card 2: Customers / Token Ingest Sparkline */}
+        <div className="glass-card rounded-2xl p-6 relative overflow-hidden flex flex-col justify-between group hover:border-brand-primary/20 transition-all duration-300">
+          <div className="absolute inset-0 bg-gradient-to-br from-white/[0.01] to-transparent pointer-events-none" />
+
+          <div className="flex items-start justify-between">
+            <div>
+              <h3 className="text-sm font-semibold text-white">Token Ingestion</h3>
+              <p className="text-[10px] text-brand-text-secondary mt-0.5">Rolling average last 7 days</p>
+            </div>
+            <span className="text-[10px] font-mono text-brand-success font-semibold bg-brand-success/10 px-2 py-0.5 rounded-full">
+              +26.5%
+            </span>
+          </div>
+
+          {/* Mini Sparkline Chart */}
+          <div className="relative h-24 my-4 flex items-end">
+            <svg width="100%" height="100%" viewBox="0 0 200 80" preserveAspectRatio="none" className="overflow-visible">
+              {/* Previous week line (grey) */}
+              <path
+                d="M 0 65 Q 30 50 60 55 T 120 40 T 180 50 T 200 45"
+                fill="none"
+                stroke="rgba(255, 255, 255, 0.15)"
+                strokeWidth="1.5"
+              />
+              {/* Current week line (gradient purple) */}
+              <path
+                d="M 0 70 Q 30 35 60 48 T 120 30 T 180 20 T 200 15"
+                fill="none"
+                stroke="var(--color-brand-primary)"
+                strokeWidth="2"
+                className="drop-shadow-[0_2px_8px_rgba(157,108,255,0.4)]"
+              />
+            </svg>
+          </div>
+
+          <div className="space-y-1.5">
+            <div className="flex items-center justify-between text-[9px] font-mono">
+              <div className="flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-brand-primary" />
+                <span className="text-brand-text-secondary">April 07 - April 14</span>
+              </div>
+              <strong className="text-white">6,380 k</strong>
+            </div>
+            <div className="flex items-center justify-between text-[9px] font-mono">
+              <div className="flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-white/20" />
+                <span className="text-brand-text-secondary">Last Week</span>
+              </div>
+              <strong className="text-white">4,298 k</strong>
+            </div>
+          </div>
+        </div>
+
+        {/* Card 3: Sales Overview / Resource Compute Allocations */}
+        <div className="glass-card rounded-2xl p-6 relative overflow-hidden flex flex-col justify-between group hover:border-brand-primary/20 transition-all duration-300">
+          <div className="absolute inset-0 bg-gradient-to-br from-white/[0.01] to-transparent pointer-events-none" />
+
+          <div>
+            <h3 className="text-sm font-semibold text-white">Compute Allocations</h3>
+            <p className="text-[10px] text-brand-text-secondary mt-0.5">Swarm hardware partition metrics</p>
+          </div>
+
+          <div className="flex items-center justify-between gap-4 my-4">
+            {/* SVG Concentric Radial Arcs */}
+            <div className="relative w-28 h-28 flex items-center justify-center">
+              <svg width="100" height="100" viewBox="0 0 100 100" className="transform -rotate-90">
+                {/* Track lines */}
+                <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255, 255, 255, 0.03)" strokeWidth="6" />
+                <circle cx="50" cy="50" r="30" fill="none" stroke="rgba(255, 255, 255, 0.03)" strokeWidth="6" />
+                <circle cx="50" cy="50" r="20" fill="none" stroke="rgba(255, 255, 255, 0.03)" strokeWidth="6" />
+
+                {/* Outer (Purple) - 75% */}
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="40"
+                  fill="none"
+                  stroke="var(--color-brand-primary)"
+                  strokeWidth="6"
+                  strokeLinecap="round"
+                  strokeDasharray="251"
+                  strokeDashoffset="62.7" /* 251 * 0.25 offset = 75% fill */
+                />
+                {/* Middle (Cyan) - 60% */}
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="30"
+                  fill="none"
+                  stroke="var(--color-brand-success)"
+                  strokeWidth="6"
+                  strokeLinecap="round"
+                  strokeDasharray="188.4"
+                  strokeDashoffset="75.3" /* 188.4 * 0.4 offset = 60% fill */
+                />
+                {/* Inner (Pink) - 45% */}
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="20"
+                  fill="none"
+                  stroke="var(--color-brand-danger)"
+                  strokeWidth="6"
+                  strokeLinecap="round"
+                  strokeDasharray="125.6"
+                  strokeDashoffset="69" /* 125.6 * 0.55 offset = 45% fill */
+                />
+              </svg>
+              {/* Concentric scale axis labels */}
+              <div className="absolute text-[8px] font-mono text-brand-text-secondary/40 font-bold select-none pointer-events-none">
+                <span className="absolute top-[8px] left-[46%]">0%</span>
+                <span className="absolute right-[4px] top-[45%]">25%</span>
+                <span className="absolute bottom-[4px] left-[43%]">50%</span>
+                <span className="absolute left-[2px] top-[45%]">75%</span>
+              </div>
+            </div>
+
+            {/* List labels */}
+            <div className="flex-1 space-y-2">
+              {[
+                { label: "GPU Core Alloc", value: "75%", color: "bg-brand-primary" },
+                { label: "RAM Cluster", value: "60%", color: "bg-brand-success" },
+                { label: "IO Latency", value: "45%", color: "bg-brand-danger" },
+              ].map((c, idx) => (
+                <div key={idx} className="flex items-center justify-between gap-1 font-mono text-[9px]">
+                  <div className="flex items-center gap-1.5">
+                    <span className={`w-2 h-2 rounded-full ${c.color}`} />
+                    <span className="text-brand-text-secondary leading-none">{c.label}</span>
+                  </div>
+                  <strong className="text-white">{c.value}</strong>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <p className="text-[9px] text-brand-text-secondary leading-normal font-light">
+            Displays memory and model inference pipeline load balances.
+          </p>
+        </div>
+
+      </div>
+
     </div>
   );
 }
