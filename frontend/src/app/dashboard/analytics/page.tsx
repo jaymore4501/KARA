@@ -110,9 +110,9 @@ export default function AnalyticsPage() {
                   </div>
 
                   {/* Visual Bar */}
-                  <div className="w-full h-36 relative rounded-t-lg bg-white/[0.02] border border-white/5 group-hover:border-brand-primary/20 overflow-hidden transition-all duration-300">
+                  <div className="w-full h-36 relative rounded-t-lg bg-white/[0.02] border border-white/5 group-hover:border-brand-primary/40 overflow-hidden transition-all duration-300 transform group-hover:-translate-y-1.5 group-hover:shadow-[0_0_25px_rgba(157,108,255,0.3)]">
                     <div
-                      className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-brand-secondary to-brand-primary group-hover:from-brand-primary group-hover:to-brand-highlight rounded-t-lg transition-all duration-500 shadow-[0_0_15px_rgba(157,108,255,0.2)]"
+                      className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-brand-secondary to-brand-primary group-hover:from-brand-primary group-hover:to-brand-highlight rounded-t-lg transition-all duration-500"
                       style={{ height: `${heightPct}%` }}
                     />
                   </div>
