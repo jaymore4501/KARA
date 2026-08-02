@@ -36,7 +36,7 @@ export default function Footer() {
         { name: 'Documentation', href: '#' },
         { name: 'Agent Sandbox', href: '#' },
         { name: 'API Contracts', href: '#' },
-        { name: 'Github Ingress', href: 'https://github.com' }
+        { name: 'Github Ingress', href: 'https://github.com/jaymore4501/KARA' }
       ]
     },
     {
@@ -163,7 +163,7 @@ export default function Footer() {
 
         {/* Social Buttons */}
         <div className="flex items-center gap-5">
-          <a href="https://github.com" className="text-brand-text-secondary hover:text-white transition-colors">
+          <a href="https://github.com/jaymore4501/KARA" className="text-brand-text-secondary hover:text-white transition-colors">
             <Github className="w-4 h-4" />
           </a>
           <a href="#" className="text-brand-text-secondary hover:text-white transition-colors">

@@ -4,8 +4,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { Sparkles, Menu, X, ArrowRight } from 'lucide-react';
-import { Github } from './BrandIcons';
+import { Sparkles, Menu, X, ArrowRight, Github } from 'lucide-react';
 
 interface NavbarProps {
   onNavigate: (sectionId: string) => void;
@@ -46,25 +45,26 @@ export default function Navbar({ onNavigate, onLaunchDashboard }: NavbarProps) {
   return (
     <nav
       id="main-navbar"
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 border-b ${isScrolled
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 border-b ${
+        isScrolled
           ? 'bg-brand-bg/80 backdrop-blur-md border-white/5 py-3 shadow-xl'
           : 'bg-transparent border-transparent py-5'
-        }`}
+      }`}
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         {/* Logo */}
-        <div
-          onClick={() => handleLinkClick('hero')}
+        <div 
+          onClick={() => handleLinkClick('hero')} 
           className="flex items-center gap-2 cursor-pointer select-none group"
         >
           <div className="relative flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-secondary to-brand-primary p-[1px] shadow-lg group-hover:shadow-brand-primary/25 transition-all">
             <div className="absolute inset-0 rounded-xl bg-brand-primary/20 blur-sm group-hover:blur-md transition-all" />
-            <div className="relative w-full h-full rounded-xl bg-brand-bg flex items-center justify-center overflow-hidden">
-              <img src="/KARA-LOGO.png" alt="KARA Logo" className="w-full h-full object-cover rounded-xl" />
+            <div className="relative w-full h-full rounded-xl bg-brand-bg flex items-center justify-center">
+              <Sparkles className="w-4 h-4 text-brand-highlight animate-pulse" />
             </div>
           </div>
           <span className="font-display font-bold text-xl tracking-wider bg-gradient-to-r from-white via-brand-highlight to-brand-primary bg-clip-text text-transparent">
-            KARA
+            KARA  
           </span>
         </div>
 
@@ -85,7 +85,7 @@ export default function Navbar({ onNavigate, onLaunchDashboard }: NavbarProps) {
         {/* CTA Buttons */}
         <div className="hidden md:flex items-center gap-4">
           <a
-            href="https://github.com/jaymore4501/KARA"
+            href="https://github.com"
             target="_blank"
             rel="noreferrer"
             className="text-brand-text-secondary hover:text-white transition-colors p-2"
@@ -136,7 +136,7 @@ export default function Navbar({ onNavigate, onLaunchDashboard }: NavbarProps) {
             <div className="flex items-center justify-between pt-4">
               <span className="text-xs text-brand-text-secondary">Explore Code</span>
               <a
-                href="https://github.com/jaymore4501/KARA"
+                href="https://github.com"
                 target="_blank"
                 rel="noreferrer"
                 className="flex items-center gap-1.5 text-xs text-brand-highlight hover:text-white"
