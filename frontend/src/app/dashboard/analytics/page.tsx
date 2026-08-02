@@ -120,13 +120,40 @@ export default function AnalyticsPage() {
 
   // --- Right Section: Settlement stepped data ---
   const settlementWeeks = ["1W", "3W", "5W", "7W", "9W", "11W", "13W", "15W"];
-  const settlementValues = [60, 60, 80, 50, 45, 52, 90, 95];
+  const settlementValues = [30, 45, 65, 40, 55, 75, 48, 90];
+
+  const getSettlementCoords = (val: number, idx: number) => {
+    const x = 10 + idx * (185 / (settlementWeeks.length - 1));
+    const y = 100 - 15 - (val * 70) / 100;
+    return { x, y };
+  };
+
+  const getSettlementBezierPath = (data: number[]) => {
+    const points = data.map((val, idx) => getSettlementCoords(val, idx));
+    let path = `M ${points[0].x} ${points[0].y}`;
+    for (let i = 0; i < points.length - 1; i++) {
+      const p0 = points[i];
+      const p1 = points[i + 1];
+      const cpX1 = p0.x + (p1.x - p0.x) / 2;
+      const cpY1 = p0.y;
+      const cpX2 = p0.x + (p1.x - p0.x) / 2;
+      const cpY2 = p1.y;
+      path += ` C ${cpX1} ${cpY1}, ${cpX2} ${cpY2}, ${p1.x} ${p1.y}`;
+    }
+    return path;
+  };
+
+  const getSettlementAreaPath = (data: number[]) => {
+    const linePath = getSettlementBezierPath(data);
+    const lastX = 10 + (data.length - 1) * (185 / (settlementWeeks.length - 1));
+    return `${linePath} L ${lastX} 90 L 10 90 Z`;
+  };
 
   const handleSettlementMouseMove = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
     if (!settlementSvgRef.current) return;
     const rect = settlementSvgRef.current.getBoundingClientRect();
     const mouseX = e.clientX - rect.left;
-    const padding = 20;
+    const padding = 10;
     const contentWidth = rect.width - padding * 2;
     const relativeX = mouseX - padding;
     const index = Math.round((relativeX / contentWidth) * (settlementWeeks.length - 1));
@@ -901,7 +928,7 @@ export default function AnalyticsPage() {
             <p className="text-[9px] text-brand-text-secondary mt-1">Overall settled budget values across cycles</p>
           </div>
 
-          {/* Settlement stepped SVG line */}
+          {/* Settlement area SVG */}
           <div className="relative h-32 my-6 flex items-end">
             <svg
               ref={settlementSvgRef}
@@ -909,30 +936,46 @@ export default function AnalyticsPage() {
               height="100%"
               viewBox="0 0 200 100"
               preserveAspectRatio="none"
-              className="overflow-visible cursor-pointer"
+              className="overflow-visible cursor-crosshair"
               onMouseMove={handleSettlementMouseMove}
               onMouseLeave={handleSettlementMouseLeave}
             >
-              {/* Stepped line path */}
+              <defs>
+                <linearGradient id="settlement-area-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stopColor="var(--color-brand-primary)" stopOpacity="0.25" />
+                  <stop offset="100%" stopColor="var(--color-brand-primary)" stopOpacity="0.0" />
+                </linearGradient>
+              </defs>
+
+              {/* Grid Lines */}
+              <line x1="10" y1="90" x2="195" y2="90" stroke="rgba(255, 255, 255, 0.05)" />
+              <line x1="10" y1="50" x2="195" y2="50" stroke="rgba(255, 255, 255, 0.02)" strokeDasharray="3 3" />
+              <line x1="10" y1="15" x2="195" y2="15" stroke="rgba(255, 255, 255, 0.02)" strokeDasharray="3 3" />
+
+              {/* Area path */}
               <path
-                d="M 10 70 L 35 70 L 35 45 L 60 45 L 60 80 L 85 80 L 85 55 L 110 55 L 110 70 L 135 70 L 135 30 L 160 30 L 160 85 L 185 85 L 185 20 L 195 20"
-                fill="none"
-                stroke="var(--color-brand-secondary)"
-                strokeWidth="2"
+                d={getSettlementAreaPath(settlementValues)}
+                fill="url(#settlement-area-gradient)"
                 className="transition-all duration-300"
               />
-              
-              {/* Grid Lines */}
-              <line x1="10" y1="90" x2="195" y2="90" stroke="rgba(255, 255, 255, 0.03)" />
-              
+
+              {/* Smooth spline curve path */}
+              <path
+                d={getSettlementBezierPath(settlementValues)}
+                fill="none"
+                stroke="var(--color-brand-primary)"
+                strokeWidth="2"
+                className="transition-all duration-300 drop-shadow-[0_2px_8px_rgba(157,108,255,0.4)]"
+              />
+
               {/* Interactive snaps */}
               {activeSettlementIndex !== null && (
                 <g>
                   {/* Vertical snaps guideline */}
                   <line
-                    x1={10 + (activeSettlementIndex * (185)) / (settlementWeeks.length - 1)}
+                    x1={getSettlementCoords(0, activeSettlementIndex).x}
                     y1="10"
-                    x2={10 + (activeSettlementIndex * (185)) / (settlementWeeks.length - 1)}
+                    x2={getSettlementCoords(0, activeSettlementIndex).x}
                     y2="90"
                     stroke="rgba(157, 108, 255, 0.2)"
                     strokeWidth="1"
@@ -940,12 +983,20 @@ export default function AnalyticsPage() {
                   />
                   {/* Active dot */}
                   <circle
-                    cx={10 + (activeSettlementIndex * (185)) / (settlementWeeks.length - 1)}
-                    cy={100 - settlementValues[activeSettlementIndex]}
+                    cx={getSettlementCoords(settlementValues[activeSettlementIndex], activeSettlementIndex).x}
+                    cy={getSettlementCoords(settlementValues[activeSettlementIndex], activeSettlementIndex).y}
                     r="4"
                     fill="var(--color-brand-primary)"
                     stroke="#09070F"
-                    strokeWidth="1"
+                    strokeWidth="1.5"
+                  />
+                  {/* Glowing outer dot ring */}
+                  <circle
+                    cx={getSettlementCoords(settlementValues[activeSettlementIndex], activeSettlementIndex).x}
+                    cy={getSettlementCoords(settlementValues[activeSettlementIndex], activeSettlementIndex).y}
+                    r="7"
+                    fill="var(--color-brand-primary)"
+                    opacity="0.3"
                   />
                 </g>
               )}
@@ -954,14 +1005,18 @@ export default function AnalyticsPage() {
             {/* Stepped hover card */}
             {activeSettlementIndex !== null && (
               <div 
-                className="absolute z-20 bg-brand-surface border border-white/10 rounded-xl px-2 py-1 shadow-xl text-center pointer-events-none transition-all duration-100 font-mono text-[9px]"
+                className="absolute z-20 bg-brand-surface/95 backdrop-blur-md border border-white/10 rounded-xl px-2.5 py-1.5 shadow-2xl pointer-events-none transition-all duration-100 ease-out font-mono text-[9px]"
                 style={{
-                  left: `${(activeSettlementIndex * 90) / (settlementWeeks.length - 1) + 5}%`,
+                  left: `${((getSettlementCoords(0, activeSettlementIndex).x) / 200) * 100}%`,
                   bottom: "65%",
+                  width: "115px",
+                  transform: activeSettlementIndex >= 5 ? "translateX(-115%)" : "translateX(15%)",
                 }}
               >
-                <span className="text-brand-text-secondary">settlements: </span>
-                <strong className="text-brand-primary">{settlementValues[activeSettlementIndex]}</strong>
+                <div className="flex justify-between items-center gap-1.5">
+                  <span className="text-brand-text-secondary">settlements:</span>
+                  <strong className="text-brand-primary">{settlementValues[activeSettlementIndex]}k</strong>
+                </div>
               </div>
             )}
           </div>
