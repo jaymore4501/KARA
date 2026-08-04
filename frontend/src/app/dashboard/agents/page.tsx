@@ -31,65 +31,79 @@ export default function AgentsPage() {
         {agents.map((agent) => (
           <div 
             key={agent.name} 
-            className="group relative glass-card rounded-2xl p-5 border transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between"
+            className="group relative glass-card rounded-3xl p-6 border transition-all duration-300 hover:-translate-y-2 flex flex-col justify-between min-h-[235px]"
             style={{
               borderColor: "rgba(255, 255, 255, 0.05)",
-              backgroundColor: "rgba(25, 22, 38, 0.25)"
+              backgroundColor: "rgba(25, 22, 38, 0.2)"
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = `${agent.glow}40`;
-              e.currentTarget.style.boxShadow = `0 10px 25px -5px ${agent.glow}15`;
-              e.currentTarget.style.backgroundColor = "rgba(25, 22, 38, 0.55)";
+              e.currentTarget.style.borderColor = `${agent.glow}50`;
+              e.currentTarget.style.boxShadow = `0 15px 30px -5px ${agent.glow}20`;
+              e.currentTarget.style.backgroundColor = "rgba(25, 22, 38, 0.4)";
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.05)";
               e.currentTarget.style.boxShadow = "none";
-              e.currentTarget.style.backgroundColor = "rgba(25, 22, 38, 0.25)";
+              e.currentTarget.style.backgroundColor = "rgba(25, 22, 38, 0.2)";
             }}
           >
-            <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/[0.01] to-transparent pointer-events-none" />
+            {/* Top decorative glass overlay */}
+            <div className="absolute inset-0 bg-gradient-to-b from-white/[0.01] to-transparent pointer-events-none rounded-3xl" />
             
-            <div className="relative">
-              {/* Header Info */}
-              <div className="flex items-center gap-2.5 mb-5 relative">
-                <div className={`w-9 h-9 rounded-xl bg-gradient-to-tr ${agent.color} p-[1px]`}>
-                  <div className="w-full h-full rounded-xl bg-brand-bg flex items-center justify-center text-[10px] font-bold text-white">
+            {/* Ambient corner glow */}
+            <div 
+              className="absolute top-0 right-0 w-24 h-24 rounded-full blur-2xl opacity-10 transition-opacity duration-300 pointer-events-none"
+              style={{
+                background: `radial-gradient(circle, ${agent.glow} 0%, transparent 70%)`
+              }}
+            />
+
+            {/* Header info */}
+            <div className="relative flex flex-col gap-3">
+              <div className="flex items-start justify-between">
+                <div className={`w-11 h-11 rounded-2xl bg-gradient-to-tr ${agent.color} p-[1.5px] shadow-lg shadow-black/30`}>
+                  <div className="w-full h-full rounded-2xl bg-[#0F0D19] flex items-center justify-center text-xs font-bold text-white tracking-wider">
                     {agent.name.substring(0, 2).toUpperCase()}
                   </div>
                 </div>
-                <div className="flex flex-col min-w-0 pr-10">
-                  <h3 className="text-xs font-semibold text-white truncate leading-snug">{agent.name}</h3>
-                  <p className="text-[9px] text-brand-text-secondary font-mono truncate">{agent.role}</p>
-                </div>
                 
-                {/* Active Indicator Pin */}
-                <div className="absolute top-0.5 right-0 flex items-center gap-1 bg-brand-success/10 border border-brand-success/20 px-1.5 py-0.5 rounded-md">
-                  <span className="relative flex h-1 w-1">
+                {/* Active Indicator Badge */}
+                <div className="flex items-center gap-1.5 bg-brand-success/5 border border-brand-success/15 px-2.5 py-0.5 rounded-full select-none">
+                  <span className="relative flex h-1.5 w-1.5">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-success opacity-75" />
-                    <span className="relative inline-flex rounded-full h-1 w-1 bg-brand-success" />
+                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-brand-success" />
                   </span>
-                  <span className="text-[7px] font-mono text-brand-success font-semibold uppercase tracking-wider">Active</span>
+                  <span className="text-[8px] font-mono text-brand-success font-semibold uppercase tracking-wider">Active</span>
                 </div>
               </div>
 
-              {/* Core Metrics */}
-              <div className="space-y-3.5">
-                <div>
-                  <div className="flex justify-between text-[9px] font-mono mb-1">
-                    <span className="text-brand-text-secondary">Efficiency</span>
-                    <span className="text-brand-success font-semibold">{agent.efficiency}%</span>
-                  </div>
-                  <div className="h-1 bg-white/5 rounded-full overflow-hidden">
-                    <div 
-                      className="h-full bg-brand-success rounded-full transition-all duration-1000" 
-                      style={{ width: `${agent.efficiency}%` }} 
-                    />
-                  </div>
+              <div>
+                <h3 className="text-sm font-semibold text-white tracking-wide">{agent.name}</h3>
+                <p className="text-[10px] text-brand-text-secondary font-mono mt-0.5">{agent.role}</p>
+              </div>
+            </div>
+
+            {/* Core Metrics */}
+            <div className="space-y-4 mt-6">
+              <div>
+                <div className="flex justify-between text-[9px] font-mono mb-1.5">
+                  <span className="text-brand-text-secondary">COGNITIVE EFFICIENCY</span>
+                  <span className="text-brand-success font-semibold">{agent.efficiency}%</span>
                 </div>
-                <div className="flex items-center justify-between px-2.5 py-2 rounded-xl bg-white/[0.01] border border-white/5 font-mono text-[9px]">
-                  <span className="text-brand-text-secondary">Tasks Compiled</span>
-                  <strong className="text-white">{agent.tasks}</strong>
+                <div className="h-1.5 bg-white/5 rounded-full overflow-hidden p-[1px]">
+                  <div 
+                    className="h-full bg-brand-success rounded-full transition-all duration-1000" 
+                    style={{ 
+                      width: `${agent.efficiency}%`,
+                      boxShadow: "0 0 6px rgba(52, 211, 153, 0.5)"
+                    }} 
+                  />
                 </div>
+              </div>
+
+              <div className="flex items-center justify-between px-3 py-2.5 rounded-2xl bg-white/[0.02] border border-white/5 font-mono text-[9px] hover:bg-white/[0.04] transition-all">
+                <span className="text-brand-text-secondary uppercase tracking-wider">Tickets Compiled</span>
+                <strong className="text-white text-xs font-bold font-display">{agent.tasks}</strong>
               </div>
             </div>
 
