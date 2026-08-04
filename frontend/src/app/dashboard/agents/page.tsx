@@ -18,7 +18,7 @@ const agents = [
 
 export default function AgentsPage() {
   return (
-    <div className="max-w-6xl mx-auto space-y-6">
+    <div className="max-w-7xl mx-auto space-y-6">
       <div>
         <h1 className="font-display font-bold text-2xl text-white flex items-center gap-2">
           <Bot className="w-5 h-5 text-brand-primary" />
@@ -27,7 +27,7 @@ export default function AgentsPage() {
         <p className="text-xs text-brand-text-secondary mt-1">Monitor your autonomous AI workforce</p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
         {agents.map((agent) => (
           <div key={agent.name} className="glass-card rounded-2xl p-6 hover:border-brand-primary/20 transition-all">
             <div className="flex items-center gap-3 mb-4">
