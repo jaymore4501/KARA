@@ -115,6 +115,9 @@ export const authApi = {
 
   getMe: (token: string) =>
     apiClient<UserResponse>("/auth/me", { token }),
+
+  changePassword: (token: string, data: Record<string, string>) =>
+    apiClient<{ message: string }>("/auth/change-password", { method: "POST", body: data, token }),
 };
 
 // ── Projects API ───────────────────────────────────────────

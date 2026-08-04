@@ -44,6 +44,11 @@ class RefreshRequest(BaseModel):
     refresh_token: str
 
 
+class ChangePasswordRequest(BaseModel):
+    old_password: str
+    new_password: str
+
+
 class UserResponse(BaseModel):
     id: str
     name: str
@@ -152,3 +157,23 @@ async def get_me(current_user: User = Depends(get_current_user)):
         credits=current_user.credits,
         created_at=current_user.created_at.isoformat(),
     )
+
+
+@router.post("/change-password")
+async def change_password(
+    body: ChangePasswordRequest,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """Change the authenticated user's password."""
+    if current_user.password_hash is not None:
+        if not verify_password(body.old_password, current_user.password_hash):
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Incorrect old password",
+            )
+
+    current_user.password_hash = hash_password(body.new_password)
+    db.add(current_user)
+    await db.commit()
+    return {"message": "Password changed successfully"}
