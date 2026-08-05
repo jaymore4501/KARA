@@ -295,7 +295,7 @@ export default function DashboardLayout({
             
             {/* Credits Badge with Hover Tooltip */}
             <div 
-              className="relative hidden md:flex items-center gap-1.5 bg-white/5 border border-white/5 py-1.5 px-3 rounded-full cursor-help transition-all hover:bg-white/10"
+              className="relative hidden md:flex items-center gap-1.5 bg-white/5 border border-white/5 py-1.5 px-3 rounded-full cursor-pointer transition-all hover:bg-white/10"
               onMouseEnter={() => setCreditsHovered(true)}
               onMouseLeave={() => setCreditsHovered(false)}
             >
