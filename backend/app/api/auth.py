@@ -3,12 +3,12 @@ KARA Backend - Authentication API Endpoints
 """
 from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy import select
+from sqlalchemy import select, func
 from sqlalchemy.ext.asyncio import AsyncSession
 from pydantic import BaseModel, EmailStr
 
 from app.database.session import get_db
-from app.database.models import User
+from app.database.models import User, Project
 from app.auth.jwt import (
     hash_password,
     verify_password,
@@ -146,15 +146,27 @@ async def refresh_token(body: RefreshRequest, db: AsyncSession = Depends(get_db)
 
 
 @router.get("/me", response_model=UserResponse)
-async def get_me(current_user: User = Depends(get_current_user)):
+async def get_me(
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db)
+):
     """Get the current authenticated user profile."""
+    # Query sum of tokens used across all projects of this user
+    result = await db.execute(
+        select(func.sum(Project.total_tokens_used)).where(Project.user_id == current_user.id)
+    )
+    total_tokens = result.scalar() or 0
+    # Calculate remaining credits: 1 credit per 1000 tokens consumed
+    credits_consumed = total_tokens // 1000
+    remaining_credits = max(0, current_user.credits - credits_consumed)
+
     return UserResponse(
         id=str(current_user.id),
         name=current_user.name,
         email=current_user.email,
         avatar_url=current_user.avatar_url,
         plan=current_user.plan,
-        credits=current_user.credits,
+        credits=remaining_credits,
         created_at=current_user.created_at.isoformat(),
     )
 

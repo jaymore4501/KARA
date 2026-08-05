@@ -44,12 +44,16 @@ async def get_analytics_summary(
     )
     recent_runs = result_runs.scalars().all()
 
+    # Calculate remaining credits: 1 credit per 1000 tokens consumed
+    credits_consumed = total_tokens // 1000
+    remaining_credits = max(0, current_user.credits - credits_consumed)
+
     return {
         "user_id": str(current_user.id),
         "total_projects": total_projects,
         "total_tokens_used": total_tokens,
         "total_agents_run": total_agents,
-        "credits_remaining": current_user.credits,
+        "credits_remaining": remaining_credits,
         "plan_type": current_user.plan,
         "recent_runs": [
             {

@@ -21,8 +21,13 @@ import {
   Plus,
   Menu,
   X,
+  Check,
+  AlertCircle,
+  Info,
+  ShieldCheck,
 } from "lucide-react";
 import { useAuthStore } from "@/store/auth-store";
+import { analyticsApi } from "@/lib/api";
 
 const sidebarNavItems = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
@@ -41,10 +46,45 @@ export default function DashboardLayout({
 }) {
   const pathname = usePathname();
   const router = useRouter();
-  const { user, isAuthenticated, fetchUser, logout } = useAuthStore();
+  const { user, isAuthenticated, fetchUser, logout, accessToken } = useAuthStore();
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
+  const [notificationsRead, setNotificationsRead] = useState(false);
+  const [creditsHovered, setCreditsHovered] = useState(false);
+  const [totalTokensUsed, setTotalTokensUsed] = useState(0);
+
+  const [notifications, setNotifications] = useState([
+    {
+      id: 1,
+      title: "Nova CEO Agent completed task",
+      message: "Business plan draft has been completed and added to project documents.",
+      time: "2 mins ago",
+      type: "success",
+      icon: Check,
+      color: "text-brand-success bg-brand-success/10 border-brand-success/20",
+    },
+    {
+      id: 2,
+      title: "Atlas Market Agent alert",
+      message: "Competitor research analysis finished. Startup score computed at 88.",
+      time: "15 mins ago",
+      type: "info",
+      icon: Info,
+      color: "text-brand-primary bg-brand-primary/10 border-brand-primary/20",
+    },
+    {
+      id: 3,
+      title: "Credits consumed",
+      message: "Forge Software Architect consumed 12,000 tokens during workspace compilation.",
+      time: "1 hour ago",
+      type: "warning",
+      icon: AlertCircle,
+      color: "text-brand-highlight bg-brand-highlight/10 border-brand-highlight/20",
+    },
+  ]);
 
   useEffect(() => {
     fetchUser().then(() => {
@@ -54,6 +94,16 @@ export default function DashboardLayout({
       }
     });
   }, [fetchUser, router]);
+
+  useEffect(() => {
+    if (isAuthenticated && accessToken) {
+      analyticsApi.getSummary(accessToken)
+        .then((summary) => {
+          setTotalTokensUsed(summary.total_tokens_used);
+        })
+        .catch(() => {});
+    }
+  }, [isAuthenticated, accessToken]);
 
   const handleLogout = () => {
     logout();
@@ -241,20 +291,113 @@ export default function DashboardLayout({
           </div>
 
           {/* Right controls */}
-          <div className="flex items-center gap-3">
-            {/* Credits */}
-            <div className="hidden md:flex items-center gap-1.5 bg-white/5 border border-white/5 py-1.5 px-3 rounded-full">
+          <div className="flex items-center gap-3 relative">
+            
+            {/* Credits Badge with Hover Tooltip */}
+            <div 
+              className="relative hidden md:flex items-center gap-1.5 bg-white/5 border border-white/5 py-1.5 px-3 rounded-full cursor-help transition-all hover:bg-white/10"
+              onMouseEnter={() => setCreditsHovered(true)}
+              onMouseLeave={() => setCreditsHovered(false)}
+            >
               <CreditCard className="w-3.5 h-3.5 text-brand-highlight" />
               <span className="text-[10px] font-mono text-brand-highlight font-semibold">
                 {user?.credits?.toLocaleString() || "1,000"}
               </span>
+
+              {/* Credits hover tooltip card */}
+              {creditsHovered && (
+                <div className="absolute top-10 right-0 z-50 w-60 bg-[#161320] border border-white/10 p-4 rounded-2xl shadow-2xl animate-fadeIn text-left cursor-default">
+                  <div className="flex items-center gap-2 mb-2 pb-2 border-b border-white/5">
+                    <CreditCard className="w-4 h-4 text-brand-highlight" />
+                    <span className="text-xs font-semibold text-white">Credits Allocation</span>
+                  </div>
+                  <div className="space-y-2 font-mono text-[10px]">
+                    <div className="flex justify-between">
+                      <span className="text-brand-text-secondary">Initial Balance:</span>
+                      <span className="text-white">1,000 CR</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-brand-text-secondary">Tokens Consumed:</span>
+                      <span className="text-brand-highlight">{(totalTokensUsed || 0).toLocaleString()}</span>
+                    </div>
+                    <div className="flex justify-between pt-1 border-t border-white/5">
+                      <span className="text-brand-text-secondary font-bold">Remaining:</span>
+                      <span className="text-brand-success font-bold">{(user?.credits || 1000).toLocaleString()} CR</span>
+                    </div>
+                  </div>
+                  <p className="text-[8px] text-brand-text-secondary/60 leading-normal mt-3">
+                    * 1 Credit is charged per 1,000 API input/output tokens processed by KARA swarm agents.
+                  </p>
+                </div>
+              )}
             </div>
 
-            {/* Notifications */}
-            <button className="relative p-2 text-brand-text-secondary hover:text-white transition-colors">
-              <Bell className="w-4 h-4" />
-              <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-brand-danger" />
-            </button>
+            {/* Notifications Button + Dropdown Container */}
+            <div className="relative">
+              <button 
+                onClick={() => setNotificationsOpen(!notificationsOpen)}
+                className="relative p-2 text-brand-text-secondary hover:text-white transition-colors rounded-lg hover:bg-white/5"
+              >
+                <Bell className="w-4 h-4" />
+                {!notificationsRead && (
+                  <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-brand-danger animate-pulse border border-brand-bg" />
+                )}
+              </button>
+
+              {/* Notifications Dropdown */}
+              {notificationsOpen && (
+                <div className="absolute top-10 right-0 z-50 w-80 bg-[#161320] border border-white/10 rounded-2xl shadow-2xl overflow-hidden animate-fadeIn">
+                  {/* Dropdown Header */}
+                  <div className="flex items-center justify-between p-4 border-b border-white/5 bg-white/[0.01]">
+                    <div className="flex items-center gap-1.5">
+                      <Bell className="w-4 h-4 text-brand-primary" />
+                      <span className="text-xs font-semibold text-white">Recent Notifications</span>
+                    </div>
+                    {!notificationsRead && (
+                      <button 
+                        onClick={() => setNotificationsRead(true)}
+                        className="text-[9px] font-mono text-brand-highlight hover:underline uppercase tracking-wider"
+                      >
+                        Mark as read
+                      </button>
+                    )}
+                  </div>
+
+                  {/* Notification List */}
+                  <div className="divide-y divide-white/5 max-h-72 overflow-y-auto">
+                    {notifications.map((notif) => {
+                      const Icon = notif.icon;
+                      return (
+                        <div key={notif.id} className="p-3.5 hover:bg-white/[0.02] transition-colors flex gap-3 items-start text-left">
+                          <div className={`w-6 h-6 rounded-lg flex items-center justify-center shrink-0 border mt-0.5 ${notif.color}`}>
+                            <Icon className="w-3.5 h-3.5" />
+                          </div>
+                          <div className="flex-1 min-w-0 space-y-1">
+                            <div className="flex justify-between items-center gap-1">
+                              <h4 className="text-[10px] font-semibold text-white truncate">{notif.title}</h4>
+                              <span className="text-[8px] font-mono text-brand-text-secondary shrink-0">{notif.time}</span>
+                            </div>
+                            <p className="text-[9px] text-brand-text-secondary leading-normal font-light">
+                              {notif.message}
+                            </p>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  {/* Dropdown Footer */}
+                  <div className="p-2 border-t border-white/5 bg-white/[0.01] text-center">
+                    <button 
+                      onClick={() => setNotificationsOpen(false)}
+                      className="w-full py-1.5 text-[9px] font-mono text-brand-text-secondary hover:text-white uppercase tracking-wider transition-all"
+                    >
+                      Close Panel
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
 
             {/* User Avatar (mobile) */}
             <div className="lg:hidden w-8 h-8 rounded-full bg-gradient-to-tr from-brand-secondary to-brand-primary flex items-center justify-center text-white text-xs font-bold">

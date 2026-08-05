@@ -175,5 +175,18 @@ export const projectsApi = {
     apiClient<void>(`/projects/${projectId}`, { method: "DELETE", token }),
 };
 
+export interface AnalyticsSummaryResponse {
+  total_projects: number;
+  total_tokens_used: number;
+  total_agents_run: number;
+  credits_remaining: number;
+  plan_type: string;
+}
+
+export const analyticsApi = {
+  getSummary: (token: string) =>
+    apiClient<AnalyticsSummaryResponse>("/analytics/summary", { token }),
+};
+
 export { ApiError };
 export default apiClient;
