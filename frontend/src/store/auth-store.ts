@@ -6,6 +6,15 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { authApi, type UserResponse } from "@/lib/api";
 
+interface NotificationItem {
+  id: number;
+  title: string;
+  message: string;
+  time: string;
+  type: string;
+  read: boolean;
+}
+
 interface AuthState {
   // State
   user: UserResponse | null;
@@ -13,6 +22,8 @@ interface AuthState {
   refreshToken: string | null;
   isLoading: boolean;
   isAuthenticated: boolean;
+  notifications: NotificationItem[];
+  notificationsRead: boolean;
 
   // Actions
   login: (email: string, password: string) => Promise<void>;
@@ -20,6 +31,8 @@ interface AuthState {
   logout: () => void;
   fetchUser: () => Promise<void>;
   setTokens: (accessToken: string, refreshToken: string) => void;
+  markAllNotificationsAsRead: () => void;
+  markNotificationAsRead: (id: number) => void;
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -30,6 +43,33 @@ export const useAuthStore = create<AuthState>()(
       refreshToken: null,
       isLoading: false,
       isAuthenticated: false,
+      notifications: [
+        {
+          id: 1,
+          title: "Nova CEO Agent completed task",
+          message: "Business plan draft has been completed and added to project documents.",
+          time: "2 mins ago",
+          type: "success",
+          read: false,
+        },
+        {
+          id: 2,
+          title: "Atlas Market Agent alert",
+          message: "Competitor research analysis finished. Startup score computed at 88.",
+          time: "15 mins ago",
+          type: "info",
+          read: false,
+        },
+        {
+          id: 3,
+          title: "Credits consumed",
+          message: "Forge Software Architect consumed 12,000 tokens during workspace compilation.",
+          time: "1 hour ago",
+          type: "warning",
+          read: false,
+        },
+      ],
+      notificationsRead: false,
 
       login: async (email: string, password: string) => {
         set({ isLoading: true });
@@ -105,6 +145,17 @@ export const useAuthStore = create<AuthState>()(
 
       setTokens: (accessToken: string, refreshToken: string) => {
         set({ accessToken, refreshToken, isAuthenticated: true });
+      },
+
+      markAllNotificationsAsRead: () => {
+        const updated = get().notifications.map(n => ({ ...n, read: true }));
+        set({ notifications: updated, notificationsRead: true });
+      },
+
+      markNotificationAsRead: (id: number) => {
+        const updated = get().notifications.map(n => n.id === id ? { ...n, read: true } : n);
+        const allRead = updated.every(n => n.read);
+        set({ notifications: updated, notificationsRead: allRead });
       },
     }),
     {

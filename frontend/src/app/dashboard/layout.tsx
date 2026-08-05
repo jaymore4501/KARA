@@ -46,45 +46,35 @@ export default function DashboardLayout({
 }) {
   const pathname = usePathname();
   const router = useRouter();
-  const { user, isAuthenticated, fetchUser, logout, accessToken } = useAuthStore();
+  const { 
+    user, 
+    isAuthenticated, 
+    fetchUser, 
+    logout, 
+    accessToken,
+    notifications,
+    notificationsRead,
+    markAllNotificationsAsRead,
+  } = useAuthStore();
+
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
   const [notificationsOpen, setNotificationsOpen] = useState(false);
-  const [notificationsRead, setNotificationsRead] = useState(false);
   const [creditsHovered, setCreditsHovered] = useState(false);
   const [totalTokensUsed, setTotalTokensUsed] = useState(0);
 
-  const [notifications, setNotifications] = useState([
-    {
-      id: 1,
-      title: "Nova CEO Agent completed task",
-      message: "Business plan draft has been completed and added to project documents.",
-      time: "2 mins ago",
-      type: "success",
-      icon: Check,
-      color: "text-brand-success bg-brand-success/10 border-brand-success/20",
-    },
-    {
-      id: 2,
-      title: "Atlas Market Agent alert",
-      message: "Competitor research analysis finished. Startup score computed at 88.",
-      time: "15 mins ago",
-      type: "info",
-      icon: Info,
-      color: "text-brand-primary bg-brand-primary/10 border-brand-primary/20",
-    },
-    {
-      id: 3,
-      title: "Credits consumed",
-      message: "Forge Software Architect consumed 12,000 tokens during workspace compilation.",
-      time: "1 hour ago",
-      type: "warning",
-      icon: AlertCircle,
-      color: "text-brand-highlight bg-brand-highlight/10 border-brand-highlight/20",
-    },
-  ]);
+  const getNotifDetails = (type: string) => {
+    switch (type) {
+      case "success":
+        return { icon: Check, color: "text-brand-success bg-brand-success/10 border-brand-success/20" };
+      case "warning":
+        return { icon: AlertCircle, color: "text-brand-highlight bg-brand-highlight/10 border-brand-highlight/20" };
+      default:
+        return { icon: Info, color: "text-brand-primary bg-brand-primary/10 border-brand-primary/20" };
+    }
+  };
 
   useEffect(() => {
     fetchUser().then(() => {
@@ -355,10 +345,10 @@ export default function DashboardLayout({
                     </div>
                     {!notificationsRead && (
                       <button 
-                        onClick={() => setNotificationsRead(true)}
+                        onClick={() => markAllNotificationsAsRead()}
                         className="text-[9px] font-mono text-brand-highlight hover:underline uppercase tracking-wider"
                       >
-                        Mark as read
+                        Mark all as read
                       </button>
                     )}
                   </div>
@@ -366,18 +356,25 @@ export default function DashboardLayout({
                   {/* Notification List */}
                   <div className="divide-y divide-white/5 max-h-72 overflow-y-auto">
                     {notifications.map((notif) => {
-                      const Icon = notif.icon;
+                      const { icon: Icon, color } = getNotifDetails(notif.type);
                       return (
                         <div key={notif.id} className="p-3.5 hover:bg-white/[0.02] transition-colors flex gap-3 items-start text-left">
-                          <div className={`w-6 h-6 rounded-lg flex items-center justify-center shrink-0 border mt-0.5 ${notif.color}`}>
+                          <div className={`w-6 h-6 rounded-lg flex items-center justify-center shrink-0 border mt-0.5 ${color} ${notif.read ? "opacity-40" : ""}`}>
                             <Icon className="w-3.5 h-3.5" />
                           </div>
                           <div className="flex-1 min-w-0 space-y-1">
                             <div className="flex justify-between items-center gap-1">
-                              <h4 className="text-[10px] font-semibold text-white truncate">{notif.title}</h4>
+                              <div className="flex items-center gap-1.5">
+                                {!notif.read && (
+                                  <span className="w-1.5 h-1.5 rounded-full bg-brand-highlight shrink-0 animate-pulse" />
+                                )}
+                                <h4 className={`text-[10px] font-semibold text-white truncate ${notif.read ? "text-brand-text-secondary/70 line-through" : ""}`}>
+                                  {notif.title}
+                                </h4>
+                              </div>
                               <span className="text-[8px] font-mono text-brand-text-secondary shrink-0">{notif.time}</span>
                             </div>
-                            <p className="text-[9px] text-brand-text-secondary leading-normal font-light">
+                            <p className={`text-[9px] leading-normal font-light ${notif.read ? "text-brand-text-secondary/40" : "text-brand-text-secondary"}`}>
                               {notif.message}
                             </p>
                           </div>
