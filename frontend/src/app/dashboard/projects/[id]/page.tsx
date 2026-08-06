@@ -323,19 +323,227 @@ export default function ProjectWorkspacePage() {
               </div>
             )}
 
-            {/* Other tabs can render simple mock details matching the premium design */}
-            {activeTab !== "overview" && activeTab !== "research" && (
-              <div className="space-y-6">
+            {/* ─── Business Plan Tab ────────────────────────── */}
+            {activeTab === "business" && (
+              <div className="space-y-6 animate-fadeIn">
                 <div>
-                  <h2 className="font-display font-semibold text-lg text-white mb-2">{workspaceTabs.find((t) => t.id === activeTab)?.label}</h2>
-                  <p className="text-xs text-brand-text-secondary font-light">Workspace asset successfully compiled by KARA workforce.</p>
+                  <h2 className="font-display font-semibold text-lg text-white mb-2">Business Specification</h2>
+                  <p className="text-xs text-brand-text-secondary font-light">Compiled by Nova (CEO) & Pulse (Product Manager)</p>
                 </div>
-                <div className="p-6 bg-white/[0.01] border border-white/5 rounded-xl font-mono text-xs text-brand-text-secondary space-y-4">
-                  <div>// Simulated {activeTab} content schema</div>
-                  <div>// Complete details are fully populated inside the database export structure</div>
-                  <div className="flex items-center gap-2 text-brand-highlight">
-                    <span>Explore details using the chat companion or download the full export package.</span>
+
+                <div className="space-y-4">
+                  <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2">
+                    <h3 className="text-xs font-semibold text-brand-highlight">Executive Summary</h3>
+                    <p className="text-xs text-brand-text-secondary font-light leading-relaxed text-left">
+                      {project.name} is a state-of-the-art solution designed to address the core problem: &quot;{project.problem || project.idea}&quot;. Our target users include {project.target_users || "DevOps & engineers"}.
+                    </p>
                   </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5 space-y-1 text-left">
+                      <span className="text-[8px] font-mono text-brand-text-secondary uppercase">Monetization Model</span>
+                      <span className="text-xs text-white font-medium block">Subscription SaaS + Usage Credits</span>
+                    </div>
+                    <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5 space-y-1 text-left">
+                      <span className="text-[8px] font-mono text-brand-text-secondary uppercase">Target Segment Pricing</span>
+                      <span className="text-xs text-white font-medium block">$49 / developer seat / month</span>
+                    </div>
+                  </div>
+
+                  <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/5 space-y-3 text-left">
+                    <h3 className="text-xs font-semibold text-white">Go-To-Market strategy</h3>
+                    <div className="space-y-2 text-xs font-light text-brand-text-secondary">
+                      <div className="flex gap-2.5 items-start">
+                        <span className="w-1.5 h-1.5 rounded-full bg-brand-primary mt-1.5 shrink-0" />
+                        <span>Establish integrations with the GitHub and GitLab App Marketplaces to capture high-intent developers.</span>
+                      </div>
+                      <div className="flex gap-2.5 items-start">
+                        <span className="w-1.5 h-1.5 rounded-full bg-brand-primary mt-1.5 shrink-0" />
+                        <span>Sponsor major developer-centric hackathons and Open Source repositories to build direct brand utility awareness.</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* ─── Architecture Tab ─────────────────────────── */}
+            {activeTab === "architecture" && (
+              <div className="space-y-6 animate-fadeIn">
+                <div>
+                  <h2 className="font-display font-semibold text-lg text-white mb-2">System Architecture</h2>
+                  <p className="text-xs text-brand-text-secondary font-light">Compiled by Forge (Software Architect)</p>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/5 font-mono text-[10px] text-brand-highlight leading-relaxed overflow-x-auto whitespace-pre text-left">
+{`+------------------+     +-----------------------+     +-------------------+
+|  Next.js App Router  | --> | FastAPI Backend Engine | --> | LangGraph Engine  |
+| (Zustand State)  |     |   (Asyncio, Python)   |     | (Gemini Swarm)    |
++------------------+     +-----------------------+     +-------------------+
+                                                                 |
+                                                                 v
++------------------+     +-----------------------+     +-------------------+
+|   Redis Cache    | <-- |  PostgreSQL Database  | <-- |   RAG Index Store |
+|  (Task Queues)   |     |    (SQLAlchemy ORM)   |     |    (PgVector)     |
++------------------+     +-----------------------+     +-------------------+`}
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5 space-y-1 text-left">
+                      <span className="text-[8px] font-mono text-brand-text-secondary uppercase">API Protocols</span>
+                      <span className="text-xs text-white font-medium block">HTTP REST / WebSockets SSE</span>
+                    </div>
+                    <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5 space-y-1 text-left">
+                      <span className="text-[8px] font-mono text-brand-text-secondary uppercase">Agent Infrastructure</span>
+                      <span className="text-xs text-white font-medium block">LangGraph + Gemini 2.5 Flash Swarm</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* ─── Database Schema Tab ───────────────────────── */}
+            {activeTab === "database" && (
+              <div className="space-y-6 animate-fadeIn">
+                <div>
+                  <h2 className="font-display font-semibold text-lg text-white mb-2">Relational Database Schema</h2>
+                  <p className="text-xs text-brand-text-secondary font-light">Compiled by Forge (Database Administrator)</p>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="border border-white/5 rounded-2xl overflow-hidden divide-y divide-white/5 bg-white/[0.01]">
+                    {[
+                      {
+                        table: "users",
+                        cols: [
+                          { name: "id", type: "UUID (Primary Key)", desc: "Unique identifier for user accounts" },
+                          { name: "email", type: "VARCHAR(255) (Unique)", desc: "Verified workspaces email accounts" },
+                          { name: "credits", type: "INTEGER (Default: 1000)", desc: "Allocated compute tokens balance" },
+                        ]
+                      },
+                      {
+                        table: "projects",
+                        cols: [
+                          { name: "id", type: "UUID (Primary Key)", desc: "Unique identifier for project workspaces" },
+                          { name: "user_id", type: "UUID (Foreign Key)", desc: "References owner user.id" },
+                          { name: "name", type: "VARCHAR(255)", desc: "Name of the startup idea" },
+                          { name: "total_tokens_used", type: "BIGINT (Default: 0)", desc: "Sum of tokens consumed by swarm" },
+                        ]
+                      }
+                    ].map((tbl, idx) => (
+                      <div key={idx} className="p-5 space-y-3">
+                        <div className="flex items-center gap-2">
+                          <Database className="w-3.5 h-3.5 text-brand-primary" />
+                          <h4 className="text-xs font-mono font-bold text-white uppercase">{tbl.table}</h4>
+                        </div>
+                        <div className="space-y-2">
+                          {tbl.cols.map((col, colIdx) => (
+                            <div key={colIdx} className="flex justify-between items-start text-[10px] font-mono py-1 border-b border-white/[0.02] text-left">
+                              <span className="text-brand-highlight font-semibold w-28 shrink-0">{col.name}</span>
+                              <span className="text-white w-48 shrink-0">{col.type}</span>
+                              <span className="text-brand-text-secondary text-right flex-1">{col.desc}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* ─── Codebase Tab ─────────────────────────────── */}
+            {activeTab === "code" && (
+              <div className="space-y-6 animate-fadeIn">
+                <div>
+                  <h2 className="font-display font-semibold text-lg text-white mb-2">Production Codebase</h2>
+                  <p className="text-xs text-brand-text-secondary font-light">Compiled by CodeX (Backend) & Flux (Frontend)</p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+                  {/* File tree */}
+                  <div className="md:col-span-4 p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-3 font-mono text-[10px] text-brand-text-secondary text-left">
+                    <span className="text-[8px] font-mono text-brand-text-secondary uppercase tracking-wider block border-b border-white/5 pb-1">Directory Structure</span>
+                    <div className="space-y-1.5">
+                      <div className="text-white font-semibold">📁 src/</div>
+                      <div className="pl-3 text-brand-highlight font-medium">📄 main.py</div>
+                      <div className="pl-3">📄 config.py</div>
+                      <div className="pl-3">📁 database/</div>
+                      <div className="pl-6">📄 connection.py</div>
+                      <div className="pl-6">📄 models.py</div>
+                      <div className="text-white font-semibold">📁 tests/</div>
+                      <div className="pl-3">📄 test_api.py</div>
+                      <div className="text-white font-semibold">📄 pyproject.toml</div>
+                      <div className="text-white font-semibold">📄 Dockerfile</div>
+                    </div>
+                  </div>
+
+                  {/* Code editor */}
+                  <div className="md:col-span-8 border border-white/5 rounded-2xl overflow-hidden bg-black/30">
+                    <div className="flex items-center justify-between px-4 py-2 border-b border-white/5 bg-white/[0.02] font-mono text-[9px]">
+                      <span className="text-brand-text-secondary">src/main.py</span>
+                      <span className="text-brand-success font-semibold">Python</span>
+                    </div>
+                    <div className="p-4 font-mono text-[10px] text-brand-highlight overflow-x-auto whitespace-pre leading-relaxed text-left">
+{`from fastapi import FastAPI, Depends, HTTPException
+from pydantic import BaseModel
+
+app = FastAPI(title="${project.name} API", version="1.0.0")
+
+class HealthResponse(BaseModel):
+    status: str
+    workers_active: int
+
+@app.get("/health", response_model=HealthResponse)
+def get_health():
+    return {
+        "status": "healthy",
+        "workers_active": 4
+    }`}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* ─── Pitch Deck Tab ───────────────────────────── */}
+            {activeTab === "investor" && (
+              <div className="space-y-6 animate-fadeIn">
+                <div>
+                  <h2 className="font-display font-semibold text-lg text-white mb-2">Investor Pitch Deck Specs</h2>
+                  <p className="text-xs text-brand-text-secondary font-light">Compiled by Ledger (Finance) & Vertex (Investor Advisor)</p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {[
+                    {
+                      slide: "Slide 1: Problem Statement",
+                      title: "The Core Friction",
+                      desc: `Target users struggle because: "${project.problem || project.idea}". Standard alternatives are extremely fragmented and costly.`
+                    },
+                    {
+                      slide: "Slide 2: The Solution",
+                      title: `Introducing ${project.name}`,
+                      desc: "An autonomous agent-driven orchestrator resolving workspace bottlenecks and automating developer deployment pipelines."
+                    },
+                    {
+                      slide: "Slide 3: Business Projection",
+                      title: "Growth Roadmap & ARR",
+                      desc: "Year 1 target is $150K ARR from select developer environments, expanding to $1.2M ARR in Year 2 via self-serve swarm tokens."
+                    },
+                    {
+                      slide: "Slide 4: Competition",
+                      title: "Market Disruption",
+                      desc: "Unlike Datadog or legacy products, we offer real-time debugging with automated repair agents out-of-the-box."
+                    }
+                  ].map((sld, idx) => (
+                    <div key={idx} className="p-5 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2 text-left">
+                      <span className="text-[8px] font-mono text-brand-primary uppercase tracking-wider font-semibold block">{sld.slide}</span>
+                      <h4 className="text-xs font-semibold text-white">{sld.title}</h4>
+                      <p className="text-xs text-brand-text-secondary font-light leading-relaxed">{sld.desc}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
             )}
