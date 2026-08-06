@@ -73,12 +73,12 @@ export default function ExportsPage() {
 
   const getExportAssets = (project: ProjectResponse) => [
     { type: "bundle", name: `${project.name} - Full Package`, ext: "zip", size: "Zip Archive", icon: Package, filename: `${project.name}_Startup_Package.zip` },
-    { type: "business", name: `${project.name} - Business Plan`, ext: "md", size: "Markdown File", icon: FileText, filename: `${project.name}_Business_Plan.md` },
-    { type: "research", name: `${project.name} - Market Research`, ext: "md", size: "Markdown File", icon: FileText, filename: `${project.name}_Market_Research.md` },
-    { type: "architecture", name: `${project.name} - Architecture Spec`, ext: "md", size: "Markdown File", icon: FileText, filename: `${project.name}_Architecture.md` },
-    { type: "database", name: `${project.name} - Database Schema`, ext: "md", size: "Markdown File", icon: FileCode, filename: `${project.name}_Database_Schema.md` },
-    { type: "code", name: `${project.name} - Codebase Blueprint`, ext: "md", size: "Markdown File", icon: FileCode, filename: `${project.name}_Codebase.md` },
-    { type: "investor", name: `${project.name} - Investor Pitch Deck`, ext: "md", size: "Markdown File", icon: FileText, filename: `${project.name}_Pitch_Deck.md` },
+    { type: "business", name: `${project.name} - Business Plan`, ext: "txt", size: "Plain Text (.txt)", icon: FileText, filename: `${project.name}_Business_Plan.txt` },
+    { type: "research", name: `${project.name} - Market Research`, ext: "txt", size: "Plain Text (.txt)", icon: FileText, filename: `${project.name}_Market_Research.txt` },
+    { type: "architecture", name: `${project.name} - Architecture Spec`, ext: "txt", size: "Plain Text (.txt)", icon: FileText, filename: `${project.name}_Architecture.txt` },
+    { type: "database", name: `${project.name} - Database Schema`, ext: "txt", size: "Plain Text (.txt)", icon: FileCode, filename: `${project.name}_Database_Schema.txt` },
+    { type: "code", name: `${project.name} - Codebase Blueprint`, ext: "txt", size: "Plain Text (.txt)", icon: FileCode, filename: `${project.name}_Codebase.txt` },
+    { type: "investor", name: `${project.name} - Investor Pitch Deck`, ext: "txt", size: "Plain Text (.txt)", icon: FileText, filename: `${project.name}_Pitch_Deck.txt` },
   ];
 
   return (

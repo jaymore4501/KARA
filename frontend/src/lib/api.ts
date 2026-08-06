@@ -188,5 +188,38 @@ export const analyticsApi = {
     apiClient<AnalyticsSummaryResponse>("/analytics/summary", { token }),
 };
 
+export interface DocumentResponse {
+  id: string;
+  title: string;
+  doc_type: string;
+  file_type: string;
+  file_size: number;
+  created_at: string;
+}
+
+export const documentsApi = {
+  list: (token: string, projectId: string) =>
+    apiClient<DocumentResponse[]>(`/documents/${projectId}`, { token }),
+  
+  upload: (token: string, projectId: string, file: File) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    
+    return fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api/v1"}/documents/upload/${projectId}`, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${token}`
+      },
+      body: formData
+    }).then(async (res) => {
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData.detail || "Upload failed");
+      }
+      return res.json();
+    });
+  }
+};
+
 export { ApiError };
 export default apiClient;

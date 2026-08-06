@@ -97,15 +97,27 @@ async def export_document(
     base_filename = f"{project.name}_{doc_type}"
     content = doc.content or "Empty Document Content"
 
-    # Export to markdown
-    md_path = os.path.join(settings.EXPORT_DIR, f"{base_filename}.md")
-    with open(md_path, "w", encoding="utf-8") as f:
-        f.write(f"# {doc.title}\n\n{content}")
+    # Clean and format plain text structure professionally
+    title_line = doc.title.upper()
+    separator = "=" * max(len(title_line), 40)
+    txt_content = (
+        f"{separator}\n"
+        f"KARA SWARM AUTONOMOUS WORKSPACE WORKFLOW EXPORT\n"
+        f"PROJECT: {project.name.upper()}\n"
+        f"ASSET: {title_line}\n"
+        f"{separator}\n\n"
+        f"{content}"
+    )
+
+    # Export to txt
+    txt_path = os.path.join(settings.EXPORT_DIR, f"{base_filename}.txt")
+    with open(txt_path, "w", encoding="utf-8") as f:
+        f.write(txt_content)
 
     return FileResponse(
-        path=md_path,
-        filename=f"{base_filename}.md",
-        media_type="text/markdown",
+        path=txt_path,
+        filename=f"{base_filename}.txt",
+        media_type="text/plain",
     )
 
 
@@ -140,8 +152,17 @@ async def download_bundle(
     with zipfile.ZipFile(zip_path, 'w') as zipf:
         for doc in docs:
             # Create text file inside zip
-            filename = f"{doc.title.replace(' ', '_')}.md"
-            file_content = f"# {doc.title}\n\n{doc.content or ''}"
+            filename = f"{doc.title.replace(' ', '_')}.txt"
+            title_line = doc.title.upper()
+            separator = "=" * max(len(title_line), 40)
+            file_content = (
+                f"{separator}\n"
+                f"KARA SWARM AUTONOMOUS WORKSPACE WORKFLOW EXPORT\n"
+                f"PROJECT: {project.name.upper()}\n"
+                f"ASSET: {title_line}\n"
+                f"{separator}\n\n"
+                f"{doc.content or ''}"
+            )
             zipf.writestr(filename, file_content)
 
     return FileResponse(
