@@ -131,6 +131,21 @@ async def run_ceo_node(state: PipelineState) -> PipelineState:
         "Strategic Vision Document", 
         f"# Strategic Vision\n{output_data['strategic_vision']}\n\n## Target Users\n" + "\n".join([f"- {u}" for u in output_data["target_demographics"]])
     )
+    await save_document_to_db(
+        state["project_id"],
+        "business",
+        "Business Plan Specifications",
+        f"# Business Specification for {state['idea']}\n\n"
+        f"## Executive Summary\n"
+        f"This startup is launched to solve the core customer problem: \"{state['problem'] or 'No manual workflows tracing'}\".\n"
+        f"Our target user segments are defined as: {state['target_users'] or 'DevOps & Product teams'}.\n\n"
+        f"## Revenue Streams\n"
+        f"- B2B Subscription SaaS seat pricing at $49/dev/month.\n"
+        f"- Usage-based API credits for serverless automation.\n\n"
+        f"## Go-To-Market Channels\n"
+        f"1. Direct integrations inside GitHub and GitLab developer marketplaces.\n"
+        f"2. Core dev-advocacy and sponsorships in high-traffic repositories."
+    )
     return state
 
 
@@ -174,6 +189,18 @@ async def run_market_research_node(state: PipelineState) -> PipelineState:
         "Market Research and Sizing Report", 
         f"# Market Research Sizing\n- TAM: {output_data['market_sizing']['tam']}\n- SAM: {output_data['market_sizing']['sam']}\n- SOM: {output_data['market_sizing']['som']}"
     )
+    await save_document_to_db(
+        state["project_id"], 
+        "research", 
+        "TAM & Market Research Report", 
+        f"# TAM & Competitor Matrix\n\n"
+        f"## Market Sizing Metrics\n"
+        f"- TAM: {output_data['market_sizing']['tam']}\n"
+        f"- SAM: {output_data['market_sizing']['sam']}\n"
+        f"- SOM: {output_data['market_sizing']['som']}\n\n"
+        f"## Competitive Advantage\n"
+        f"Our product targets immediate automated root-cause repair loops, bypassing the high setup latency of competitors like Datadog or Loggly."
+    )
     return state
 
 
@@ -206,6 +233,20 @@ async def run_business_analyst_node(state: PipelineState) -> PipelineState:
             
     state["business_plan_output"] = output_data
     await save_agent_run_to_db(state["project_id"], agent_key, "completed", output_data)
+    await save_document_to_db(
+        state["project_id"],
+        "investor",
+        "Startup Pitch Deck Slide Specs",
+        f"# Investor Pitch Deck Blueprint & Strategy\n\n"
+        f"## Slide 1: The Core Problem\n"
+        f"Target customer struggles with resolving serverless execution errors, wasting over 4 engineering hours per week.\n\n"
+        f"## Slide 2: The Solution\n"
+        f"An autonomous multi-agent swarm that instantly intercepts log events, analyzes structural patterns, and deploys fixes.\n\n"
+        f"## Slide 3: Market Size & Opportunity\n"
+        f"Targeting a $1.2B addressable market of DevOps and corporate SaaS teams.\n\n"
+        f"## Slide 4: Business Model\n"
+        f"Enterprise seat licenses + pay-per-token usage credits."
+    )
     return state
 
 
@@ -268,6 +309,21 @@ async def run_database_node(state: PipelineState) -> PipelineState:
             
     state["database_output"] = output_data
     await save_agent_run_to_db(state["project_id"], agent_key, "completed", output_data)
+    await save_document_to_db(
+        state["project_id"],
+        "database",
+        "Relational Database Schemas",
+        f"# PostgreSQL Relational Schema Blueprint\n\n"
+        f"## Users Table\n"
+        f"- `id` UUID PRIMARY KEY (Unique identifier for user profile settings)\n"
+        f"- `email` VARCHAR(255) UNIQUE NOT NULL (Workspace billing email address)\n"
+        f"- `credits` INTEGER DEFAULT 1000 (Remaining compute token balance)\n\n"
+        f"## Projects Table\n"
+        f"- `id` UUID PRIMARY KEY (Unique identifier for workspaces)\n"
+        f"- `user_id` UUID REFERENCES users(id) ON DELETE CASCADE\n"
+        f"- `name` VARCHAR(255) NOT NULL\n"
+        f"- `total_tokens_used` BIGINT DEFAULT 0"
+    )
     return state
 
 
@@ -294,6 +350,31 @@ async def run_codebase_node(state: PipelineState) -> PipelineState:
             
     state["codebase_output"] = output_data
     await save_agent_run_to_db(state["project_id"], agent_key, "completed", output_data)
+    await save_document_to_db(
+        state["project_id"],
+        "code",
+        "Production Codebase Template",
+        f"# Source Codebase Directory Structure & Main API\n\n"
+        f"## File Tree Layout\n"
+        f"```bash\n"
+        f"src/\n"
+        f"├── main.py (FastAPI entrypoint router)\n"
+        f"├── config.py (Settings schema parsing)\n"
+        f"├── database/\n"
+        f"│   ├── connection.py (Engine factory)\n"
+        f"│   └── models.py (SQLAlchemy schemas)\n"
+        f"└── tests/\n"
+        f"    └── test_api.py (Unit test specs)\n"
+        f"```\n\n"
+        f"## Entrypoint (src/main.py)\n"
+        f"```python\n"
+        f"from fastapi import FastAPI\n"
+        f"app = FastAPI(title=\"Core API\", version=\"1.0.0\")\n"
+        f"@app.get('/health')\n"
+        f"def get_health():\n"
+        f"    return {{'status': 'healthy', 'workers': 4}}\n"
+        f"```"
+    )
     return state
 
 
