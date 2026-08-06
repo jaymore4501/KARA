@@ -65,7 +65,7 @@ export default function SettingsPage() {
   ];
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
+    <div className="max-w-6xl mx-auto space-y-6">
       <div>
         <h1 className="font-display font-bold text-2xl text-white flex items-center gap-2">
           <Settings className="w-5 h-5 text-brand-primary" />
@@ -283,7 +283,170 @@ export default function SettingsPage() {
         </div>
       )}
 
-      {activeTab !== "profile" && activeTab !== "security" && activeTab !== "notifications" && (
+      {activeTab === "billing" && (
+        <div className="space-y-8 animate-fadeIn">
+          {/* Active Plan Overview Card */}
+          <div className="glass-card rounded-2xl p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 border border-white/10 bg-gradient-to-r from-brand-card/80 via-[#130E26]/80 to-brand-card/80">
+            <div className="space-y-1 text-left">
+              <span className="text-[9px] font-mono text-brand-text-secondary uppercase tracking-widest">Current Subscription</span>
+              <h3 className="text-xl font-bold text-white font-display flex items-center gap-2">
+                {user?.plan || "Autonomous Suite"}
+                <span className="text-[10px] font-mono font-medium px-2.5 py-0.5 rounded-full bg-brand-success/10 border border-brand-success/20 text-brand-success">
+                  ACTIVE
+                </span>
+              </h3>
+              <p className="text-xs text-brand-text-secondary">
+                Your workspace is operating with full workforce execution access.
+              </p>
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="text-right">
+                <span className="text-[9px] font-mono text-brand-text-secondary uppercase tracking-widest block">Available Credits</span>
+                <span className="text-lg font-mono font-bold text-brand-highlight">1,000 CR</span>
+              </div>
+              <button className="px-4 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-xs font-semibold text-white transition-all cursor-pointer">
+                Manage Subscription
+              </button>
+            </div>
+          </div>
+
+          {/* Pricing Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
+            {/* Builder Core */}
+            <div className="glass-card rounded-3xl p-7 flex flex-col justify-between border border-white/10 bg-[#0B0813] hover:border-white/20 transition-all text-left group">
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-lg font-bold text-white font-display">Builder Core</h3>
+                  <p className="text-xs text-brand-text-secondary mt-2 leading-relaxed min-h-[40px]">
+                    Perfect for solo founders looking to spin up proof-of-concepts rapidly with our AI workforce.
+                  </p>
+                </div>
+
+                <div className="flex items-baseline gap-1">
+                  <span className="text-3xl font-extrabold text-white font-display">$49</span>
+                  <span className="text-xs font-mono text-brand-text-secondary">/ month</span>
+                </div>
+
+                <div className="space-y-3 pt-4 border-t border-white/5">
+                  {[
+                    "Access to 4 Core Agents (CEO, PM, Backend, Frontend)",
+                    "Up to 12 active startup projects simultaneously",
+                    "Basic Postgres/SQLite database architecture modeling",
+                    "Live code generation & sandboxed preview access",
+                    "Git export integrations",
+                  ].map((feat, i) => (
+                    <div key={i} className="flex items-start gap-2.5 text-xs text-brand-text-secondary">
+                      <Check className="w-4 h-4 text-brand-success shrink-0 mt-0.5" />
+                      <span>{feat}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="pt-8 space-y-3">
+                <button className="w-full py-3.5 px-4 rounded-xl text-xs font-semibold bg-white/5 hover:bg-white/10 border border-white/10 text-white transition-all cursor-pointer">
+                  Deploy Builder
+                </button>
+                <div className="flex items-center justify-center gap-1 text-[10px] text-brand-text-secondary/70 font-mono">
+                  <Info className="w-3 h-3" />
+                  <span>Instant activation. Cancel anytime.</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Autonomous Suite - MOST POPULAR */}
+            <div className="glass-card rounded-3xl p-7 flex flex-col justify-between border-2 border-brand-primary bg-[#0F0A1F] shadow-2xl shadow-brand-primary/20 relative text-left group">
+              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-3.5 py-1 rounded-full bg-gradient-to-r from-brand-secondary to-brand-primary text-[9px] font-mono font-bold text-white uppercase tracking-widest shadow-lg shadow-brand-primary/30">
+                MOST POPULAR
+              </div>
+
+              <div className="space-y-6 pt-2">
+                <div>
+                  <h3 className="text-lg font-bold text-white font-display">Autonomous Suite</h3>
+                  <p className="text-xs text-brand-text-secondary mt-2 leading-relaxed min-h-[40px]">
+                    Unleash the full potential of a complete coordinated enterprise department working at lightspeed.
+                  </p>
+                </div>
+
+                <div className="flex items-baseline gap-1">
+                  <span className="text-3xl font-extrabold text-white font-display">$149</span>
+                  <span className="text-xs font-mono text-brand-text-secondary">/ month</span>
+                </div>
+
+                <div className="space-y-3 pt-4 border-t border-white/5">
+                  {[
+                    "Access to all 10 Premium Agents with unique personalities",
+                    "Unlimited active startup pipelines and exports",
+                    "Production-grade DB schema planning & migrations (SQL/ORM)",
+                    "Automated marketing sequence & ad copy generator",
+                    "Interactive Pitch Deck & financial model builder",
+                    "Priority dedicated container runtime",
+                  ].map((feat, i) => (
+                    <div key={i} className="flex items-start gap-2.5 text-xs text-white/90 font-medium">
+                      <Check className="w-4 h-4 text-brand-highlight shrink-0 mt-0.5" />
+                      <span>{feat}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="pt-8 space-y-3">
+                <button className="w-full py-3.5 px-4 rounded-xl text-xs font-bold bg-gradient-to-r from-brand-secondary via-brand-primary to-purple-600 text-white shadow-xl shadow-brand-primary/30 hover:shadow-brand-primary/50 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer">
+                  Unlock Full Workforce
+                </button>
+                <div className="flex items-center justify-center gap-1 text-[10px] text-brand-text-secondary/70 font-mono">
+                  <Info className="w-3 h-3" />
+                  <span>Instant activation. Cancel anytime.</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Sovereign Nexus */}
+            <div className="glass-card rounded-3xl p-7 flex flex-col justify-between border border-white/10 bg-[#0B0813] hover:border-white/20 transition-all text-left group">
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-lg font-bold text-white font-display">Sovereign Nexus</h3>
+                  <p className="text-xs text-brand-text-secondary mt-2 leading-relaxed min-h-[40px]">
+                    Custom fine-tuned agent layers, enterprise security baselines, and bespoke cloud landing zones.
+                  </p>
+                </div>
+
+                <div className="flex items-baseline gap-1">
+                  <span className="text-3xl font-extrabold text-white font-display">$499</span>
+                  <span className="text-xs font-mono text-brand-text-secondary">/ month</span>
+                </div>
+
+                <div className="space-y-3 pt-4 border-t border-white/5">
+                  {[
+                    "Bespoke agent modeling trained on your specific brand guidelines",
+                    "Dedicated on-premise relational database synchronization",
+                    "Fine-grained OAuth permission scopes controls",
+                    "Bespoke security & compliance checks (SOC2, GDPR)",
+                    "24/7 priority enterprise SLA assistance & core hooks access",
+                  ].map((feat, i) => (
+                    <div key={i} className="flex items-start gap-2.5 text-xs text-brand-text-secondary">
+                      <Check className="w-4 h-4 text-brand-success shrink-0 mt-0.5" />
+                      <span>{feat}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="pt-8 space-y-3">
+                <button className="w-full py-3.5 px-4 rounded-xl text-xs font-semibold bg-white/5 hover:bg-white/10 border border-white/10 text-white transition-all cursor-pointer">
+                  Establish Sovereign Nexus
+                </button>
+                <div className="flex items-center justify-center gap-1 text-[10px] text-brand-text-secondary/70 font-mono">
+                  <Info className="w-3 h-3" />
+                  <span>Instant activation. Cancel anytime.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {activeTab !== "profile" && activeTab !== "security" && activeTab !== "notifications" && activeTab !== "billing" && (
         <div className="glass-card rounded-2xl p-12 text-center animate-fadeIn">
           <div className="w-12 h-12 rounded-2xl bg-white/5 mx-auto flex items-center justify-center text-brand-text-secondary mb-4">
             <Settings className="w-5 h-5" />
