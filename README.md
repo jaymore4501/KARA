@@ -37,6 +37,10 @@ Designed with a **dark-mode cyberpunk aesthetic**, KARA features an interactive 
 
 ---
 
+<img src="frontend/public/Kara Intro Poster.png" alt="KARA AI Logo" style="border-radius: 28px; box-shadow: 0 12px 40px rgba(157, 108, 255, 0.35);" />
+
+---
+
 ## ✨ Key Features
 
 - **🧠 Swarm Multi-Agent Engine:** Coordinated AI roles working in parallel (CEO, Architect, Data Scientist, UX Lead).
