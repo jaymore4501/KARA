@@ -42,35 +42,25 @@ const DEMO_PROJECTS: ProjectResponse[] = [
 
 export default function ExportsPage() {
   const { accessToken } = useAuthStore();
-  const [projects, setProjects] = useState<ProjectResponse[]>([]);
-  const [selectedProjectId, setSelectedProjectId] = useState<string>("");
-  const [isLoading, setIsLoading] = useState(true);
+  const [projects, setProjects] = useState<ProjectResponse[]>(DEMO_PROJECTS);
+  const [selectedProjectId, setSelectedProjectId] = useState<string>("demo-velocloud");
   const [downloadingId, setDownloadingId] = useState<string | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!accessToken) {
-      setProjects(DEMO_PROJECTS);
-      setSelectedProjectId(DEMO_PROJECTS[0].id);
-      setIsLoading(false);
-      return;
-    }
+    if (!accessToken) return;
 
     projectsApi.list(accessToken)
       .then((data) => {
-        const list = data.projects.length > 0 ? data.projects : DEMO_PROJECTS;
-        setProjects(list);
-        if (list.length > 0) {
-          setSelectedProjectId(list[0].id);
+        if (data && data.projects && data.projects.length > 0) {
+          // Combine user projects first, followed by demo projects for reference
+          const combined = [...data.projects, ...DEMO_PROJECTS];
+          setProjects(combined);
+          setSelectedProjectId(data.projects[0].id);
         }
       })
       .catch((err) => {
-        console.error("Failed to load projects, fallback to default startup demo packages", err);
-        setProjects(DEMO_PROJECTS);
-        setSelectedProjectId(DEMO_PROJECTS[0].id);
-      })
-      .finally(() => {
-        setIsLoading(false);
+        console.error("Using default demo projects", err);
       });
   }, [accessToken]);
 
@@ -122,7 +112,7 @@ export default function ExportsPage() {
   };
 
   const handleDownload = async (projectId: string, type: string, filename: string) => {
-    const selected = projects.find(p => p.id === projectId) || DEMO_PROJECTS[0];
+    const selected = projects.find(p => p.id === projectId) || projects[0] || DEMO_PROJECTS[0];
 
     // If demo project, trigger instant client generation
     if (projectId.startsWith("demo-")) {
@@ -171,7 +161,8 @@ export default function ExportsPage() {
     }
   };
 
-  const selectedProject = projects.find(p => p.id === selectedProjectId) || projects[0];
+  // Compute active project safely
+  const activeProject = projects.find(p => p.id === selectedProjectId) || projects[0] || DEMO_PROJECTS[0];
 
   const getExportAssets = (project: ProjectResponse) => [
     { type: "bundle", name: `${project.name} - Full Package`, ext: "zip", size: "Zip Archive", icon: Package, filename: `${project.name.replace(/\s+/g, '_')}_Startup_Package.zip` },
@@ -199,75 +190,68 @@ export default function ExportsPage() {
         </div>
       </div>
 
-      {isLoading ? (
-        <div className="min-h-[200px] flex items-center justify-center">
-          <div className="w-6 h-6 rounded-full border-2 border-brand-primary border-t-transparent animate-spin" />
-        </div>
-      ) : (
-        <div className="space-y-6">
-          {/* Project Selection Dropdown Header */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 glass-card rounded-2xl">
-            <div className="text-left">
-              <span className="text-[9px] font-mono text-brand-text-secondary uppercase tracking-widest block mb-1">Active workspace</span>
-              <h4 className="text-sm font-semibold text-white">Select Startup Package</h4>
-            </div>
-            <select
-              value={selectedProjectId}
-              onChange={(e) => setSelectedProjectId(e.target.value)}
-              className="bg-[#0D0B16] border border-white/10 focus:border-brand-primary/40 focus:outline-none rounded-xl px-4 py-2.5 text-xs text-white cursor-pointer w-full sm:w-auto"
-            >
-              {projects.map((p) => (
-                <option key={p.id} value={p.id}>
-                  {p.name} ({p.status.toUpperCase()})
-                </option>
-              ))}
-            </select>
+      <div className="space-y-6">
+        {/* Project Selection Dropdown Header */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 glass-card rounded-2xl border border-white/10 bg-[#0B0813]">
+          <div className="text-left">
+            <span className="text-[9px] font-mono text-brand-text-secondary uppercase tracking-widest block mb-1">Active workspace</span>
+            <h4 className="text-sm font-semibold text-white">Select Startup Package</h4>
           </div>
+          <select
+            value={activeProject.id}
+            onChange={(e) => setSelectedProjectId(e.target.value)}
+            className="bg-[#0D0B16] text-white border border-white/20 focus:border-brand-primary focus:outline-none rounded-xl px-4 py-2.5 text-xs font-medium cursor-pointer w-full sm:w-auto min-w-[220px]"
+          >
+            {projects.map((p) => (
+              <option key={p.id} value={p.id} className="bg-[#0D0B16] text-white py-2">
+                {p.name} ({(p.status || "ACTIVE").toUpperCase()})
+              </option>
+            ))}
+          </select>
+        </div>
 
-          {errorMsg && (
-            <div className="p-4 rounded-xl border border-brand-danger/20 bg-brand-danger/10 text-xs text-brand-danger animate-fadeIn text-left">
-              {errorMsg}
-            </div>
-          )}
+        {errorMsg && (
+          <div className="p-4 rounded-xl border border-brand-danger/20 bg-brand-danger/10 text-xs text-brand-danger animate-fadeIn text-left">
+            {errorMsg}
+          </div>
+        )}
 
-          {selectedProject && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {getExportAssets(selectedProject).map((exp, idx) => (
-                <div key={idx} className="glass-card rounded-2xl p-5 hover:border-brand-primary/20 transition-all group text-left">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-brand-primary/10 border border-brand-primary/20 flex items-center justify-center text-brand-highlight shrink-0">
-                      <exp.icon className="w-5 h-5" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h3 className="text-sm font-semibold text-white group-hover:text-brand-highlight transition-colors truncate">
-                        {exp.name}
-                      </h3>
-                      <div className="flex items-center gap-3 mt-1">
-                        <span className="text-[9px] font-mono text-brand-text-secondary uppercase">{exp.ext}</span>
-                        <span className="text-[9px] text-brand-text-secondary">{exp.size}</span>
-                        <span className="text-[9px] font-mono text-brand-success flex items-center gap-1">
-                          <CheckCircle2 className="w-3 h-3" /> Ready
-                        </span>
-                      </div>
-                    </div>
-                    <button
-                      onClick={() => handleDownload(selectedProject.id, exp.type, exp.filename)}
-                      disabled={downloadingId !== null}
-                      className="p-3 rounded-xl bg-brand-primary/10 text-brand-highlight hover:bg-brand-primary/20 transition-all cursor-pointer disabled:opacity-40 shrink-0"
-                    >
-                      {downloadingId === exp.type ? (
-                        <div className="w-4 h-4 border-2 border-brand-highlight border-t-transparent animate-spin rounded-full" />
-                      ) : (
-                        <Download className="w-4 h-4" />
-                      )}
-                    </button>
+        {/* 7 Export Cards Grid - Guaranteed Rendering */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 animate-fadeIn">
+          {getExportAssets(activeProject).map((exp, idx) => (
+            <div key={idx} className="glass-card rounded-2xl p-5 border border-white/10 bg-[#0B0813] hover:border-brand-primary/30 transition-all group text-left">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-brand-primary/10 border border-brand-primary/20 flex items-center justify-center text-brand-highlight shrink-0">
+                  <exp.icon className="w-5 h-5" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-sm font-semibold text-white group-hover:text-brand-highlight transition-colors truncate">
+                    {exp.name}
+                  </h3>
+                  <div className="flex items-center gap-3 mt-1">
+                    <span className="text-[9px] font-mono text-brand-text-secondary uppercase">{exp.ext}</span>
+                    <span className="text-[9px] text-brand-text-secondary">{exp.size}</span>
+                    <span className="text-[9px] font-mono text-brand-success flex items-center gap-1">
+                      <CheckCircle2 className="w-3 h-3" /> Ready
+                    </span>
                   </div>
                 </div>
-              ))}
+                <button
+                  onClick={() => handleDownload(activeProject.id, exp.type, exp.filename)}
+                  disabled={downloadingId !== null}
+                  className="p-3 rounded-xl bg-brand-primary/10 text-brand-highlight hover:bg-brand-primary/20 transition-all cursor-pointer disabled:opacity-40 shrink-0"
+                >
+                  {downloadingId === exp.type ? (
+                    <div className="w-4 h-4 border-2 border-brand-highlight border-t-transparent animate-spin rounded-full" />
+                  ) : (
+                    <Download className="w-4 h-4" />
+                  )}
+                </button>
+              </div>
             </div>
-          )}
+          ))}
         </div>
-      )}
+      </div>
     </div>
   );
 }
