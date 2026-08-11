@@ -25,8 +25,6 @@
     <a href="#-quick-start">Quick Start</a> •
     <a href="#-api-reference">API Reference</a>
   <p align="center">
-    <img src="frontend/public/Kara%20Intro%20Poster.png" alt="KARA AI Engine Intro Poster" width="100%" style="border-radius: 16px; box-shadow: 0 12px 40px rgba(124, 92, 255, 0.25);" />
-  </p>
 
   ---
 </div>
