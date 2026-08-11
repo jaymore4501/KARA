@@ -1,147 +1,110 @@
-# 🚀 KARA — Deployment & Local Setup Guide
+# 🚀 KARA AI - Deployment Guide
 
-This guide provides simple, step-by-step instructions to set up and run **KARA** locally from a **ZIP download** or **Git clone**, as well as cloud deployment on **Render**.
-
----
-
-## 📦 How to Setup & Run Locally (ZIP Download on Laptop/PC)
-
-If you downloaded this repository as a **ZIP file** from GitHub (`KARA-main.zip`):
-
-### 1. Extract the ZIP File
-1. Right-click `KARA-main.zip` and select **Extract All...** (or unzip).
-2. Open the extracted folder `KARA-main` in **VS Code** (or your Terminal / Command Prompt).
+This guide provides concise, professional instructions for deploying **KARA** (Autonomous Multi-Agent Startup Engine) locally on your laptop, as well as production deployments on **Render** (Backend API) and **Vercel** (Frontend App).
 
 ---
 
-### 2. Prerequisites Check
-Make sure your laptop has:
-- **Node.js (v18+)** — [Download Node.js](https://nodejs.org/)
-- **Python (v3.11+)** — [Download Python](https://www.python.org/)
+## 💻 1. Local Laptop Setup
 
----
+### Prerequisites
+- **Node.js**: v18+ & npm
+- **Python**: v3.11+
+- **Git**
 
-### 3. Step 1: Start the Backend (FastAPI)
+### Step-by-Step Setup
 
-Open your first Terminal tab in the project root folder (`KARA-main`):
-
+#### 1. Backend Setup (FastAPI Engine)
 ```bash
-# 1. Move into the backend folder
 cd backend
-
-# 2. Create the environment file
-# On Windows Command Prompt / PowerShell:
-copy .env.example .env
-
-# On Mac / Linux:
-cp .env.example .env
-```
-
-Open `backend/.env` in VS Code and add your Google Gemini API Key:
-```env
-GEMINI_API_KEY=your_actual_gemini_api_key_here
-PORT=8000
-CORS_ORIGINS=http://localhost:3000
-```
-
-Install Python dependencies and start the backend server:
-```bash
-# Install dependencies
+python -m venv venv
+# Windows: venv\Scripts\activate  |  Mac/Linux: source venv/bin/activate
 pip install -r requirements.txt
-
-# Start backend server
-python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
 ```
-> 🟢 **Backend Live:** `http://127.0.0.1:8000` (API Docs: `http://127.0.0.1:8000/docs`)
 
----
+Create a `.env` file in `backend/`:
+```env
+APP_NAME="KARA"
+APP_VERSION="1.0.0"
+API_PREFIX="/api/v1"
+CORS_ORIGINS=["http://localhost:3000", "http://localhost:3001"]
+JWT_SECRET_KEY="replace-with-a-strong-secret-key"
+GEMINI_API_KEY="your-gemini-api-key"
+```
 
-### 4. Step 2: Start the Frontend (Next.js)
-
-Open a **second Terminal tab** in the project root folder (`KARA-main`):
-
+Launch the Backend Server:
 ```bash
-# 1. Move into the frontend folder
-cd frontend
+uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
+```
+*API documentation available at:* `http://localhost:8000/docs`
 
-# 2. Install Node dependencies
+#### 2. Frontend Setup (Next.js 16)
+```bash
+cd ../frontend
 npm install
-
-# 3. Start Next.js development server
-npm run dev
 ```
-> 🟢 **Frontend Live:** `http://localhost:3000`
 
----
+Create a `.env.local` file in `frontend/`:
+```env
+NEXT_PUBLIC_API_URL="http://localhost:8000/api/v1"
+```
 
-### 5. Step 3: Open in Laptop Browser
-Open your Web Browser (Chrome, Edge, Brave, Safari) and go to:
-👉 **`http://localhost:3000`**
-
----
-
-## 💻 Local Git Setup (Alternative)
-
-If you are cloning via Git:
-
+Launch the Frontend Dev Server:
 ```bash
-git clone https://github.com/jaymore4501/KARA.git
-cd KARA
+npm run dev -- -p 3001
 ```
-Then follow the same Backend (`cd backend`) and Frontend (`cd frontend`) steps above.
+*Web application accessible at:* `http://localhost:3001`
 
 ---
 
-## ☁️ Option 2: Deploying to Render (Cloud)
+## 🌐 2. Render Deployment (Backend API)
 
-### Step 1: Deploy Backend (Web Service)
+Render hosts the Python FastAPI multi-agent backend engine.
 
-1. Log in to [Render Dashboard](https://dashboard.render.com/) and click **New +** → **Web Service**.
-2. Connect your GitHub repository: `https://github.com/jaymore4501/KARA`.
-3. Configure Backend Service settings:
+### Step-by-Step Deployment
+
+1. Sign in to [Render Dashboard](https://dashboard.render.com/) and click **New +** → **Web Service**.
+2. Connect your GitHub repository (`jaymore4501/KARA`).
+3. Configure service settings:
    - **Name:** `kara-backend`
    - **Root Directory:** `backend`
    - **Environment:** `Python 3`
    - **Build Command:** `pip install -r requirements.txt`
    - **Start Command:** `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
-4. Add **Environment Variables**:
-   - `GEMINI_API_KEY` = `your_actual_gemini_key`
-   - `CORS_ORIGINS` = `https://kara-frontend.onrender.com` (your frontend Render URL)
-5. Click **Create Web Service**. Copy your backend URL (e.g. `https://kara-backend.onrender.com`).
-
----
-
-### Step 2: Deploy Frontend (Web Service)
-
-1. Click **New +** → **Web Service** on Render.
-2. Select your repository `https://github.com/jaymore4501/KARA`.
-3. Configure Frontend Service settings:
-   - **Name:** `kara-frontend`
-   - **Root Directory:** `frontend`
-   - **Environment:** `Node`
-   - **Build Command:** `npm install && npm run build`
-   - **Start Command:** `npm run start`
-4. Add **Environment Variables**:
-   - `NEXT_PUBLIC_API_URL` = `https://kara-backend.onrender.com`
+4. Add **Environment Variables** under Render settings:
+   - `GEMINI_API_KEY`: Your Google Gemini API Key
+   - `JWT_SECRET_KEY`: A secure secret key for token authentication
+   - `CORS_ORIGINS`: `["https://your-vercel-app.vercel.app"]`
 5. Click **Create Web Service**.
+6. Copy your deployed Render backend URL (e.g. `https://kara-backend.onrender.com`).
 
 ---
 
-## 🐳 Option 3: Docker Deployment (Single Command)
+## ⚡ 3. Vercel Deployment (Frontend Web App)
 
-If you have Docker & Docker Compose installed:
+Vercel hosts the Next.js dark-mode parallax dashboard interface.
 
-```bash
-# Build and run backend + frontend together
-docker-compose up --build -d
-```
-> 🟢 Access Frontend at `http://localhost:3000` & Backend at `http://localhost:8000`.
+### Step-by-Step Deployment
+
+1. Sign in to [Vercel Dashboard](https://vercel.com/dashboard) and click **Add New...** → **Project**.
+2. Import your GitHub repository (`jaymore4501/KARA`).
+3. Configure project settings:
+   - **Framework Preset:** Next.js
+   - **Root Directory:** Edit and select `frontend`
+   - **Build Command:** `npm run build`
+4. Add **Environment Variables**:
+   - `NEXT_PUBLIC_API_URL`: `https://kara-backend.onrender.com/api/v1` *(Replace with your Render backend URL)*
+5. Click **Deploy**.
+
+Vercel will compile and issue your live production URL (e.g., `https://kara-ai.vercel.app`).
 
 ---
 
-## ✅ Deployment Checklist
+## 🛠️ Verification & Troubleshooting
 
-- [x] Gemini API key configured in backend `.env`
-- [x] Backend CORS origin set to frontend URL
-- [x] Next.js production build verified (`npm run build`)
-- [x] Security headers & strict CORS active
+- **CORS Configuration:** Ensure your production Vercel domain is whitelisted in `CORS_ORIGINS` on Render.
+- **Backend Health Check:** Visit `https://kara-backend.onrender.com/health` to confirm `{"status":"healthy"}`.
+- **Render Cold Starts:** Free tier services sleep after inactivity; initial requests take ~30 seconds to warm up.
+
+---
+
+<p align="center">Made with ❤️ for <b>KARA AI Platform</b></p>
