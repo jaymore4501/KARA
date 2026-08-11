@@ -88,6 +88,17 @@ async def export_document(
     )
     doc = result_doc.scalar_one_or_none()
     if doc is None:
+        from app.api.documents import seed_default_documents_if_empty
+        await seed_default_documents_if_empty(db, project)
+        result_doc = await db.execute(
+            select(ProjectDocument).where(
+                ProjectDocument.project_id == project_id,
+                ProjectDocument.doc_type == doc_type
+            )
+        )
+        doc = result_doc.scalar_one_or_none()
+
+    if doc is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Artifact of type {doc_type} has not been generated yet for this project",
@@ -139,6 +150,10 @@ async def download_bundle(
         select(ProjectDocument).where(ProjectDocument.project_id == project_id)
     )
     docs = result_docs.scalars().all()
+
+    if not docs:
+        from app.api.documents import seed_default_documents_if_empty
+        docs = await seed_default_documents_if_empty(db, project)
 
     if not docs:
         raise HTTPException(
