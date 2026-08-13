@@ -6,17 +6,24 @@
   ### **Autonomous Multi-Agent Startup Engine**
 
   *Transform raw business ideas into production-grade full-stack applications, market analytics, financial models, and execution roadmaps in seconds.*
-
+  
   <p align="center">
-    <a href="https://ai.google.dev"><img src="https://img.shields.io/badge/AI_Engine-Gemini_Pro-8E75FF?style=flat-square&logo=google&logoColor=white" alt="Gemini AI" /></a>
-    <a href="#-autonomous-agent-workforce"><img src="https://img.shields.io/badge/AI_Agents-9_Active_Swarm-7C5CFF?style=flat-square&logo=probot&logoColor=white" alt="AI Agents" /></a>
-    <a href="#-autonomous-agent-workforce"><img src="https://img.shields.io/badge/Workforce_Roles-Specialized-9D6CFF?style=flat-square&logo=gitkraken&logoColor=white" alt="Workforce Roles" /></a>
-    <a href="https://nextjs.org"><img src="https://img.shields.io/badge/Frontend-Next.js_16-000000?style=flat-square&logo=nextdotjs&logoColor=white" alt="Next.js" /></a>
-    <a href="https://fastapi.tiangolo.com"><img src="https://img.shields.io/badge/Backend-FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white" alt="FastAPI" /></a>
-    <a href="https://www.docker.com"><img src="https://img.shields.io/badge/Docker-Ready-2496ED?style=flat-square&logo=docker&logoColor=white" alt="Docker" /></a>
-    <a href="https://github.com/jaymore4501/KARA/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/jaymore4501/KARA/ci.yml?branch=main&label=Build&style=flat-square&logo=githubactions&logoColor=white" alt="CI Build" /></a>
+  <a href="https://ai.google.dev"><img src="https://img.shields.io/badge/AI_Engine-Gemini_Pro-8E75FF?style=flat-square&logo=google&logoColor=white" alt="Gemini AI" /></a>
+  <a href="#-autonomous-agent-workforce"><img src="https://img.shields.io/badge/AI_Agents-9_Active_Swarm-7C5CFF?style=flat-square&logo=probot&logoColor=white" alt="AI Agents" /></a>
+  <a href="#-autonomous-agent-workforce"><img src="https://img.shields.io/badge/Workforce_Roles-Specialized-9D6CFF?style=flat-square&logo=gitkraken&logoColor=white" alt="Workforce Roles" /></a>
+  <a href="https://nextjs.org"><img src="https://img.shields.io/badge/Frontend-Next.js_16-000000?style=flat-square&logo=nextdotjs&logoColor=white" alt="Next.js" /></a>
+  <a href="https://fastapi.tiangolo.com"><img src="https://img.shields.io/badge/Backend-FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white" alt="FastAPI" /></a>
+  <a href="https://www.python.org"><img src="https://img.shields.io/badge/Python-3.12+-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python" /></a>
+  <a href="https://www.typescriptlang.org"><img src="https://img.shields.io/badge/TypeScript-5+-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" /></a>
+  <a href="https://www.docker.com"><img src="https://img.shields.io/badge/Docker-Ready-2496ED?style=flat-square&logo=docker&logoColor=white" alt="Docker" /></a>
+  <a href="https://github.com/jaymore4501/KARA/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/jaymore4501/KARA/ci.yml?branch=main&label=Build&style=flat-square&logo=githubactions&logoColor=white" alt="CI Build" /></a>
+   <a href="https://react.dev"><img src="https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=black" alt="React" /></a>
+   <a href="https://nodejs.org"><img src="https://img.shields.io/badge/Node.js-22+-339933?style=flat-square&logo=node.js&logoColor=white" alt="Node.js" /></a>
     <a href="https://github.com/jaymore4501/KARA/blob/main/LICENSE"><img src="https://img.shields.io/github/license/jaymore4501/KARA?color=4169E1&style=flat-square" alt="License MIT" /></a>
-  </p>
+    <a href="https://github.com/jaymore4501/KARA/security"><img src="https://img.shields.io/badge/Security-Verified-00C853?style=flat-square&logo=shield&logoColor=white" alt="Security" /></a>
+    <a href="https://github.com/jaymore4501/KARA/actions"><img src="https://img.shields.io/badge/CI-CD-7C5CFF?style=flat-square&logo=githubactions&logoColor=white" alt="CI/CD" /></a>
+    <a href="https://github.com/jaymore4501/KARA"><img src="https://img.shields.io/github/languages/code-size/jaymore4501/KARA?style=flat-square&color=7C5CFF" alt="Code Size" /></a>
+</p>
 
   <p align="center">
     <a href="#-key-features">Key Features</a> •
