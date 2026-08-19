@@ -96,29 +96,35 @@ KARA delegates tasks across specialized autonomous agent personas operating in p
 
 ```text
 KARA/
-├── backend/                  # FastAPI Backend Application
+├── backend/                  # FastAPI Backend Application & Swarm Engine
 │   ├── app/
-│   │   ├── main.py           # FastAPI entrypoint & router definitions
-│   │   ├── config.py         # App configuration & env parameters
-│   │   ├── models/           # Pydantic data schemas & DB models
-│   │   ├── routers/          # API route handlers (/projects, /agents)
-│   │   └── services/         # Multi-agent execution engine logic
-│   ├── requirements.txt      # Python dependencies
-│   └── pyproject.toml        # uv configuration manifest
+│   │   ├── main.py           # FastAPI main entrypoint & Security middleware
+│   │   ├── config.py         # App settings & Gemini API configuration
+│   │   ├── api/              # REST & WebSocket Endpoints (/auth, /projects, /agents, /documents, /exports, /analytics)
+│   │   ├── database/         # PostgreSQL AsyncSession engine & SQLAlchemy models
+│   │   ├── agents/           # Swarm Agent Registry & 10 Autonomous Persona Handlers
+│   │   ├── workflows/        # LangGraph StateGraph orchestration pipeline
+│   │   ├── rag/              # Document parser & PgVector RAG embedding engine
+│   │   ├── auth/             # JWT auth tokens & security dependencies
+│   │   └── services/         # Gemini 2.5 LLM integration client
+│   ├── requirements.txt      # Python backend dependencies
+│   └── pyproject.toml        # uv package manager manifest
 │
 ├── frontend/                 # Next.js 16 (Turbopack) Application
-│   ├── public/               # Static assets & brand logos
-│   │   ├── HERO-Logo.png     # Official KARA full-coverage brand logo
-│   │   └── ROBOT_HERO_IMG.png# Core 3D Robot visualization asset
+│   ├── public/               # Brand assets & visual media
+│   │   ├── Kara Intro Poster.png # Official KARA showcase poster
+│   │   └── KARA-LOGO.png     # Brand squircle logo mark
 │   ├── src/
-│   │   ├── app/              # Next.js App Router (pages & layouts)
-│   │   └── components/
-│   │       ├── dashboard/    # Workspace execution dashboard
-│   │       └── marketing/    # Landing page, 3D HolographicCore, Timeline
-│   ├── package.json          # Node dependencies & scripts
-│   └── tailwind.config.ts    # Custom dark cyber design system tokens
+│   │   ├── app/              # Next.js App Router (pages & dashboard sub-routes)
+│   │   ├── components/       # UI components (marketing, dashboard, 3D parallax HUD)
+│   │   ├── store/            # Zustand global state (auth, credits, notifications)
+│   │   └── lib/              # API client methods & utility helpers
+│   ├── package.json          # Node.js dependencies & scripts
+│   └── tailwind.config.ts    # Cyberpunk design system tokens & colors
 │
-└── README.md                 # Project documentation
+├── Project_Deployment.md     # Deployment guide for local laptop, Render, and Vercel
+├── docker-compose.yml        # Docker compose orchestration
+└── README.md                 # Project documentation & overview
 ```
 
 ---
