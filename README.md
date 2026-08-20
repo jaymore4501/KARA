@@ -63,17 +63,17 @@ Designed with a **dark-mode cyberpunk aesthetic**, KARA features an interactive 
 
 KARA delegates tasks across specialized autonomous agent personas operating in parallel:
 
-| Agent Logo | Persona & Role | Key Responsibilities | Primary Output |
-| :---: | :--- | :--- | :--- |
-| 👑 | **Nova** <br> *(CEO & Strategy Lead)* | Strategic visioning, dynamic agent delegation, roadmap decisions | Executive Summary & GTM Strategy |
-| 🔍 | **Atlas** <br> *(Market Research)* | Deep intelligence crawling, TAM/SAM estimation, competitor sentiment | Market Intelligence & Segment Matrix |
-| 📋 | **Pulse** <br> *(Product Manager)* | PRD document autogeneration, agile epic mapping, feature value scoring | PRD Specifications & Sprint Backlog |
-| 🏗️ | **Forge** <br> *(Software Architect)* | System architecture design, database schema modeling, OpenAPI contracts | Schema Files & System Blueprints |
-| 💻 | **CodeX** <br> *(Backend Engineer)* | FastAPI & Node.js service development, SQL migrations, unit testing | Modular Backend & API Services |
-| ⚡ | **Flux** <br> *(Frontend Engineer)* | Component compilation, client state hooks, responsive UI assemblies | Production React/Next.js Client |
-| 🎨 | **Aura** <br> *(UI/UX Designer)* | Dark cosmic visual themes, typography frameworks, layout presets | Design Tokens & Wireframe Presets |
-| 📢 | **Echo** <br> *(Marketing Strategist)* | SEO positioning blueprints, ad copy autowriting, launch campaign sequencing | Launch Campaign & Social Assets |
-| 📊 | **Ledger & Vertex** <br> *(Finance & Investor Lead)* | COGS engine calculation, SaaS pricing yield, runway burn projections | Pitch Deck Slides & Financial Model |
+| Agent Logo | Persona & Role | Status | Key Responsibilities | Primary Output |
+| :---: | :--- | :---: | :--- | :--- |
+| 👑 | **Nova** <br> *(CEO & Strategy Lead)* | `🟢 LIVE` | Strategic visioning, dynamic agent delegation, roadmap decisions | Executive Summary & GTM Strategy |
+| 🔍 | **Atlas** <br> *(Market Research)* | `🟢 LIVE` | Deep intelligence crawling, TAM/SAM estimation, competitor sentiment | Market Intelligence & Segment Matrix |
+| 📋 | **Pulse** <br> *(Product Manager)* | `🟢 LIVE` | PRD document autogeneration, agile epic mapping, feature value scoring | PRD Specifications & Sprint Backlog |
+| 🏗️ | **Forge** <br> *(Software Architect)* | `🟢 LIVE` | System architecture design, database schema modeling, OpenAPI contracts | Schema Files & System Blueprints |
+| 💻 | **CodeX** <br> *(Backend Engineer)* | `🟢 LIVE` | FastAPI & Node.js service development, SQL migrations, unit testing | Modular Backend & API Services |
+| ⚡ | **Flux** <br> *(Frontend Engineer)* | `🟢 LIVE` | Component compilation, client state hooks, responsive UI assemblies | Production React/Next.js Client |
+| 🎨 | **Aura** <br> *(UI/UX Designer)* | `🟢 LIVE` | Dark cosmic visual themes, typography frameworks, layout presets | Design Tokens & Wireframe Presets |
+| 📢 | **Echo** <br> *(Marketing Strategist)* | `🟢 LIVE` | SEO positioning blueprints, ad copy autowriting, launch campaign sequencing | Launch Campaign & Social Assets |
+| 📊 | **Ledger & Vertex** <br> *(Finance & Investor Lead)* | `🟢 LIVE` | COGS engine calculation, SaaS pricing yield, runway burn projections | Pitch Deck Slides & Financial Model |
 
 ---
 
