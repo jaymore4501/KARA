@@ -1,9 +1,71 @@
 "use client";
 
-import React, { useState, useRef } from "react";
-import { BarChart3, TrendingUp, Zap, Clock, Activity, Calendar, ArrowUpRight, Cpu, HardDrive, Layers, Server, Shield, CheckCircle, Download, Sparkles, FileText, Printer } from "lucide-react";
+import React, { useState, useEffect, useRef } from "react";
+import { BarChart3, TrendingUp, Zap, Clock, Activity, Calendar, ArrowUpRight, Cpu, HardDrive, Layers, Server, Shield, CheckCircle, Download, Sparkles, FileText, Printer, Building2, CheckCircle2 } from "lucide-react";
+import { useAuthStore } from "@/store/auth-store";
+import { projectsApi } from "@/lib/api";
+
+interface StartupProjectDetails {
+  id: string;
+  name: string;
+  idea: string;
+  problem: string;
+  target_users: string;
+  status: string;
+  startup_score: number;
+  tokens_used: number;
+  agents_run: number;
+  country: string;
+  budget: string;
+}
+
+const DEMO_STARTUPS: StartupProjectDetails[] = [
+  {
+    id: "demo-velocloud",
+    name: "VeloCloud AI SaaS Platform",
+    idea: "Autonomous Cloud Log Interceptor & DevOps Root-Cause Analysis Swarm",
+    problem: "DevOps teams waste over 4 hours per week manually debugging cloud server logs.",
+    target_users: "DevOps Engineers, Site Reliability Engineers, SaaS CTOs",
+    status: "COMPLETED",
+    startup_score: 94,
+    tokens_used: 84200,
+    agents_run: 18,
+    country: "Global",
+    budget: "$150,000",
+  },
+  {
+    id: "demo-nexusflow",
+    name: "NexusFlow Real Estate AI",
+    idea: "Real Estate Contract AI Compiler & Automated Compliance Reviewer",
+    problem: "Real estate brokers spend up to 6 hours reviewing standard purchase contracts for compliance risks.",
+    target_users: "Real Estate Brokers, Commercial Landlords, Property Managers",
+    status: "COMPLETED",
+    startup_score: 91,
+    tokens_used: 65400,
+    agents_run: 14,
+    country: "United States",
+    budget: "$200,000",
+  },
+  {
+    id: "demo-aether",
+    name: "Aether Health Records Compiler",
+    idea: "HIPAA-Compliant Patient EHR Data Synthesizer & Medical Billing Auditor",
+    problem: "Medical clinics spend thousands on manual coding and claim error resolution.",
+    target_users: "Hospital Networks, Private Clinics, HealthTech Founders",
+    status: "ACTIVE",
+    startup_score: 89,
+    tokens_used: 51900,
+    agents_run: 12,
+    country: "Global",
+    budget: "$300,000",
+  }
+];
 
 export default function AnalyticsPage() {
+  const { accessToken } = useAuthStore();
+  const [startups, setStartups] = useState<StartupProjectDetails[]>(DEMO_STARTUPS);
+  const [selectedProjectId, setSelectedProjectId] = useState<string>("demo-velocloud");
+
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [activeLineIndex, setActiveLineIndex] = useState<number | null>(null);
   const [activeTab, setActiveTab] = useState<string>("All");
@@ -16,6 +78,43 @@ export default function AnalyticsPage() {
   const settlementSvgRef = useRef<SVGSVGElement>(null);
   const ingestSvgRef = useRef<SVGSVGElement>(null);
   const analyticsPortalRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!accessToken) return;
+
+    projectsApi.list(accessToken)
+      .then((data) => {
+        if (data && data.projects && data.projects.length > 0) {
+          const userProjectsMapped: StartupProjectDetails[] = data.projects.map((p) => ({
+            id: p.id,
+            name: p.name,
+            idea: p.idea || "Autonomous Multi-Agent AI Startup Project",
+            problem: p.problem || "Automating complex business workflows and code synthesis",
+            target_users: p.target_users || "Enterprise Developers & SaaS Founders",
+            status: (p.status || "active").toUpperCase(),
+            startup_score: p.startup_score || 92,
+            tokens_used: p.total_tokens_used || 76500,
+            agents_run: p.total_agents_run || 16,
+            country: p.country || "Global",
+            budget: p.budget || "$150,000",
+          }));
+          const combined = [...userProjectsMapped, ...DEMO_STARTUPS];
+          setStartups(combined);
+          setSelectedProjectId(userProjectsMapped[0].id);
+        }
+      })
+      .catch((err) => {
+        console.error("Using default demo startups for analytics", err);
+      });
+  }, [accessToken]);
+
+  const activeProject = startups.find(s => s.id === selectedProjectId) || startups[0] || DEMO_STARTUPS[0];
+
+  const exportDateStr = new Date().toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
 
   const weeklyData = [
     { day: "Mon", tokens: 3200, agents: 12 },
@@ -271,8 +370,9 @@ export default function AnalyticsPage() {
         heightLeft -= pageHeight;
       }
 
+      const cleanProjectName = activeProject.name.replace(/[^a-zA-Z0-9]/g, "_");
       const dateStr = new Date().toISOString().slice(0, 10);
-      pdf.save(`KARA_Analytics_HD_Report_${dateStr}.pdf`);
+      pdf.save(`KARA_Analytics_${cleanProjectName}_${dateStr}.pdf`);
     } catch (err) {
       console.error("PDF engine fallback to window print:", err);
       window.print();
@@ -293,8 +393,24 @@ export default function AnalyticsPage() {
           <p className="text-xs text-brand-text-secondary mt-1">Real-time usage analytics, model latency and system performance.</p>
         </div>
 
-        {/* Action Controls: Export PDF Button & Date Range */}
+        {/* Action Controls: Project Selector & Export PDF Button */}
         <div className="flex flex-wrap items-center gap-3">
+          {/* Startup Selector Dropdown */}
+          <div className="flex items-center gap-2 bg-[#0D0B16] border border-white/10 rounded-xl px-3 py-1.5">
+            <Building2 className="w-4 h-4 text-brand-primary shrink-0" />
+            <select
+              value={activeProject.id}
+              onChange={(e) => setSelectedProjectId(e.target.value)}
+              className="bg-transparent text-white text-xs font-medium focus:outline-none cursor-pointer min-w-[160px]"
+            >
+              {startups.map((s) => (
+                <option key={s.id} value={s.id} className="bg-[#0D0B16] text-white py-1">
+                  {s.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
           <button
             onClick={handleExportPDF}
             disabled={isExporting}
@@ -312,41 +428,69 @@ export default function AnalyticsPage() {
               </>
             )}
           </button>
-
-          <div className="flex items-center gap-2 bg-brand-card border border-white/5 px-3 py-2 rounded-xl font-mono text-[10px] text-brand-text-secondary">
-            <Calendar className="w-3.5 h-3.5 text-brand-primary" />
-            <span>July 26 - Aug 02, 2026</span>
-          </div>
         </div>
       </div>
 
       {/* Main Printable Analytics Container */}
-      <div id="analytics-portal-container" ref={analyticsPortalRef} className="space-y-6 bg-[#06040A] p-3 rounded-2xl border border-white/5">
+      <div id="analytics-portal-container" ref={analyticsPortalRef} className="space-y-6 bg-[#06040A] p-4 rounded-2xl border border-white/5">
         
-        {/* PDF Header Showcase Banner (Rendered in PDF) */}
-        <div className="flex items-center justify-between p-4 glass-card rounded-2xl border border-brand-primary/20 bg-brand-primary/5">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-brand-primary/10 border border-brand-primary/20 flex items-center justify-center text-brand-highlight font-bold font-mono">
-              ⚡
+        {/* Dynamic Startup Analytics Header Banner */}
+        <div className="p-5 glass-card rounded-2xl border border-brand-primary/20 bg-gradient-to-r from-brand-primary/10 via-[#0D0A1B] to-brand-primary/5 text-left space-y-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-3 border-b border-white/10">
+            <div className="flex items-center gap-3">
+              <div className="w-11 h-11 rounded-xl bg-brand-primary/20 border border-brand-primary/40 flex items-center justify-center text-brand-highlight text-lg font-bold font-mono shrink-0">
+                🚀
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <h2 className="text-lg font-bold text-white font-display tracking-tight">{activeProject.name}</h2>
+                  <span className="text-[9px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-brand-success/15 text-brand-success border border-brand-success/30">
+                    {activeProject.status}
+                  </span>
+                </div>
+                <p className="text-xs text-brand-text-secondary mt-0.5 line-clamp-1">{activeProject.idea}</p>
+              </div>
             </div>
-            <div className="text-left">
-              <h3 className="text-sm font-semibold text-white">KARA Swarm System Telemetry Report</h3>
-              <p className="text-[10px] text-brand-text-secondary">High-Definition Performance, Token Usage & Agent Workload Export</p>
+
+            <div className="flex flex-wrap items-center gap-2 self-start sm:self-center shrink-0">
+              <div className="px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 text-[10px] font-mono text-brand-text-secondary flex items-center gap-1.5">
+                <Calendar className="w-3.5 h-3.5 text-brand-primary" />
+                <span>Report Exported: {exportDateStr}</span>
+              </div>
             </div>
           </div>
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-brand-primary/10 text-brand-highlight text-[10px] font-mono border border-brand-primary/20">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Verified System Snapshot</span>
+
+          {/* Startup Details Metadata Bar */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
+            <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
+              <span className="text-[8px] font-mono text-brand-text-secondary uppercase tracking-widest block mb-0.5">Target Users</span>
+              <span className="text-xs font-semibold text-white truncate block">{activeProject.target_users}</span>
+            </div>
+            <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
+              <span className="text-[8px] font-mono text-brand-text-secondary uppercase tracking-widest block mb-0.5">Startup Health Score</span>
+              <span className="text-xs font-mono font-bold text-brand-highlight flex items-center gap-1">
+                <span>{activeProject.startup_score} / 100</span>
+                <span className="text-[9px] text-brand-success">★ High Viability</span>
+              </span>
+            </div>
+            <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
+              <span className="text-[8px] font-mono text-brand-text-secondary uppercase tracking-widest block mb-0.5">Token Consumption</span>
+              <span className="text-xs font-mono font-bold text-brand-primary">{activeProject.tokens_used.toLocaleString()} tokens</span>
+            </div>
+            <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
+              <span className="text-[8px] font-mono text-brand-text-secondary uppercase tracking-widest block mb-0.5">Swarm Execution</span>
+              <span className="text-xs font-mono font-bold text-white">{activeProject.agents_run} Active Agents</span>
+            </div>
           </div>
         </div>
 
         {/* Summary Stats Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {[
-            { label: "Total Tokens", value: "24,500", change: "+12%", icon: Zap, accent: "text-brand-primary" },
-            { label: "Agent Runs", value: "87", change: "+8%", icon: Activity, accent: "text-brand-success" },
+            { label: "Total Tokens", value: activeProject.tokens_used.toLocaleString(), change: "+12%", icon: Zap, accent: "text-brand-primary" },
+            { label: "Agent Runs", value: `${activeProject.agents_run} runs`, change: "+8%", icon: Activity, accent: "text-brand-success" },
             { label: "Avg. Exec Time", value: "14.3s", change: "-5%", icon: Clock, accent: "text-brand-highlight" },
-            { label: "Success Rate", value: "98.4%", change: "+0.3%", icon: TrendingUp, accent: "text-brand-success" },
+            { label: "Success Rate", value: `${activeProject.startup_score}%`, change: "+0.3%", icon: TrendingUp, accent: "text-brand-success" },
           ].map((stat, idx) => (
             <div key={idx} className="glass-card rounded-2xl p-5 relative overflow-hidden group transition-all duration-300 hover:scale-[1.02] text-left">
               <div className="absolute inset-0 bg-gradient-to-br from-white/[0.01] to-transparent pointer-events-none" />
