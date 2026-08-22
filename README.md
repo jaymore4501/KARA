@@ -44,7 +44,7 @@ Designed with a **dark-mode cyberpunk aesthetic**, KARA features an interactive 
 
 ---
 
-<img src="frontend/public/Kara Intro Poster.png" alt="KARA AI Logo" style="border-radius: 28px; box-shadow: 0 12px 40px rgba(157, 108, 255, 0.35);" />
+<img src="frontend/public/Kara Intro Poster.png" alt="KARA AI 16:9 Keynote Launch Poster" style="border-radius: 28px; box-shadow: 0 12px 40px rgba(157, 108, 255, 0.35);" />
 
 ---
 
