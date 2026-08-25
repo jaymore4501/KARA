@@ -29,6 +29,7 @@ import {
 } from "lucide-react";
 import { useAuthStore } from "@/store/auth-store";
 import { analyticsApi } from "@/lib/api";
+import { fetchGitHubStars, formatStarCount } from "@/lib/github";
 
 const sidebarNavItems = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
@@ -65,6 +66,11 @@ export default function DashboardLayout({
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [creditsHovered, setCreditsHovered] = useState(false);
   const [totalTokensUsed, setTotalTokensUsed] = useState(0);
+  const [starCount, setStarCount] = useState<number | null>(null);
+
+  useEffect(() => {
+    fetchGitHubStars("jaymore4501/KARA").then((count) => setStarCount(count));
+  }, []);
 
   const getNotifDetails = (type: string) => {
     switch (type) {
@@ -297,7 +303,7 @@ export default function DashboardLayout({
               <span className="font-medium text-white/90 group-hover:text-white text-[11px]">Star</span>
               <span className="flex items-center gap-0.5 font-mono text-[9px] text-amber-300 bg-amber-400/10 px-1.5 py-0.5 rounded-full border border-amber-400/20 font-bold">
                 <Star className="w-2.5 h-2.5 fill-amber-400 text-amber-400" />
-                <span>1.2k</span>
+                <span>{formatStarCount(starCount !== null ? starCount : 2)}</span>
               </span>
             </a>
             

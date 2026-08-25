@@ -7,6 +7,8 @@ import React, { useState, useEffect } from 'react';
 import { Sparkles, Menu, X, ArrowRight, Star } from 'lucide-react';
 import { Github } from './BrandIcons';
 
+import { fetchGitHubStars, formatStarCount } from '@/lib/github';
+
 interface NavbarProps {
   onNavigate: (sectionId: string) => void;
   onLaunchDashboard: () => void;
@@ -15,8 +17,11 @@ interface NavbarProps {
 export default function Navbar({ onNavigate, onLaunchDashboard }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [starCount, setStarCount] = useState<number | null>(null);
 
   useEffect(() => {
+    fetchGitHubStars("jaymore4501/KARA").then((count) => setStarCount(count));
+
     const handleScroll = () => {
       if (window.scrollY > 20) {
         setIsScrolled(true);
@@ -94,7 +99,7 @@ export default function Navbar({ onNavigate, onLaunchDashboard }: NavbarProps) {
             <span className="font-medium text-white/90 group-hover:text-white">Star on GitHub</span>
             <span className="flex items-center gap-0.5 font-mono text-[10px] text-amber-300 bg-amber-400/10 px-2 py-0.5 rounded-full border border-amber-400/20 font-bold">
               <Star className="w-2.5 h-2.5 fill-amber-400 text-amber-400" />
-              <span>1.2k</span>
+              <span>{formatStarCount(starCount !== null ? starCount : 2)}</span>
             </span>
           </a>
           <button
