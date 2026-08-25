@@ -4,7 +4,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { Sparkles, Menu, X, ArrowRight } from 'lucide-react';
+import { Sparkles, Menu, X, ArrowRight, Star } from 'lucide-react';
 import { Github } from './BrandIcons';
 
 interface NavbarProps {
@@ -83,18 +83,23 @@ export default function Navbar({ onNavigate, onLaunchDashboard }: NavbarProps) {
         </div>
 
         {/* CTA Buttons */}
-        <div className="hidden md:flex items-center gap-4">
+        <div className="hidden md:flex items-center gap-3">
           <a
             href="https://github.com/jaymore4501/KARA"
             target="_blank"
             rel="noreferrer"
-            className="text-brand-text-secondary hover:text-white transition-colors p-2"
+            className="group flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 hover:border-amber-500/40 text-xs transition-all shadow-sm hover:shadow-amber-500/10"
           >
-            <Github className="w-4 h-4" />
+            <Github className="w-3.5 h-3.5 text-white/80 group-hover:text-white" />
+            <span className="font-medium text-white/90 group-hover:text-white">Star on GitHub</span>
+            <span className="flex items-center gap-0.5 font-mono text-[10px] text-amber-300 bg-amber-400/10 px-2 py-0.5 rounded-full border border-amber-400/20 font-bold">
+              <Star className="w-2.5 h-2.5 fill-amber-400 text-amber-400" />
+              <span>1.2k</span>
+            </span>
           </a>
           <button
             onClick={onLaunchDashboard}
-            className="relative overflow-hidden group rounded-full text-xs font-semibold px-5 py-2.5 bg-gradient-to-r from-brand-secondary to-brand-primary text-white shadow-lg shadow-brand-primary/10 hover:shadow-brand-primary/25 transition-all duration-300 flex items-center gap-1.5"
+            className="relative overflow-hidden group rounded-full text-xs font-semibold px-5 py-2.5 bg-gradient-to-r from-brand-secondary to-brand-primary text-white shadow-lg shadow-brand-primary/10 hover:shadow-brand-primary/25 transition-all duration-300 flex items-center gap-1.5 cursor-pointer"
           >
             <span className="relative z-10 flex items-center gap-1">
               Launch Platform <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
