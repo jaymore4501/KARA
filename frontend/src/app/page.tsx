@@ -66,16 +66,28 @@ export default function LandingPage() {
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.012)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.012)_1px,transparent_1px)] bg-[size:60px_60px] opacity-40" />
       </div>
 
-      {/* Main Components */}
+      {/* Main Components Sequence (Matching Navbar Menu Order) */}
       <div className="relative z-10 flex flex-col min-h-screen">
         <Navbar onNavigate={handleNavigate} onLaunchDashboard={handleLaunchDashboard} />
         <Hero onLaunchDashboard={handleLaunchDashboard} onNavigate={handleNavigate} />
+
+        {/* 1. Dashboard (#dashboard) */}
         <InteractiveDashboard />
-        <AgentGrid />
-        <WorkflowTimeline />
+
+        {/* 2. Features (#features) */}
         <Features />
+
+        {/* 3. Autonomous Agents (#agents) */}
+        <AgentGrid />
+
+        {/* 4. How It Works Workflow (#workflow) */}
+        <WorkflowTimeline />
+
+        {/* 5. Pricing (#pricing) & Community Wall */}
         <Pricing onLaunchDashboard={handleLaunchDashboard} />
         <Testimonials />
+
+        {/* 6. Interactive KARA AI FAQ Chatbot (#faqs) & Footer */}
         <FAQ />
         <Footer />
       </div>
