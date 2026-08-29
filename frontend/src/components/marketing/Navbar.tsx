@@ -104,12 +104,14 @@ export default function Navbar({ onNavigate, onLaunchDashboard }: NavbarProps) {
           </a>
           <button
             onClick={onLaunchDashboard}
-            className="relative overflow-hidden group rounded-full text-xs font-semibold px-5 py-2.5 bg-gradient-to-r from-brand-secondary to-brand-primary text-white shadow-lg shadow-brand-primary/10 hover:shadow-brand-primary/25 transition-all duration-300 flex items-center gap-1.5 cursor-pointer"
+            className="relative overflow-hidden group rounded-full text-xs font-semibold px-5 py-2.5 bg-gradient-to-r from-brand-secondary via-brand-primary to-brand-highlight bg-[length:200%_auto] text-white shadow-[0_0_15px_rgba(124,92,255,0.25)] hover:shadow-[0_0_25px_rgba(157,108,255,0.55)] hover:bg-right hover:scale-[1.03] active:scale-[0.97] transition-all duration-500 ease-out flex items-center gap-1.5 cursor-pointer border border-brand-highlight/30"
           >
-            <span className="relative z-10 flex items-center gap-1">
-              Launch Platform <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            {/* Glossy Shimmer Reflection Sweep */}
+            <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/25 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-[300%] transition-transform duration-1000 ease-in-out pointer-events-none" />
+
+            <span className="relative z-10 flex items-center gap-1 font-medium">
+              Launch Platform <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-300" />
             </span>
-            <div className="absolute inset-0 -translate-x-full group-hover:translate-x-0 bg-gradient-to-r from-brand-primary to-brand-highlight transition-transform duration-500 ease-out" />
           </button>
         </div>
 

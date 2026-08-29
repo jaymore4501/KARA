@@ -54,19 +54,22 @@ export default function Hero({ onLaunchDashboard, onNavigate }: HeroProps) {
           <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto pt-2">
             <button
               onClick={onLaunchDashboard}
-              className="w-full sm:w-auto relative group overflow-hidden rounded-2xl text-xs font-semibold px-8 py-4 bg-gradient-to-r from-brand-secondary to-brand-primary text-white shadow-lg shadow-brand-primary/10 hover:shadow-brand-primary/30 transition-all duration-300 flex items-center justify-center gap-2"
+              className="w-full sm:w-auto relative group overflow-hidden rounded-2xl text-xs font-semibold px-8 py-4 bg-gradient-to-r from-brand-secondary via-brand-primary to-brand-highlight bg-[length:200%_auto] text-white shadow-[0_0_25px_rgba(124,92,255,0.3)] hover:shadow-[0_0_40px_rgba(157,108,255,0.65)] hover:bg-right hover:scale-[1.02] active:scale-[0.98] transition-all duration-500 ease-out flex items-center justify-center gap-2 cursor-pointer border border-brand-highlight/30"
             >
-              <span className="relative z-10 flex items-center gap-1.5">
-                Launch Autonomous Dashboard <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              {/* Glossy Shimmer Reflection Sweep */}
+              <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-[300%] transition-transform duration-1000 ease-in-out pointer-events-none" />
+              
+              <span className="relative z-10 flex items-center gap-2 text-white font-display font-semibold tracking-wide">
+                <span>Launch Autonomous Dashboard</span>
+                <ArrowRight className="w-4 h-4 text-white group-hover:translate-x-1.5 transition-transform duration-300 ease-out" />
               </span>
-              <div className="absolute inset-0 -translate-x-full group-hover:translate-x-0 bg-gradient-to-r from-brand-primary to-brand-highlight transition-transform duration-500 ease-out" />
             </button>
 
             <button
               onClick={() => onNavigate('dashboard')}
-              className="w-full sm:w-auto flex items-center justify-center gap-2 border border-white/10 hover:border-brand-primary/40 bg-white/5 hover:bg-white/10 py-4 px-8 rounded-2xl text-xs font-semibold text-white transition-all duration-300"
+              className="w-full sm:w-auto flex items-center justify-center gap-2 border border-white/15 hover:border-brand-primary/60 bg-white/5 hover:bg-brand-primary/10 hover:shadow-lg hover:shadow-brand-primary/15 hover:scale-[1.02] active:scale-[0.98] py-4 px-8 rounded-2xl text-xs font-semibold text-white transition-all duration-300 cursor-pointer"
             >
-              <Play className="w-3.5 h-3.5 text-brand-highlight fill-brand-highlight" />
+              <Play className="w-3.5 h-3.5 text-brand-highlight fill-brand-highlight group-hover:scale-110 transition-transform" />
               <span>Watch Platform Demo</span>
             </button>
           </div>
