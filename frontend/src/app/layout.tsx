@@ -6,6 +6,14 @@ export const metadata: Metadata = {
   description:
     "Build an entire startup with a coordinated workforce of autonomous AI agents. From market research to investor pitch decks — one prompt, complete execution.",
   keywords: ["AI", "startup builder", "multi-agent", "autonomous", "SaaS", "KARA"],
+  icons: {
+    icon: [
+      { url: "/ROBOT_HERO_IMG.png" },
+      { url: "/icon.png" },
+    ],
+    shortcut: "/ROBOT_HERO_IMG.png",
+    apple: "/ROBOT_HERO_IMG.png",
+  },
 };
 
 export default function RootLayout({
