@@ -356,7 +356,7 @@ export const PITCH_DECK_SLIDES: PitchDeckSlide[] = [
 export const PRICING_PLANS: PricingPlan[] = [
   {
     name: 'Builder Core',
-    price: '$49',
+    price: '$29',
     period: 'month',
     description: 'Perfect for solo founders looking to spin up proof-of-concepts rapidly with our AI workforce.',
     features: [
@@ -371,7 +371,7 @@ export const PRICING_PLANS: PricingPlan[] = [
   },
   {
     name: 'Autonomous Suite',
-    price: '$149',
+    price: '$79',
     period: 'month',
     description: 'Unleash the full potential of a complete coordinated enterprise department working at lightspeed.',
     features: [
@@ -387,7 +387,7 @@ export const PRICING_PLANS: PricingPlan[] = [
   },
   {
     name: 'Sovereign Nexus',
-    price: '$499',
+    price: '$119',
     period: 'month',
     description: 'Custom fine-tuned agent layers, enterprise security baselines, and bespoke cloud landing zones.',
     features: [
