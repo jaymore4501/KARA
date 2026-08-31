@@ -82,56 +82,45 @@ KARA delegates tasks across specialized autonomous agent personas operating in p
   <img src="frontend/public/System Flow Diagram.png" alt="System Overview Diagram" width="1200" style="box-shadow: 0 10px 30px rgba(157, 108, 255, 0.3);" />
 
 
-### ⚡ Sequential Multi-Agent Execution Flow
+### ⚡ Sequential Execution Pipeline
 
-```mermaid
-graph LR
-    A[1. Idea Ingestion] --> B[2. Atlas: Domain RAG]
-    B --> C[3. Nova & Pulse: PRD Blueprint]
-    C --> D[4. Forge & Aura: Architecture]
-    D --> E[5. CodeX & Flux: Codebase Synthesis]
-    E --> F[6. Ledger & Vertex: Financials]
-    F --> G[7. Echo: Go-To-Market]
-    G --> H[8. Workspace & ZIP Export]
+```text
+  ┌───────────────────────────┐
+  │   💡 1. Idea Ingestion    │  ➔ Raw prompt & vision input
+  └─────────────┬─────────────┘
+                │
+                ▼
+  ┌───────────────────────────┐
+  │   🔍 2. Context & RAG     │  ➔ Taxonomy resolution & benchmark retrieval
+  └─────────────┬─────────────┘
+                │
+                ▼
+  ┌───────────────────────────┐
+  │   🎯 3. Strategy (Nova)   │  ➔ PRD, user personas & business model
+  └─────────────┬─────────────┘
+                │
+                ▼
+  ┌───────────────────────────┐
+  │  ⚙️ 4. Swarm Synthesis    │  ➔ Parallel DB schema, REST API & UI code
+  └─────────────┬─────────────┘
+                │
+                ▼
+  ┌───────────────────────────┐
+  │  📊 5. Financial Engine   │  ➔ TAM/SAM, unit economics & pitch deck
+  └─────────────┬─────────────┘
+                │
+                ▼
+  ┌───────────────────────────┐
+  │ 🚀 6. Deployment & Export │  ➔ Live workspace & ZIP / Git push export
+  └───────────────────────────┘
 ```
 
-#### 📌 Execution Stages Detailed Breakdown:
-
-1. **📥 Step 1: Raw Idea Ingestion & Prompt Parsing**
-   - User submits a business vision prompt or startup concept via the KARA workspace terminal.
-   - *Core Engine:* Prompt Pre-processor & Context Resolution.
-
-2. **🔍 Step 2: Market Intelligence & RAG Retrieval (`Atlas`)**
-   - **Atlas (Research Specialist)** executes domain taxonomy lookups, competitive landscape analysis, and vector retrieval via PgVector RAG.
-   - *Deliverable:* Competitive Matrix & Market Insights.
-
-3. **📋 Step 3: Executive Strategy & PRD Blueprinting (`Nova` & `Pulse`)**
-   - **Nova (CEO)** synthesizes business hypotheses, value propositions, and monetization models.
-   - **Pulse (PM)** generates complete PRD specifications, epic feature mappings, and sprint backlog user stories.
-   - *Deliverable:* Product Requirement Document (PRD) & Roadmap.
-
-4. **🏗️ Step 4: System Architecture & Design Systems (`Forge` & `Aura`)**
-   - **Forge (Architect)** models PostgreSQL/SQLite schemas, SQL migration scripts, and OpenAPI contracts.
-   - **Aura (UI/UX)** compiles dark cyberpunk visual design tokens, color palettes, and responsive wireframes.
-   - *Deliverable:* Relational ERDs, API Contracts & Design System.
-
-5. **💻 Step 5: Full-Stack Codebase Synthesis (`CodeX` & `Flux`)**
-   - **CodeX (Backend)** generates modular FastAPI/Python endpoints, authentication layers, and database ORMs.
-   - **Flux (Frontend)** compiles production Next.js 16 (Turbopack) UI components, state hooks, and page views.
-   - *Deliverable:* Runnable Full-Stack Codebase.
-
-6. **📊 Step 6: Financial Modeling & Investor Deck (`Ledger` & `Vertex`)**
-   - **Ledger (Finance)** builds 3-year MRR projections, TAM/SAM/SOM market sizing, CAC/LTV unit economics, and burn rate schedules.
-   - **Vertex (Investor Lead)** structures 10-slide investor pitch decks and valuation benchmarks.
-   - *Deliverable:* Financial Projections & Investor Pitch Deck.
-
-7. **📢 Step 7: Growth Strategy & Marketing Automation (`Echo`)**
-   - **Echo (Marketing)** writes SEO copy, email launch campaigns, ad variations, and social media announcements.
-   - *Deliverable:* Go-To-Market (GTM) Campaign Suite.
-
-8. **📦 Step 8: Workspace Deployment & Artifact Exports**
-   - Bundles all generated code, PRDs, financial spreadsheets, and decks into instant `.ZIP` downloads, dark-themed PDF analytics reports, and live workspace dashboards.
-   - *Deliverable:* Downloadable Archive & Production Terminal.
+1. **Idea Ingestion:** Raw prompt vision & domain input.
+2. **Context & RAG:** Taxonomy resolution & benchmark retrieval.
+3. **Strategy (Nova):** PRD, target personas & business model.
+4. **Swarm Synthesis:** Parallel DB schema, REST API & UI compilation.
+5. **Financial Engine:** TAM/SAM, unit economics & pitch deck generation.
+6. **Deployment & Export:** Live workspace dashboard & full project export.
 
 ---
 
