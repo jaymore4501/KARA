@@ -2,7 +2,7 @@
 KARA Backend - Analytics API Endpoints
 Returns system utilization, token usage statistics, and execution metrics.
 """
-from typing import Dict, Any, List
+from typing import Dict, Any
 from fastapi import APIRouter, Depends
 from sqlalchemy import select, func
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -14,11 +14,11 @@ from app.auth.dependencies import get_current_user
 router = APIRouter(prefix="/analytics", tags=["Analytics"])
 
 
-@router.get("/summary")
+@router.get("/summary", response_model=Dict[str, Any])
 async def get_analytics_summary(
     db: AsyncSession = Depends(get_db),
     current_user: User = Depends(get_current_user),
-):
+) -> Dict[str, Any]:
     """Retrieve summarized usage metrics for the active user's workspace."""
     # 1. Projects Count
     result_projects = await db.execute(

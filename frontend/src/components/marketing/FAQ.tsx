@@ -84,7 +84,7 @@ export default function FAQ() {
       id: 'welcome-msg',
       sender: 'kara',
       text: "Greetings! I am KARA, your Autonomous Multi-Agent AI Assistant. Ask me anything about turning ideas into startups, code synthesis, full-stack deliverables, or user privacy. Click any question below to chat with me instantly!",
-      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      timestamp: 'Just now',
     }
   ]);
   const [inputQuery, setInputQuery] = useState('');
