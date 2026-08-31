@@ -91,6 +91,8 @@ KARA delegates tasks across specialized autonomous agent personas operating in p
 5. **Financial Engine:** TAM/SAM, unit economics & pitch deck generation.
 6. **Deployment & Export:** Live workspace dashboard & full project export.
 
+---
+
 ```text
   ┌───────────────────────────┐
   │   💡 1. Idea Ingestion    │  ➔ Raw prompt & vision input
