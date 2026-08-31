@@ -84,6 +84,13 @@ KARA delegates tasks across specialized autonomous agent personas operating in p
 
 ### ⚡ Sequential Execution Pipeline
 
+1. **Idea Ingestion:** Raw prompt vision & domain input.
+2. **Context & RAG:** Taxonomy resolution & benchmark retrieval.
+3. **Strategy (Nova):** PRD, target personas & business model.
+4. **Swarm Synthesis:** Parallel DB schema, REST API & UI compilation.
+5. **Financial Engine:** TAM/SAM, unit economics & pitch deck generation.
+6. **Deployment & Export:** Live workspace dashboard & full project export.
+
 ```text
   ┌───────────────────────────┐
   │   💡 1. Idea Ingestion    │  ➔ Raw prompt & vision input
@@ -115,14 +122,6 @@ KARA delegates tasks across specialized autonomous agent personas operating in p
   └───────────────────────────┘
 ```
 
-1. **Idea Ingestion:** Raw prompt vision & domain input.
-2. **Context & RAG:** Taxonomy resolution & benchmark retrieval.
-3. **Strategy (Nova):** PRD, target personas & business model.
-4. **Swarm Synthesis:** Parallel DB schema, REST API & UI compilation.
-5. **Financial Engine:** TAM/SAM, unit economics & pitch deck generation.
-6. **Deployment & Export:** Live workspace dashboard & full project export.
-
----
 
 ## 📁 Repository Structure
 
