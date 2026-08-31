@@ -81,6 +81,7 @@ KARA delegates tasks across specialized autonomous agent personas operating in p
 
   <img src="frontend/public/System Flow Diagram.png" alt="System Overview Diagram" width="1200" style="box-shadow: 0 10px 30px rgba(157, 108, 255, 0.3);" />
 
+---
 
 ### ⚡ Sequential Execution Pipeline
 
@@ -122,6 +123,7 @@ KARA delegates tasks across specialized autonomous agent personas operating in p
 5. **Financial Engine:** TAM/SAM, unit economics & pitch deck generation.
 6. **Deployment & Export:** Live workspace dashboard & full project export.
 
+---
 
 ## 📁 Repository Structure
 
