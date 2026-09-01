@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Download, FileText, Package, FileCode, CheckCircle2, Sparkles, Github, ExternalLink, ShieldCheck, Lock, Unlock, AlertCircle } from "lucide-react";
+import { Download, FileText, Package, FileCode, CheckCircle2, Sparkles, ExternalLink, ShieldCheck, Lock, Unlock, AlertCircle } from "lucide-react";
+import { Github } from "@/components/marketing/BrandIcons";
 import { useAuthStore } from "@/store/auth-store";
 import { projectsApi, type ProjectResponse } from "@/lib/api";
 
