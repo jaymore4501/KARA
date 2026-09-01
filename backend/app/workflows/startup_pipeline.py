@@ -381,7 +381,7 @@ async def run_codebase_node(state: PipelineState) -> PipelineState:
 # ── LangGraph Assembly ───────────────────────────────────────
 
 def compile_startup_workflow():
-    """Build and compile the StateGraph linking all agent nodes together."""
+    """Build and compile the StateGraph linking all agent nodes together in a parallel DAG topology."""
     workflow = StateGraph(PipelineState)
     
     # Add Nodes
@@ -392,13 +392,25 @@ def compile_startup_workflow():
     workflow.add_node("database", run_database_node)
     workflow.add_node("codebase", run_codebase_node)
     
-    # Build Edges (Sequential pipeline assembly)
+    # Build Edges (Parallel DAG Swarm Topology)
+    # 1. Start -> CEO (Executive Strategy Setup)
     workflow.add_edge(START, "ceo")
+    
+    # 2. CEO -> Parallel Fan-Out: Market Research & Business Analyst
     workflow.add_edge("ceo", "market_research")
-    workflow.add_edge("market_research", "business_analyst")
+    workflow.add_edge("ceo", "business_analyst")
+    
+    # 3. Market Research & Business Analyst -> Architecture (Fan-In Node)
+    workflow.add_edge("market_research", "architecture")
     workflow.add_edge("business_analyst", "architecture")
+    
+    # 4. Architecture -> Database Blueprint Synthesis
     workflow.add_edge("architecture", "database")
+    
+    # 5. Database -> Codebase Generation
     workflow.add_edge("database", "codebase")
+    
+    # 6. Codebase -> Completion
     workflow.add_edge("codebase", END)
     
     return workflow.compile()
