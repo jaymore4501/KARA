@@ -5,6 +5,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { Bot, Send, Sparkles, User, HelpCircle, Shield, Zap, RefreshCw, MessageSquare, Terminal } from 'lucide-react';
+import { getAssetUrl } from '@/lib/assets';
 
 interface ChatMessage {
   id: string;
@@ -218,7 +219,7 @@ export default function FAQ() {
             <div className="flex items-center gap-3">
               <div className="relative w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-secondary to-brand-primary p-[1px] shadow-md shrink-0">
                 <div className="relative w-full h-full rounded-xl bg-[#06050D] flex items-center justify-center overflow-hidden">
-                  <img src="/KARA-LOGO.png" alt="KARA AI Agent" className="w-full h-full object-cover" />
+                  <img src={getAssetUrl("/KARA-LOGO.png")} alt="KARA AI Agent" className="w-full h-full object-cover" />
                 </div>
                 <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-brand-success border-2 border-[#090713] animate-pulse" />
               </div>
@@ -258,7 +259,7 @@ export default function FAQ() {
                 {msg.sender === 'kara' ? (
                   <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-brand-secondary to-brand-primary p-[1px] shrink-0 mt-0.5">
                     <div className="w-full h-full rounded-xl bg-[#06050D] flex items-center justify-center overflow-hidden">
-                      <img src="/KARA-LOGO.png" alt="KARA AI" className="w-full h-full object-cover" />
+                      <img src={getAssetUrl("/KARA-LOGO.png")} alt="KARA AI" className="w-full h-full object-cover" />
                     </div>
                   </div>
                 ) : (
@@ -288,7 +289,7 @@ export default function FAQ() {
               <div className="flex gap-3 text-left">
                 <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-brand-secondary to-brand-primary p-[1px] shrink-0">
                   <div className="w-full h-full rounded-xl bg-[#06050D] flex items-center justify-center overflow-hidden">
-                    <img src="/KARA-LOGO.png" alt="KARA AI" className="w-full h-full object-cover" />
+                    <img src={getAssetUrl("/KARA-LOGO.png")} alt="KARA AI" className="w-full h-full object-cover" />
                   </div>
                 </div>
                 <div className="bg-white/5 border border-white/10 px-4 py-3 rounded-2xl rounded-tl-none flex items-center gap-1.5">

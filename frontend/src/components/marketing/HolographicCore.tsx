@@ -4,6 +4,7 @@
  */
 
 import React, { useState } from 'react';
+import { getAssetUrl } from '@/lib/assets';
 
 export default function HolographicCore() {
   const [activePulse, setActivePulse] = useState(false);
@@ -84,7 +85,7 @@ export default function HolographicCore() {
         }}
       >
         <img
-          src="/ROBOT_HERO_IMG.png"
+          src={getAssetUrl("/ROBOT_HERO_IMG.png")}
           alt="KARA AI Robot Core"
           className="w-full h-full object-contain filter drop-shadow-[0_20px_50px_rgba(124,92,255,0.2)]"
         />

@@ -6,6 +6,7 @@
 import React, { useState } from 'react';
 import { Sparkles, ArrowUpRight, Send } from 'lucide-react';
 import { Github, Twitter, Linkedin } from './BrandIcons';
+import { getAssetUrl } from '@/lib/assets';
 
 export default function Footer() {
   const [email, setEmail] = useState('');
@@ -65,7 +66,7 @@ export default function Footer() {
         <div className="lg:col-span-5 flex flex-col items-start gap-5">
           <div className="flex items-center gap-2 select-none">
             <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-brand-secondary to-brand-primary p-[1px] shadow-lg overflow-hidden">
-              <img src="/KARA-LOGO.png" alt="KARA Logo" className="w-full h-full object-cover rounded-xl" />
+              <img src={getAssetUrl("/KARA-LOGO.png")} alt="KARA Logo" className="w-full h-full object-cover rounded-xl" />
             </div>
             <span className="font-display font-bold text-lg text-white tracking-wider">
               KARA
